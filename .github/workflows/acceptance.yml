@@ -100,6 +100,7 @@ jobs:
         run: |
           uv venv .venv-audit --python 3.12.14
           uv pip install --python .venv-audit/bin/python bandit==1.9.4 ruff==0.17.6
+          cp artifacts/production-2026-11-23/security/static-triage.json artifacts/security/static-triage.json
           .venv-audit/bin/python scripts/static_audit.py
       - name: Build dashboard and inspect actual browser flows
         working-directory: dashboard

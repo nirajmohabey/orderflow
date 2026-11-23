@@ -1,0 +1,243 @@
+{
+  "reviewed_at": "2026-11-23T19:10:17.050598+00:00",
+  "scan_generated_at": "2026-11-23T19:09:03Z",
+  "tools": {
+    "bandit": "1.9.4",
+    "ruff": "0.17.6"
+  },
+  "scope": "Current production Python runtime src, maintenance/verification scripts and Airflow DAG. Ruff additionally includes tests, limited to F821/F822/F823; analysis and frontend are outside this static scan.",
+  "bandit_severities": {
+    "SEVERITY.HIGH": 0,
+    "SEVERITY.LOW": 45,
+    "SEVERITY.MEDIUM": 11,
+    "SEVERITY.UNDEFINED": 0
+  },
+  "bandit_categories": {
+    "B105": 1,
+    "B310": 1,
+    "B311": 1,
+    "B314": 1,
+    "B404": 13,
+    "B405": 1,
+    "B603": 23,
+    "B607": 6,
+    "B608": 9
+  },
+  "medium_findings": [
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "scripts/recovery_check.py",
+        "line": 46,
+        "snippet_sha256": "380799fd772c8bed0ccb34f4bc1968ffc92db7b197feff3ae7a1b13ad891c8e3"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "Table names come only from fixed, application-owned tuples in an administrative recovery observer. No request/string input selects a SQL identifier; data arguments elsewhere are parameters. This does not authorize using the concatenation with untrusted table names."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "scripts/recovery_check.py",
+        "line": 73,
+        "snippet_sha256": "bd19fbc768bcabaeddc015d8c65205604c67baf3d813c7678a076664ecaeaaac"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "Table names come only from fixed, application-owned tuples in an administrative recovery observer. No request/string input selects a SQL identifier; data arguments elsewhere are parameters. This does not authorize using the concatenation with untrusted table names."
+    },
+    {
+      "signature": {
+        "test_id": "B314",
+        "path": "scripts/run_tests.py",
+        "line": 82,
+        "snippet_sha256": "b25f0056fba6eba47d7ee4a22c63574084273029315f703f76494f417c4199a0"
+      },
+      "scanner_message": "Using xml.etree.ElementTree.parse to parse untrusted XML data is known to be vulnerable to XML attacks. Replace xml.etree.ElementTree.parse with its defusedxml equivalent function or make sure defusedxml.defuse_stdlib() is called",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "The release runner parses pytest-generated JUnit artifacts under the project artifacts directory, not an HTTP upload or general untrusted XML input. The writer/output path and assertion-enabled execution are controlled by the reviewed runner. Keep those local evidence inputs trusted; ElementTree is not approved here for arbitrary third-party XML."
+    },
+    {
+      "signature": {
+        "test_id": "B310",
+        "path": "scripts/security_audit.py",
+        "line": 36,
+        "snippet_sha256": "0c0c9c0f60e82028ef1929d4d940234acb1cff3b389fecc0bc8c143c817a4b96"
+      },
+      "scanner_message": "Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "All callers use fixed HTTPS OSV endpoints, with advisory IDs URL-encoded and only public package names/versions submitted. Responses/timeouts/retries are bounded. This local audit helper is not a public/general-purpose URL-fetch API and is not approved for untrusted arbitrary URLs."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/pipeline.py",
+        "line": 239,
+        "snippet_sha256": "dd02d957a79dc18ca26f832e34461187974b2d48292495cae206e9adc6ce2c52"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "SQL identifiers are produced only by _relation: a two-name model allowlist, fixed warehouse schema and canonical UUID.hex suffix. Both run_id and the new per-attempt build_id are parsed as UUIDs before interpolation. Tenant and data values remain bind parameters. Current source and each exact snippet are bound; this is not approval for arbitrary identifiers."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/pipeline.py",
+        "line": 240,
+        "snippet_sha256": "4bf80c84aff43dcb046b80a543089f76e99d702dde02408aed135ad63540f182"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "SQL identifiers are produced only by _relation: a two-name model allowlist, fixed warehouse schema and canonical UUID.hex suffix. Both run_id and the new per-attempt build_id are parsed as UUIDs before interpolation. Tenant and data values remain bind parameters. Current source and each exact snippet are bound; this is not approval for arbitrary identifiers."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/pipeline.py",
+        "line": 241,
+        "snippet_sha256": "00eb0d6f8655169daefbca854d249c29d57959867e13cc6f9fca1cdc569c3eba"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "SQL identifiers are produced only by _relation: a two-name model allowlist, fixed warehouse schema and canonical UUID.hex suffix. Both run_id and the new per-attempt build_id are parsed as UUIDs before interpolation. Tenant and data values remain bind parameters. Current source and each exact snippet are bound; this is not approval for arbitrary identifiers."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/pipeline.py",
+        "line": 242,
+        "snippet_sha256": "0dc60b596e2694f8ea8e4663dc4e95ac77a52f68ea947c040f168e7fb5b0095f"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "SQL identifiers are produced only by _relation: a two-name model allowlist, fixed warehouse schema and canonical UUID.hex suffix. Both run_id and the new per-attempt build_id are parsed as UUIDs before interpolation. Tenant and data values remain bind parameters. Current source and each exact snippet are bound; this is not approval for arbitrary identifiers."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/service.py",
+        "line": 113,
+        "snippet_sha256": "7a94f47ca01a9cc4a3d0d0bdce8f0486e079d400a6f995696079fbed28c54e7e"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "EVENT_COLUMNS and the conditional keyset fragment are application-owned SQL constants. Tenant, IDs, filters, limits and cursor positions are bound values. Signed/scoped cursor validation and explicit tenant predicates/RLS remain separate checks. No caller-provided SQL structure is interpolated at these call sites."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/service.py",
+        "line": 267,
+        "snippet_sha256": "02f3ba12c657abbedcc72923110db152ee4f4f172200b8b1cc54aea88792e539"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "EVENT_COLUMNS and the conditional keyset fragment are application-owned SQL constants. Tenant, IDs, filters, limits and cursor positions are bound values. Signed/scoped cursor validation and explicit tenant predicates/RLS remain separate checks. No caller-provided SQL structure is interpolated at these call sites."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/service.py",
+        "line": 288,
+        "snippet_sha256": "e2e1810c32984e53a21f2d01000aa4b9d6ad8d86a28cd019ea689cef8f159e74"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "EVENT_COLUMNS and the conditional keyset fragment are application-owned SQL constants. Tenant, IDs, filters, limits and cursor positions are bound values. Signed/scoped cursor validation and explicit tenant predicates/RLS remain separate checks. No caller-provided SQL structure is interpolated at these call sites."
+    }
+  ],
+  "reviewed_medium_source_sha256": {
+    "scripts/recovery_check.py": "fe6362e2e23427f9ec5d07e7c8e6447e53129ac3c69c8cdc526717c8836fc4d8",
+    "scripts/run_tests.py": "584b5c6fa5e99a98426f5436f4e4e36e52c6a8cd7c6f3b465bb629d74ba4ab1b",
+    "scripts/security_audit.py": "8abd49d85790ea96e6717086c7c20f45976940688736d89d4e4205417754a218",
+    "src/orderflow/pipeline.py": "492545d7bb4252dfb8a75dc6a5d2311b6a74d1ec8ddb03e10459815e08328e50",
+    "src/orderflow/service.py": "23bbb60a425729d6a53132b513c0b2220256a031f2535ad1b9bc44a3484ad90a"
+  },
+  "source_hashes": {
+    "src/orderflow/__init__.py": "b2e4cfe6cbe0230170ece51c042e62e7fdeef2f6ae271c49d25fdb2a188a6677",
+    "src/orderflow/api.py": "a9f2be24bfa3f6699d646d4cf3465e4cf798f562429b6f8bcf3a833693f117f9",
+    "src/orderflow/auth.py": "8cae5a3478d227896e64a05e5f913e3aaccc5c06ced20e261a2de7201632710f",
+    "src/orderflow/config.py": "93fafd0fc978a1877edda6410219aad69372dd7f2bdfa2c60cbc88aacda505c6",
+    "src/orderflow/connectors.py": "d95ae2f78996361e5f3f24eefc336269118972b0a9564f32cfbc730b9a5e7a0e",
+    "src/orderflow/db.py": "004196a2ba6ac1b5624d041abf4d3808f5201757d8cf4605cf101a4e92e553ab",
+    "src/orderflow/hosted_jobs.py": "034af2a8cb1a278c15a81c1f8bb29b2916a43a3eb96a1e16f1d9f82edb150f6e",
+    "src/orderflow/neon_auth.py": "eeb8bcfe009b0cee715e96daa4a64510d756b9a0c9ec51134182ed84edff3ee9",
+    "src/orderflow/objects.py": "8b26fff0ea262f1ab71264064322eaf51c4a2c2dfd674bf84050a3809b5fede0",
+    "src/orderflow/pipeline.py": "492545d7bb4252dfb8a75dc6a5d2311b6a74d1ec8ddb03e10459815e08328e50",
+    "src/orderflow/schemas.py": "f819534d70c611cf9ffe70867e2768da0456c7d7c4f6d7b55d53a5cd1dffede9",
+    "src/orderflow/service.py": "23bbb60a425729d6a53132b513c0b2220256a031f2535ad1b9bc44a3484ad90a",
+    "src/orderflow/worker.py": "78d74e0ee34981b515eae328e267cc338fc6415e2b3309ec12b05b69633569ea",
+    "scripts/acceptance.py": "0ba1cd69df16081082042f2fb86581ba8d1996b84bcd860da9afc5ad082dac40",
+    "scripts/backup_check.py": "cd29ff110645768161e3facfbf4b5b42aad9a9fc7023837a2483f5626747248f",
+    "scripts/benchmark.py": "bf9a8d7da1d7fb2e448c2da8a89d02fc4de30ba7db4204b83a8176bf3198d644",
+    "scripts/benchmark_small_trial.py": "8dba0f2ef3b9f4be3ff9ba31892b12240af18a32608b6cfca016823827147505",
+    "scripts/benchmark_trial.py": "0c50ff00a02e4c0d0370242d3b0732da9a4614d5c0dbe94fa4300207212045be",
+    "scripts/bootstrap.py": "c3ca191d7115b2010f5de101d80b9a58c13fb3f8573e8278af1e9326949ecc2b",
+    "scripts/catalog_simulator.py": "dd568adb8ba001d138ffdc8f710e89f496919a93e8b22dfc48abbd1091c03a98",
+    "scripts/check_dns_bounds.py": "bfcea5a72e0141b1cb955ca54965aff0cfed1a5232989e0796827d655f36ec8a",
+    "scripts/ci_airflow.py": "2cc4155dbb7718d8dfa582879a2e9df6d5c65d30df7a7cc1cc097652c9d5bbdc",
+    "scripts/ci_docker_smoke.py": "a906da18eab873b9295ceff301d9d657f98c936cfeb63d9355d26e37b869385b",
+    "scripts/ci_live.py": "a5130e547f8930261b6387b38da702d8bdae0fa7cd05be736a2c5b75a5f318d0",
+    "scripts/ci_setup.py": "3b6d54efb1f224176a04d0942f496717eca949eeb0d9f377de532b4d0edb76a9",
+    "scripts/collect_dependencies.py": "ca63cc991918387b1d37b47dc461682991e458835b1981d4717f70556ced5120",
+    "scripts/container_setup.py": "4f165d90cb8b7219e6e00ac66a65dd75efec1e2b6c3eb59b0286f35825b5f42e",
+    "scripts/docker_env.py": "9e38c2faa4817cabf2371de29d280d2079d9137e9aec226483fa5cf1321b1591",
+    "scripts/merge_benchmark_trials.py": "f9be23bf4f486ffe5c6a3d774c2ac3625647d05fc54845ca7e756dbf2f1baa11",
+    "scripts/merge_small_benchmark_gate.py": "a66473dad55d0d8efdcea2cd7ce6c68324cdad1965e33546a1d95ecee23ad0d6",
+    "scripts/package_release.py": "2f7389d40cc2647cc501b3dea58e0a04924c7918dcb6a707ef3005ae872e38a8",
+    "scripts/pipeline.py": "60767cdec4cdcbee8ab941d7123263b8297cb0be9dc8668ecee927e18d55f0c7",
+    "scripts/populate_demo.py": "4b274ae08c9865a5d2529f561f8a29dcd35220a0ecf710cc917d51f0a763349b",
+    "scripts/recovery_check.py": "fe6362e2e23427f9ec5d07e7c8e6447e53129ac3c69c8cdc526717c8836fc4d8",
+    "scripts/release_manifest.py": "9bad8c62d730f0de8d356434a2e11c0a95b55bfe1cce110a5af6f3044cd86d05",
+    "scripts/review_patch.py": "d6626a612c79ff72f3f9e6ef87fbc6c4f32ae18243e2f3b7b645b8c710c587cd",
+    "scripts/run_tests.py": "584b5c6fa5e99a98426f5436f4e4e36e52c6a8cd7c6f3b465bb629d74ba4ab1b",
+    "scripts/security_audit.py": "8abd49d85790ea96e6717086c7c20f45976940688736d89d4e4205417754a218",
+    "scripts/serve.py": "40453b8d121ea76267f25aca1f72a52b7044ee9d2d589695bea30e0696795009",
+    "scripts/static_audit.py": "27e193115fb84cba6aabe9c34ffbc4a2b83db9de2b4d421c9c8bc190d999b681",
+    "scripts/verification_support.py": "acde5c17084acd82b38bdfee5c44d53553a862cbd7dacfa3cf61dcd3dd0a65cc",
+    "orchestration/dags/orderflow_daily.py": "b2ad0e94da328506aea850dc577c8c16360bde7699c19e5eb83e3f1d934a2275"
+  },
+  "raw_reports": {
+    "bandit.json": "043911e83f5c19b46e45329710f091f9d74b586ddf2183288f820505c80fc9e0",
+    "ruff-undefined-names.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "low_category_assessments": [
+    {
+      "test_ids": [
+        "B404",
+        "B603",
+        "B607"
+      ],
+      "count": 42,
+      "assessment": "Maintenance, benchmark, dbt/Airflow and CI subprocesses use argument arrays without shell=True and explicit owned process handles. Executable paths/PATH and the host remain trusted configuration; arbitrary executable/environment compromise is outside this claim."
+    },
+    {
+      "test_ids": [
+        "B311"
+      ],
+      "count": 1,
+      "assessment": "Seeded benchmark Random shuffles synthetic workloads; credentials use secrets, not Random."
+    },
+    {
+      "test_ids": [
+        "B105"
+      ],
+      "count": 1,
+      "assessment": "The captured token_type=bearer protocol label is not an embedded credential."
+    },
+    {
+      "test_ids": [
+        "B405"
+      ],
+      "count": 1,
+      "assessment": "ElementTree import belongs to the same trusted pytest-JUnit evidence boundary as medium B314; do not reuse this parser for arbitrary untrusted XML."
+    }
+  ],
+  "findings_suppressed": 0,
+  "scan_errors": 0,
+  "limitations": [
+    "Every raw finding is retained. Dispositions apply only to the bound code and are not blanket security or exploitability claims.",
+    "The previous static-triage.json remains historical and is not overwritten in the repository.",
+    "The production HTTP auth/job boundaries have separate signature/database/runtime tests; static scanners do not prove them."
+  ]
+}
