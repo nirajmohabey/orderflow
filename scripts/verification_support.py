@@ -14,16 +14,34 @@ from sqlalchemy import create_engine, text
 
 ROOT = Path(__file__).resolve().parents[1]
 
+
+def validate_connection_url(value):
+    """Reject ambiguous routing before creating or restoring any database."""
+    parsed = make_url(value)
+    forbidden = {'dbname','database','host','hostaddr','port','user','password','service','servicefile','options'}
+    if parsed.drivername != 'postgresql+psycopg' or not parsed.host or not parsed.database:
+        raise RuntimeError('Verification requires an explicit PostgreSQL destination')
+    if forbidden.intersection(k.lower() for k in parsed.query):
+        raise RuntimeError('Connection-routing overrides are forbidden in verification URLs')
+    return parsed
+
+
+def report_output(default):
+    path = Path(os.environ.get('ODF_VERIFICATION_OUTPUT', default))
+    path = (ROOT / path).resolve() if not path.is_absolute() else path.resolve()
+    if not path.is_relative_to((ROOT / 'artifacts').resolve()):
+        raise RuntimeError('Verification output must stay inside project artifacts')
+    return path
+
 def validate_destination_pair(admin_url, runtime_url, expected):
     """Verify connected identities before any verification migration or write."""
     if not re.fullmatch(r'orderflow_(?:acceptance|recovery|benchmark|backup|oracle|restore)_[0-9a-f]{12}',expected):
         raise RuntimeError('Unrecognized owned verification database')
-    forbidden={'dbname','database','host','hostaddr','port','user','password','service','servicefile','options'}
+    # Validate both strings before the first connection.
+    for value in (admin_url,runtime_url):
+        validate_connection_url(value)
     destinations=[]
     for index,url in enumerate((admin_url,runtime_url)):
-        parsed=make_url(url)
-        if forbidden.intersection(k.lower() for k in parsed.query):
-            raise RuntimeError('Connection-routing overrides are forbidden in verification URLs')
         engine=create_engine(url,pool_pre_ping=True,connect_args={'connect_timeout':5})
         try:
             with engine.connect() as conn:
@@ -37,6 +55,7 @@ def validate_destination_pair(admin_url, runtime_url, expected):
         finally: engine.dispose()
     if destinations[0]!=destinations[1]:
         raise RuntimeError('Administrative and runtime verification destinations differ')
+    return destinations[0]
 
 @contextmanager
 def scratch_database(purpose):
@@ -44,8 +63,10 @@ def scratch_database(purpose):
         raise ValueError('Unrecognized verification purpose')
     original = dict(os.environ)
     env = {k:v for k,v in dotenv_values(ROOT / '.env').items() if v is not None}
-    admin = make_url(env['ODF_ADMIN_DATABASE_URL'])
-    runtime = make_url(env['ODF_DATABASE_URL'])
+    admin = validate_connection_url(env['ODF_ADMIN_DATABASE_URL'])
+    runtime = validate_connection_url(env['ODF_DATABASE_URL'])
+    if env.get('ODF_DBT_DATABASE_URL'):
+        validate_connection_url(env['ODF_DBT_DATABASE_URL'])
     name = 'orderflow_'+purpose+'_'+uuid4().hex[:12]
     kwargs = dict(host=admin.host,port=admin.port,user=admin.username,password=admin.password,connect_timeout=5)
     created = False

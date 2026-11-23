@@ -1,5 +1,7 @@
 # Container OS advisory audit
 
+> Patch version note: Current v0.1.1 native evidence is in `artifacts/recheck-2026-11-23/`. The earlier Linux/Airflow/container/OS and measured v1 workload results below are historical v0.1.0 evidence. Use `scripts/review_patch.py` for the current native review. The legacy release/partial-render tools require their matching original source; no current full performance matrix or Linux rerun is claimed.
+
 On 23 November 2026 the final OrderFlow Compose images were rebuilt and exercised in an owned, private Linux sandbox. Python remains 3.12.14 and PostgreSQL remains 17.12. This is a package advisory scan and functional smoke, not a penetration test or evidence that the application has no vulnerabilities.
 
 | Runtime image | Original OS package findings | Final findings | Final findings with a supplied fixed version |

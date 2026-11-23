@@ -5,7 +5,10 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."),
-  OUT = path.resolve(ROOT, "../artifacts/dashboard/live");
+  OUT = path.resolve(
+    process.env.ORDERFLOW_LIVE_OUT ??
+      path.join(ROOT, "../artifacts/dashboard/live"),
+  );
 await fs.mkdir(OUT, { recursive: true });
 const origin = process.env.ORDERFLOW_URL ?? "http://127.0.0.1:8010";
 if (!/^http:\/\/127\.0\.0\.1:\d+$/.test(origin))
@@ -79,10 +82,19 @@ const run = async (name, fn) => {
 };
 const scan = async (state) => {
   const r = await new AxeBuilder({ page })
-    .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
     .analyze();
   scans.push({
     state,
+    incomplete: r.incomplete.map((rule) => ({
+      id: rule.id,
+      impact: rule.impact,
+      help: rule.help,
+      nodes: rule.nodes.map((node) => ({
+        target: node.target,
+        summary: node.failureSummary,
+      })),
+    })),
     violations: r.violations.map((v) => ({
       id: v.id,
       impact: v.impact,

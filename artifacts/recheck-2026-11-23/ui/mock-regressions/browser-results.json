@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-11-23T17:24:08.380Z",
+  "mode": "built React app; intercepted API; isolated synthetic contexts",
+  "passed": 5,
+  "total": 5,
+  "results": [
+    {
+      "name": "fresh: Back to the original root URL restores Overview",
+      "passed": true,
+      "pageerrors": []
+    },
+    {
+      "name": "fresh: a JSON-null 401 still expires the session",
+      "passed": true,
+      "pageerrors": []
+    },
+    {
+      "name": "fresh: JSON-null service errors retain an actionable status and request ID",
+      "passed": true,
+      "pageerrors": []
+    },
+    {
+      "name": "fresh: an old retry401 cannot expire a reconnected session using the same token",
+      "passed": true,
+      "pageerrors": []
+    },
+    {
+      "name": "fresh: all views fit320/375/768/1440 and200percent text",
+      "passed": true,
+      "pageerrors": []
+    }
+  ],
+  "accessibility": [],
+  "source_hashes": {
+    "src/App.tsx": "f434c991c27446e2aaf09d9789feb37d2ee02425a80f86905cbb66338769d0c1",
+    "src/api.ts": "1527c5220551112e9739cddc30dcd67fc683f22b3d8c0ab48a53f20a0a61e628",
+    "src/types.ts": "da7372b42b359c53fd61d23faf5c9d2cb02cbacbc8dd3ff023377fe32b6f4a46",
+    "src/style.css": "70f8ae280b74a3257c6d9745dcba7ff89b6a26207bdde8ed7b049d2bca8591e8",
+    "src/main.tsx": "575c9833bc5993d6a7b8db0587b8ecc202809448fd71842c5a4331bec6ee7977",
+    "package.json": "4859f02e19d2951d809aa1c73025e679b9a90d075bd6e8f3736584b8dc5f2462",
+    "package-lock.json": "abd5ea623d552e451dba3ee2792b3cf1b76c04ea3f047a9b47fe40b9bb2c59fa",
+    "index.html": "6a870c0a36737b284d9bb84bdad2d06eba84842d0a665a2733e5e621be40e263"
+  },
+  "source_stable": true
+}

@@ -7,7 +7,13 @@ import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const OUT = path.resolve(ROOT, "../artifacts/dashboard");
+const OUT = path.resolve(
+  process.env.ORDERFLOW_BROWSER_OUT ??
+    path.join(ROOT, "../artifacts/dashboard"),
+);
+const DIST = path.resolve(
+  process.env.ORDERFLOW_BROWSER_DIST ?? path.join(ROOT, "dist"),
+);
 await fs.mkdir(OUT, { recursive: true });
 const sourceFiles = [
   "src/App.tsx",
@@ -39,8 +45,8 @@ const server = http.createServer(async (req, res) => {
         url.pathname === "/"
           ? "index.html"
           : decodeURIComponent(url.pathname.slice(1)),
-      target = path.resolve(ROOT, "dist", relative);
-    if (!target.startsWith(path.resolve(ROOT, "dist") + path.sep)) {
+      target = path.resolve(DIST, relative);
+    if (!target.startsWith(DIST + path.sep)) {
       res.writeHead(404);
       res.end();
       return;
@@ -322,7 +328,7 @@ function history(id) {
 }
 const results = [],
   a11y = [];
-async function scenario(name, fn, options = {}) {
+export async function scenario(name, fn, options = {}) {
   const context = await browser.newContext({
       viewport: options.viewport ?? { width: 1440, height: 1000 },
     }),
@@ -468,11 +474,20 @@ async function scenario(name, fn, options = {}) {
   };
   const axe = async (state) => {
     const r = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+      .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
       .analyze();
     a11y.push({
       scenario: name,
       state,
+      incomplete: r.incomplete.map((rule) => ({
+        id: rule.id,
+        impact: rule.impact,
+        help: rule.help,
+        nodes: rule.nodes.map((node) => ({
+          target: node.target,
+          summary: node.failureSummary,
+        })),
+      })),
       violations: r.violations.map((v) => ({
         id: v.id,
         impact: v.impact,
@@ -539,666 +554,8 @@ async function scenario(name, fn, options = {}) {
   }
   await context.close();
 }
-try {
-  await scenario(
-    "Overview uses exact aggregate amounts and source ledger",
-    async ({ page, axe, check }) => {
-      await page
-        .getByText("$9,007,199,254,740,993.12", { exact: true })
-        .first()
-        .waitFor();
-      await check(
-        page
-          .getByText("No pending backlog", { exact: true })
-          .count()
-          .then((n) => n > 0),
-        "Null backlog is explicit",
-      );
-      await page.screenshot({
-        path: path.join(OUT, "01-overview-desktop.png"),
-        fullPage: true,
-      });
-      await axe("overview");
-    },
-  );
-  await scenario(
-    "Current order detail preserves maximum bigint version",
-    async ({ page, go, check, axe }) => {
-      await go("Current orders");
-      await page.getByRole("button", { name: "O1", exact: true }).click();
-      await page
-        .getByRole("dialog")
-        .getByText("9223372036854775807", { exact: true })
-        .waitFor();
-      await check(
-        page
-          .getByRole("dialog")
-          .getByText("$123.45", { exact: true })
-          .isVisible(),
-        "Exact minor-unit price",
-      );
-      await axe("order detail");
-      await page.keyboard.press("Escape");
-      await page.getByRole("heading", { name: "Order snapshots" }).waitFor();
-    },
-  );
-  await scenario(
-    "History query preserves dot and slash identifiers; real interval chart",
-    async ({ page, go, requests, check, axe }) => {
-      await go("Products & history");
-      await page.getByRole("button", { name: "..", exact: true }).click();
-      await page
-        .getByRole("dialog")
-        .getByRole("img", { name: /Effective price across 3/ })
-        .waitFor();
-      await check(
-        Promise.resolve(
-          requests.some(
-            (r) =>
-              r.path === "/v1/product-history" && r.query === "?entity_id=..",
-          ),
-        ),
-        "Dot ID must use query form",
-      );
-      await page.getByRole("button", { name: "Raw revisions (3)" }).click();
-      await page.getByText("revision-2", { exact: true }).waitFor();
-      await axe("history raw revisions");
-      await page.keyboard.press("Escape");
-      await page.getByRole("button", { name: "P/二", exact: true }).click();
-      await page
-        .getByRole("dialog")
-        .getByText("Open end", { exact: true })
-        .waitFor();
-      await check(
-        Promise.resolve(
-          requests.some((r) => r.query.includes("P%2F%E4%BA%8C")),
-        ),
-        "Slash Unicode ID preserved",
-      );
-    },
-  );
-  await scenario(
-    "Inbox keyset paging and filters reset page cursor",
-    async ({ page, go, requests, check, axe }) => {
-      await go("Event inbox");
-      await page.getByRole("button", { name: "Next page" }).click();
-      await page
-        .getByRole("button", { name: "order-second-page", exact: true })
-        .waitFor();
-      await page
-        .getByLabel("Status", { exact: true })
-        .selectOption("quarantined");
-      await page.getByRole("button", { name: "order-filter-event" }).waitFor();
-      await check(
-        Promise.resolve(
-          requests
-            .filter((r) => r.path === "/v1/events")
-            .at(-1)
-            .query.includes("status=quarantined") &&
-            !requests
-              .filter((r) => r.path === "/v1/events")
-              .at(-1)
-              .query.includes("cursor="),
-        ),
-        "Filter reset cursor",
-      );
-      await check(
-        page
-          .getByRole("button", { name: "Previous", exact: true })
-          .isDisabled(),
-        "Previous disabled on reset",
-      );
-      await axe("filtered inbox");
-    },
-  );
-  await scenario(
-    "Operator retry verifies resulting state and submits bounded reason",
-    async ({ page, go, requests, check, axe }) => {
-      await go("Event inbox");
-      await page
-        .getByRole("button", { name: "order-retry-event", exact: true })
-        .click();
-      await page
-        .getByLabel("Operational reason")
-        .fill("Reviewed upstream transient outage.");
-      await axe("retry form");
-      await page
-        .getByRole("button", { name: "Request retry", exact: true })
-        .click();
-      await page
-        .getByRole("dialog")
-        .getByText("Pending", { exact: true })
-        .waitFor();
-      await check(
-        page
-          .getByRole("button", { name: "Request retry", exact: true })
-          .count()
-          .then((n) => n === 0),
-        "No duplicate retry once pending",
-      );
-      await check(
-        Promise.resolve(
-          requests.filter(
-            (r) => r.method === "POST" && r.path.endsWith("/retry"),
-          ).length === 1,
-        ),
-        "One retry mutation",
-      );
-    },
-  );
-  await scenario(
-    "Viewer can inspect retry-wait without mutation controls",
-    async ({ page, go, check }) => {
-      await page
-        .getByRole("combobox", { name: "Local fixture identity" })
-        .selectOption("alpha-viewer");
-      await page
-        .getByRole("heading", { name: "Operations overview" })
-        .waitFor();
-      await go("Event inbox");
-      await page
-        .getByRole("button", { name: "order-retry-event", exact: true })
-        .click();
-      await page
-        .getByText("An operator must request a retry.", { exact: false })
-        .waitFor();
-      await check(
-        page
-          .getByRole("button", { name: "Request retry", exact: true })
-          .count()
-          .then((n) => n === 0),
-        "Viewer has no retry action",
-      );
-    },
-  );
-  await scenario(
-    "Quarantine diagnostic text is inert and terminal correction is explicit",
-    async ({ page, go, axe, check }) => {
-      await go("Quarantines");
-      await page
-        .getByRole("button", { name: "quarantine-1", exact: true })
-        .click();
-      await page
-        .getByRole("dialog")
-        .getByText(/is inert text/)
-        .waitFor();
-      await check(
-        page
-          .locator("dialog img")
-          .count()
-          .then((n) => n === 0),
-        "Diagnostic markup must not create elements",
-      );
-      await axe("quarantine detail");
-      await page.keyboard.press("Escape");
-      await page.getByRole("button", { name: "Inspect event" }).click();
-      await page
-        .getByText("This is a terminal quarantine.", { exact: false })
-        .waitFor();
-      await check(
-        page
-          .getByRole("button", { name: "Request retry", exact: true })
-          .count()
-          .then((n) => n === 0),
-        "No retry for terminal event",
-      );
-    },
-  );
-  await scenario(
-    "Failed latest report preserves last-good, previews, and run checks",
-    async ({ page, go, axe }) => {
-      await go("Runs & reports");
-      await page
-        .getByText("Last successful publication is stale.", { exact: true })
-        .waitFor();
-      await page
-        .getByRole("heading", { name: "Last successful publication" })
-        .waitFor();
-      await page
-        .getByRole("button", { name: "Product intervals", exact: true })
-        .click();
-      await page.getByText("Open end", { exact: true }).waitFor();
-      await page
-        .getByRole("button", { name: "Inspect run", exact: true })
-        .click();
-      await page
-        .getByRole("dialog")
-        .getByText("Order total matches", { exact: true })
-        .waitFor();
-      await axe("run checks");
-      await page.screenshot({
-        path: path.join(OUT, "02-report-checks.png"),
-        fullPage: false,
-      });
-    },
-  );
-  await scenario(
-    "Inventory net-zero still reveals per-SKU and missing-row differences",
-    async ({ page, go, axe, check }) => {
-      await go("Inventory diff");
-      await page.getByText("Reference only", { exact: true }).waitFor();
-      await check(
-        page.getByText("+2", { exact: true }).isVisible(),
-        "Positive difference",
-      );
-      await check(
-        page.getByText("-2", { exact: true }).isVisible(),
-        "Negative difference",
-      );
-      await axe("inventory diff");
-      await page.screenshot({
-        path: path.join(OUT, "03-inventory-diff.png"),
-        fullPage: true,
-      });
-      await page
-        .getByRole("button", { name: "WH-2026-11-23", exact: true })
-        .click();
-      await page
-        .getByRole("dialog")
-        .getByText("Reference only", { exact: true })
-        .waitFor();
-    },
-  );
-  await scenario(
-    "Late previous-tenant reads cannot repopulate switched workspace",
-    async ({ page, override, respond, check }) => {
-      await page
-        .getByText("$9,007,199,254,740,993.12", { exact: true })
-        .first()
-        .waitFor();
-      let release, started;
-      const began = new Promise((r) => (started = r));
-      override(async ({ route, url, tenant }) => {
-        if (url.pathname === "/v1/overview" && tenant === "alpha") {
-          started();
-          await new Promise((r) => (release = r));
-          try {
-            await respond(route, {
-              ...overview("alpha"),
-              order_totals: {
-                current_amount_minor: 11111101,
-                paid_amount_minor: 11111101,
-                currency: "USD",
-              },
-            });
-          } catch {}
-          return true;
-        }
-        return false;
-      });
-      await page.getByRole("button", { name: "Refresh workspace" }).click();
-      await began;
-      await page
-        .getByRole("combobox", { name: "Local fixture identity" })
-        .selectOption("beta-operator");
-      await page.getByText("Beta Retail", { exact: true }).first().waitFor();
-      await page.getByText("$77.77", { exact: true }).first().waitFor();
-      release();
-      await page.waitForTimeout(150);
-      await check(
-        page
-          .getByText("$111,111.01", { exact: true })
-          .count()
-          .then((n) => n === 0),
-        "Old tenant's rendered amount cannot reappear",
-      );
-      await check(
-        page.getByText("$77.77", { exact: true }).first().isVisible(),
-        "Verified Beta amount remains rendered",
-      );
-      await check(
-        page.evaluate(
-          () => localStorage.length === 0 && sessionStorage.length === 0,
-        ),
-        "Tokens not stored",
-      );
-    },
-  );
-  await scenario(
-    "Closed late product detail cannot overwrite the next product",
-    async ({ page, go, override, respond, check }) => {
-      let release;
-      override(async ({ route, url }) => {
-        if (
-          url.pathname === "/v1/product-history" &&
-          url.searchParams.get("entity_id") === ".."
-        ) {
-          await new Promise((r) => (release = r));
-          try {
-            const stale = history("..");
-            for (const revision of [...stale.raw_revisions, ...stale.intervals])
-              revision.payload = {
-                ...revision.payload,
-                name: "STALE PRIVATE PRODUCT",
-                sku: "STALE-PRIVATE-SKU",
-                unit_price_minor: 88888,
-              };
-            await respond(route, stale);
-          } catch {}
-          return true;
-        }
-        return false;
-      });
-      await go("Products & history");
-      await page.getByRole("button", { name: "..", exact: true }).click();
-      await page.getByRole("dialog").waitFor();
-      await page.getByRole("button", { name: "Close detail" }).click();
-      await page.getByRole("button", { name: "P/二", exact: true }).click();
-      await page
-        .getByRole("dialog")
-        .getByText("Open end", { exact: true })
-        .waitFor();
-      release();
-      await page.waitForTimeout(100);
-      await check(
-        page
-          .getByText("STALE-PRIVATE-SKU", { exact: true })
-          .count()
-          .then((n) => n === 0),
-        "Late closed modal response suppressed",
-      );
-      await check(
-        page
-          .getByRole("dialog")
-          .getByRole("button", { name: "Raw revisions (3)" })
-          .isVisible(),
-        "Current product's own history remains rendered",
-      );
-    },
-  );
-  await scenario(
-    "Refresh failure retains labelled prior data and request ID",
-    async ({ page, override, respond }) => {
-      await page
-        .getByText("$9,007,199,254,740,993.12", { exact: true })
-        .first()
-        .waitFor();
-      override(async ({ route, url }) => {
-        if (url.pathname === "/v1/overview") {
-          await respond(
-            route,
-            {
-              code: "db_unavailable",
-              message: "The database is temporarily unavailable.",
-              request_id: "review-request-503",
-            },
-            503,
-          );
-          return true;
-        }
-        return false;
-      });
-      await page.getByRole("button", { name: "Refresh workspace" }).click();
-      await page
-        .getByText(
-          "Showing the last successfully loaded view. It may be out of date.",
-          { exact: true },
-        )
-        .waitFor();
-      await page.getByText("review-request-503", { exact: true }).waitFor();
-      await page
-        .getByText("$9,007,199,254,740,993.12", { exact: true })
-        .first()
-        .waitFor();
-    },
-  );
-  await scenario(
-    "Unauthorized background read clears records and credentials",
-    async ({ page, override, respond, check }) => {
-      await page
-        .getByText("$9,007,199,254,740,993.12", { exact: true })
-        .first()
-        .waitFor();
-      override(async ({ route, url }) => {
-        if (url.pathname === "/v1/overview") {
-          await respond(
-            route,
-            {
-              code: "invalid_token",
-              message: "Expired",
-              request_id: "401-review",
-            },
-            401,
-          );
-          return true;
-        }
-        return false;
-      });
-      await page.getByRole("button", { name: "Refresh workspace" }).click();
-      await page
-        .getByRole("heading", { name: "Connect to OrderFlow" })
-        .waitFor();
-      await check(
-        page
-          .getByText("$9,007,199,254,740,993.12", { exact: true })
-          .count()
-          .then((n) => n === 0),
-        "Protected records removed",
-      );
-      await check(
-        page
-          .getByText("Your session expired. Connect again to continue.", {
-            exact: true,
-          })
-          .isVisible(),
-        "Session explanation",
-      );
-    },
-  );
-  await scenario(
-    "Lost retry acknowledgement verifies state before another attempt",
-    async ({ page, go, override, setEventState, check, requests }) => {
-      override(async ({ route, url, request }) => {
-        if (url.pathname.endsWith("/retry") && request.method() === "POST") {
-          setEventState("pending");
-          await route.abort("failed");
-          return true;
-        }
-        return false;
-      });
-      await go("Event inbox");
-      await page
-        .getByRole("button", { name: "order-retry-event", exact: true })
-        .click();
-      await page
-        .getByLabel("Operational reason")
-        .fill("Reviewed after worker connection recovery.");
-      await page
-        .getByRole("button", { name: "Request retry", exact: true })
-        .click();
-      await page
-        .getByRole("dialog")
-        .getByText("Pending", { exact: true })
-        .waitFor();
-      await check(
-        page
-          .getByRole("button", { name: "Request retry", exact: true })
-          .count()
-          .then((n) => n === 0),
-        "Pending read suppresses duplicate mutation",
-      );
-      await check(
-        Promise.resolve(
-          requests.filter(
-            (r) => r.method === "POST" && r.path.endsWith("/retry"),
-          ).length === 1,
-        ),
-        "Single lost-ack mutation",
-      );
-    },
-  );
-  await scenario(
-    "Bearer deployment offers no fixture login and stores no token",
-    async ({ page, check }) => {
-      await page
-        .getByRole("heading", { name: "Connect to OrderFlow" })
-        .waitFor();
-      await check(
-        page
-          .getByRole("combobox", { name: "Local fixture identity" })
-          .count()
-          .then((n) => n === 0),
-        "Production has no fixture picker",
-      );
-      await page
-        .getByLabel("Access token", { exact: true })
-        .fill("token-alpha-viewer");
-      await page.getByRole("button", { name: "Verify and connect" }).click();
-      await page
-        .getByRole("heading", { name: "Operations overview" })
-        .waitFor();
-      await check(
-        page.evaluate(
-          () => localStorage.length === 0 && sessionStorage.length === 0,
-        ),
-        "No browser storage",
-      );
-      await page.reload();
-      await page
-        .getByRole("heading", { name: "Connect to OrderFlow" })
-        .waitFor();
-      await check(
-        page
-          .getByLabel("Access token", { exact: true })
-          .inputValue()
-          .then((v) => v === ""),
-        "Token not restored on reload",
-      );
-    },
-    { fixture: false },
-  );
-  await scenario(
-    "No-success and empty views never manufacture healthy results",
-    async ({ page, go, override, respond, axe }) => {
-      override(async ({ route, url }) => {
-        if (url.pathname === "/v1/reports/latest") {
-          await respond(route, {
-            has_success: false,
-            stale: false,
-            observed_at: timestamp,
-            last_good: null,
-            latest_attempt: run,
-          });
-          return true;
-        }
-        if (url.pathname === "/v1/inventory/latest") {
-          await respond(route, { has_snapshot: false, latest: null });
-          return true;
-        }
-        if (
-          url.pathname === "/v1/inventory/history" ||
-          url.pathname === "/v1/quarantines"
-        ) {
-          await respond(route, {
-            items: [],
-            truncated: false,
-            next_cursor: null,
-          });
-          return true;
-        }
-        return false;
-      });
-      await go("Runs & reports");
-      await page
-        .getByRole("heading", { name: "No successful publication yet" })
-        .waitFor();
-      await axe("no last-good publication");
-      await go("Inventory diff");
-      await page
-        .getByRole("heading", { name: "No inventory snapshot yet" })
-        .waitFor();
-      await axe("no inventory snapshot");
-      await go("Quarantines");
-      await page
-        .getByRole("heading", { name: "No quarantines", exact: true })
-        .waitFor();
-      await axe("empty quarantines");
-    },
-  );
-  await scenario(
-    "Hung read times out, preserves prior view, and allows recovery",
-    async ({ page, override, respond }) => {
-      await page
-        .getByText("$9,007,199,254,740,993.12", { exact: true })
-        .first()
-        .waitFor();
-      let block = true;
-      override(async ({ route, url }) => {
-        if (url.pathname === "/v1/overview" && block) {
-          await new Promise((resolve) => setTimeout(resolve, 21_000));
-          try {
-            await respond(route, overview());
-          } catch {
-            /* The real request deadline cancelled this route. */
-          }
-          return true;
-        }
-        return false;
-      });
-      await page.getByRole("button", { name: "Refresh workspace" }).click();
-      await page
-        .getByText(
-          "The service did not respond within 20 seconds. Refresh to verify the latest state.",
-          { exact: true },
-        )
-        .waitFor({ timeout: 25_000 });
-      await page
-        .getByText(
-          "Showing the last successfully loaded view. It may be out of date.",
-          { exact: true },
-        )
-        .waitFor();
-      block = false;
-      await page
-        .getByRole("button", { name: "Try again", exact: true })
-        .click();
-      await page.getByRole("alert").waitFor({ state: "hidden" });
-    },
-  );
-  await scenario(
-    "Responsive keyboard workspace 375 and 768 has no page overflow",
-    async ({ page, go, axe, check }) => {
-      for (const width of [375, 768]) {
-        await page.setViewportSize({ width, height: 900 });
-        for (const [name, file] of [
-          ["Overview", "overview"],
-          ["Current orders", "orders"],
-          ["Products & history", "products"],
-          ["Event inbox", "events"],
-          ["Quarantines", "quarantine"],
-          ["Runs & reports", "reports"],
-          ["Inventory diff", "inventory"],
-        ]) {
-          await go(name);
-          await page
-            .locator(".loading")
-            .waitFor({ state: "hidden" })
-            .catch(() => {});
-          await check(
-            page.evaluate(
-              () => document.documentElement.scrollWidth <= innerWidth + 1,
-            ),
-            `No viewport overflow ${width}/${name}`,
-          );
-          await axe(`${width} ${name}`);
-          if (
-            width === 375 &&
-            ["overview", "products", "inventory"].includes(file)
-          )
-            await page.screenshot({
-              path: path.join(OUT, `mobile-${file}.png`),
-              fullPage: true,
-            });
-        }
-        await page.keyboard.press("Tab");
-        await check(
-          page.evaluate(() => document.activeElement !== document.body),
-          "Keyboard focus retained",
-        );
-      }
-    },
-  );
-} finally {
+export { ROOT, OUT, sourceId, history, event, entity };
+export async function finishHarness(expected = 18) {
   const after = await hashes();
   const reportOut = {
     recorded_at: new Date().toISOString(),
@@ -1231,7 +588,684 @@ try {
     ),
   );
   await browser.close();
-  server.close();
-  if (reportOut.passed !== reportOut.total || !reportOut.source_stable)
+  await new Promise((resolve) => server.close(resolve));
+  if (
+    reportOut.passed !== reportOut.total ||
+    reportOut.total !== expected ||
+    !reportOut.source_stable
+  )
     process.exitCode = 1;
+}
+
+if (
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
+  try {
+    await scenario(
+      "Overview uses exact aggregate amounts and source ledger",
+      async ({ page, axe, check }) => {
+        await page
+          .getByText("$9,007,199,254,740,993.12", { exact: true })
+          .first()
+          .waitFor();
+        await check(
+          page
+            .getByText("No pending backlog", { exact: true })
+            .count()
+            .then((n) => n > 0),
+          "Null backlog is explicit",
+        );
+        await page.screenshot({
+          path: path.join(OUT, "01-overview-desktop.png"),
+          fullPage: true,
+        });
+        await axe("overview");
+      },
+    );
+    await scenario(
+      "Current order detail preserves maximum bigint version",
+      async ({ page, go, check, axe }) => {
+        await go("Current orders");
+        await page.getByRole("button", { name: "O1", exact: true }).click();
+        await page
+          .getByRole("dialog")
+          .getByText("9223372036854775807", { exact: true })
+          .waitFor();
+        await check(
+          page
+            .getByRole("dialog")
+            .getByText("$123.45", { exact: true })
+            .isVisible(),
+          "Exact minor-unit price",
+        );
+        await axe("order detail");
+        await page.keyboard.press("Escape");
+        await page.getByRole("heading", { name: "Order snapshots" }).waitFor();
+      },
+    );
+    await scenario(
+      "History query preserves dot and slash identifiers; real interval chart",
+      async ({ page, go, requests, check, axe }) => {
+        await go("Products & history");
+        await page.getByRole("button", { name: "..", exact: true }).click();
+        await page
+          .getByRole("dialog")
+          .getByRole("img", { name: /Effective price across 3/ })
+          .waitFor();
+        await check(
+          Promise.resolve(
+            requests.some(
+              (r) =>
+                r.path === "/v1/product-history" && r.query === "?entity_id=..",
+            ),
+          ),
+          "Dot ID must use query form",
+        );
+        await page.getByRole("button", { name: "Raw revisions (3)" }).click();
+        await page.getByText("revision-2", { exact: true }).waitFor();
+        await axe("history raw revisions");
+        await page.keyboard.press("Escape");
+        await page.getByRole("button", { name: "P/二", exact: true }).click();
+        await page
+          .getByRole("dialog")
+          .getByText("Open end", { exact: true })
+          .waitFor();
+        await check(
+          Promise.resolve(
+            requests.some((r) => r.query.includes("P%2F%E4%BA%8C")),
+          ),
+          "Slash Unicode ID preserved",
+        );
+      },
+    );
+    await scenario(
+      "Inbox keyset paging and filters reset page cursor",
+      async ({ page, go, requests, check, axe }) => {
+        await go("Event inbox");
+        await page.getByRole("button", { name: "Next page" }).click();
+        await page
+          .getByRole("button", { name: "order-second-page", exact: true })
+          .waitFor();
+        await page
+          .getByLabel("Status", { exact: true })
+          .selectOption("quarantined");
+        await page
+          .getByRole("button", { name: "order-filter-event" })
+          .waitFor();
+        await check(
+          Promise.resolve(
+            requests
+              .filter((r) => r.path === "/v1/events")
+              .at(-1)
+              .query.includes("status=quarantined") &&
+              !requests
+                .filter((r) => r.path === "/v1/events")
+                .at(-1)
+                .query.includes("cursor="),
+          ),
+          "Filter reset cursor",
+        );
+        await check(
+          page
+            .getByRole("button", { name: "Previous", exact: true })
+            .isDisabled(),
+          "Previous disabled on reset",
+        );
+        await axe("filtered inbox");
+      },
+    );
+    await scenario(
+      "Operator retry verifies resulting state and submits bounded reason",
+      async ({ page, go, requests, check, axe }) => {
+        await go("Event inbox");
+        await page
+          .getByRole("button", { name: "order-retry-event", exact: true })
+          .click();
+        await page
+          .getByLabel("Operational reason")
+          .fill("Reviewed upstream transient outage.");
+        await axe("retry form");
+        await page
+          .getByRole("button", { name: "Request retry", exact: true })
+          .click();
+        await page
+          .getByRole("dialog")
+          .getByText("Pending", { exact: true })
+          .waitFor();
+        await check(
+          page
+            .getByRole("button", { name: "Request retry", exact: true })
+            .count()
+            .then((n) => n === 0),
+          "No duplicate retry once pending",
+        );
+        await check(
+          Promise.resolve(
+            requests.filter(
+              (r) => r.method === "POST" && r.path.endsWith("/retry"),
+            ).length === 1,
+          ),
+          "One retry mutation",
+        );
+      },
+    );
+    await scenario(
+      "Viewer can inspect retry-wait without mutation controls",
+      async ({ page, go, check }) => {
+        await page
+          .getByRole("combobox", { name: "Local fixture identity" })
+          .selectOption("alpha-viewer");
+        await page
+          .getByRole("heading", { name: "Operations overview" })
+          .waitFor();
+        await go("Event inbox");
+        await page
+          .getByRole("button", { name: "order-retry-event", exact: true })
+          .click();
+        await page
+          .getByText("An operator must request a retry.", { exact: false })
+          .waitFor();
+        await check(
+          page
+            .getByRole("button", { name: "Request retry", exact: true })
+            .count()
+            .then((n) => n === 0),
+          "Viewer has no retry action",
+        );
+      },
+    );
+    await scenario(
+      "Quarantine diagnostic text is inert and terminal correction is explicit",
+      async ({ page, go, axe, check }) => {
+        await go("Quarantines");
+        await page
+          .getByRole("button", { name: "quarantine-1", exact: true })
+          .click();
+        await page
+          .getByRole("dialog")
+          .getByText(/is inert text/)
+          .waitFor();
+        await check(
+          page
+            .locator("dialog img")
+            .count()
+            .then((n) => n === 0),
+          "Diagnostic markup must not create elements",
+        );
+        await axe("quarantine detail");
+        await page.keyboard.press("Escape");
+        await page.getByRole("button", { name: "Inspect event" }).click();
+        await page
+          .getByText("This is a terminal quarantine.", { exact: false })
+          .waitFor();
+        await check(
+          page
+            .getByRole("button", { name: "Request retry", exact: true })
+            .count()
+            .then((n) => n === 0),
+          "No retry for terminal event",
+        );
+      },
+    );
+    await scenario(
+      "Failed latest report preserves last-good, previews, and run checks",
+      async ({ page, go, axe }) => {
+        await go("Runs & reports");
+        await page
+          .getByText("Last successful publication is stale.", { exact: true })
+          .waitFor();
+        await page
+          .getByRole("heading", { name: "Last successful publication" })
+          .waitFor();
+        await page
+          .getByRole("button", { name: "Product intervals", exact: true })
+          .click();
+        await page.getByText("Open end", { exact: true }).waitFor();
+        await page
+          .getByRole("button", { name: "Inspect run", exact: true })
+          .click();
+        await page
+          .getByRole("dialog")
+          .getByText("Order total matches", { exact: true })
+          .waitFor();
+        await axe("run checks");
+        await page.screenshot({
+          path: path.join(OUT, "02-report-checks.png"),
+          fullPage: false,
+        });
+      },
+    );
+    await scenario(
+      "Inventory net-zero still reveals per-SKU and missing-row differences",
+      async ({ page, go, axe, check }) => {
+        await go("Inventory diff");
+        await page.getByText("Reference only", { exact: true }).waitFor();
+        await check(
+          page.getByText("+2", { exact: true }).isVisible(),
+          "Positive difference",
+        );
+        await check(
+          page.getByText("-2", { exact: true }).isVisible(),
+          "Negative difference",
+        );
+        await axe("inventory diff");
+        await page.screenshot({
+          path: path.join(OUT, "03-inventory-diff.png"),
+          fullPage: true,
+        });
+        await page
+          .getByRole("button", { name: "WH-2026-11-23", exact: true })
+          .click();
+        await page
+          .getByRole("dialog")
+          .getByText("Reference only", { exact: true })
+          .waitFor();
+      },
+    );
+    await scenario(
+      "Late previous-tenant reads cannot repopulate switched workspace",
+      async ({ page, override, respond, check }) => {
+        await page
+          .getByText("$9,007,199,254,740,993.12", { exact: true })
+          .first()
+          .waitFor();
+        let release, started;
+        const began = new Promise((r) => (started = r));
+        override(async ({ route, url, tenant }) => {
+          if (url.pathname === "/v1/overview" && tenant === "alpha") {
+            started();
+            await new Promise((r) => (release = r));
+            try {
+              await respond(route, {
+                ...overview("alpha"),
+                order_totals: {
+                  current_amount_minor: 11111101,
+                  paid_amount_minor: 11111101,
+                  currency: "USD",
+                },
+              });
+            } catch {}
+            return true;
+          }
+          return false;
+        });
+        await page.getByRole("button", { name: "Refresh workspace" }).click();
+        await began;
+        await page
+          .getByRole("combobox", { name: "Local fixture identity" })
+          .selectOption("beta-operator");
+        await page.getByText("Beta Retail", { exact: true }).first().waitFor();
+        await page.getByText("$77.77", { exact: true }).first().waitFor();
+        release();
+        await page.waitForTimeout(150);
+        await check(
+          page
+            .getByText("$111,111.01", { exact: true })
+            .count()
+            .then((n) => n === 0),
+          "Old tenant's rendered amount cannot reappear",
+        );
+        await check(
+          page.getByText("$77.77", { exact: true }).first().isVisible(),
+          "Verified Beta amount remains rendered",
+        );
+        await check(
+          page.evaluate(
+            () => localStorage.length === 0 && sessionStorage.length === 0,
+          ),
+          "Tokens not stored",
+        );
+      },
+    );
+    await scenario(
+      "Closed late product detail cannot overwrite the next product",
+      async ({ page, go, override, respond, check }) => {
+        let release;
+        override(async ({ route, url }) => {
+          if (
+            url.pathname === "/v1/product-history" &&
+            url.searchParams.get("entity_id") === ".."
+          ) {
+            await new Promise((r) => (release = r));
+            try {
+              const stale = history("..");
+              for (const revision of [
+                ...stale.raw_revisions,
+                ...stale.intervals,
+              ])
+                revision.payload = {
+                  ...revision.payload,
+                  name: "STALE PRIVATE PRODUCT",
+                  sku: "STALE-PRIVATE-SKU",
+                  unit_price_minor: 88888,
+                };
+              await respond(route, stale);
+            } catch {}
+            return true;
+          }
+          return false;
+        });
+        await go("Products & history");
+        await page.getByRole("button", { name: "..", exact: true }).click();
+        await page.getByRole("dialog").waitFor();
+        await page.getByRole("button", { name: "Close detail" }).click();
+        await page.getByRole("button", { name: "P/二", exact: true }).click();
+        await page
+          .getByRole("dialog")
+          .getByText("Open end", { exact: true })
+          .waitFor();
+        release();
+        await page.waitForTimeout(100);
+        await check(
+          page
+            .getByText("STALE-PRIVATE-SKU", { exact: true })
+            .count()
+            .then((n) => n === 0),
+          "Late closed modal response suppressed",
+        );
+        await check(
+          page
+            .getByRole("dialog")
+            .getByRole("button", { name: "Raw revisions (3)" })
+            .isVisible(),
+          "Current product's own history remains rendered",
+        );
+      },
+    );
+    await scenario(
+      "Refresh failure retains labelled prior data and request ID",
+      async ({ page, override, respond }) => {
+        await page
+          .getByText("$9,007,199,254,740,993.12", { exact: true })
+          .first()
+          .waitFor();
+        override(async ({ route, url }) => {
+          if (url.pathname === "/v1/overview") {
+            await respond(
+              route,
+              {
+                code: "db_unavailable",
+                message: "The database is temporarily unavailable.",
+                request_id: "review-request-503",
+              },
+              503,
+            );
+            return true;
+          }
+          return false;
+        });
+        await page.getByRole("button", { name: "Refresh workspace" }).click();
+        await page
+          .getByText(
+            "Showing the last successfully loaded view. It may be out of date.",
+            { exact: true },
+          )
+          .waitFor();
+        await page.getByText("review-request-503", { exact: true }).waitFor();
+        await page
+          .getByText("$9,007,199,254,740,993.12", { exact: true })
+          .first()
+          .waitFor();
+      },
+    );
+    await scenario(
+      "Unauthorized background read clears records and credentials",
+      async ({ page, override, respond, check }) => {
+        await page
+          .getByText("$9,007,199,254,740,993.12", { exact: true })
+          .first()
+          .waitFor();
+        override(async ({ route, url }) => {
+          if (url.pathname === "/v1/overview") {
+            await respond(
+              route,
+              {
+                code: "invalid_token",
+                message: "Expired",
+                request_id: "401-review",
+              },
+              401,
+            );
+            return true;
+          }
+          return false;
+        });
+        await page.getByRole("button", { name: "Refresh workspace" }).click();
+        await page
+          .getByRole("heading", { name: "Connect to OrderFlow" })
+          .waitFor();
+        await check(
+          page
+            .getByText("$9,007,199,254,740,993.12", { exact: true })
+            .count()
+            .then((n) => n === 0),
+          "Protected records removed",
+        );
+        await check(
+          page
+            .getByText("Your session expired. Connect again to continue.", {
+              exact: true,
+            })
+            .isVisible(),
+          "Session explanation",
+        );
+      },
+    );
+    await scenario(
+      "Lost retry acknowledgement verifies state before another attempt",
+      async ({ page, go, override, setEventState, check, requests }) => {
+        override(async ({ route, url, request }) => {
+          if (url.pathname.endsWith("/retry") && request.method() === "POST") {
+            setEventState("pending");
+            await route.abort("failed");
+            return true;
+          }
+          return false;
+        });
+        await go("Event inbox");
+        await page
+          .getByRole("button", { name: "order-retry-event", exact: true })
+          .click();
+        await page
+          .getByLabel("Operational reason")
+          .fill("Reviewed after worker connection recovery.");
+        await page
+          .getByRole("button", { name: "Request retry", exact: true })
+          .click();
+        await page
+          .getByRole("dialog")
+          .getByText("Pending", { exact: true })
+          .waitFor();
+        await check(
+          page
+            .getByRole("button", { name: "Request retry", exact: true })
+            .count()
+            .then((n) => n === 0),
+          "Pending read suppresses duplicate mutation",
+        );
+        await check(
+          Promise.resolve(
+            requests.filter(
+              (r) => r.method === "POST" && r.path.endsWith("/retry"),
+            ).length === 1,
+          ),
+          "Single lost-ack mutation",
+        );
+      },
+    );
+    await scenario(
+      "Bearer deployment offers no fixture login and stores no token",
+      async ({ page, check }) => {
+        await page
+          .getByRole("heading", { name: "Connect to OrderFlow" })
+          .waitFor();
+        await check(
+          page
+            .getByRole("combobox", { name: "Local fixture identity" })
+            .count()
+            .then((n) => n === 0),
+          "Production has no fixture picker",
+        );
+        await page
+          .getByLabel("Access token", { exact: true })
+          .fill("token-alpha-viewer");
+        await page.getByRole("button", { name: "Verify and connect" }).click();
+        await page
+          .getByRole("heading", { name: "Operations overview" })
+          .waitFor();
+        await check(
+          page.evaluate(
+            () => localStorage.length === 0 && sessionStorage.length === 0,
+          ),
+          "No browser storage",
+        );
+        await page.reload();
+        await page
+          .getByRole("heading", { name: "Connect to OrderFlow" })
+          .waitFor();
+        await check(
+          page
+            .getByLabel("Access token", { exact: true })
+            .inputValue()
+            .then((v) => v === ""),
+          "Token not restored on reload",
+        );
+      },
+      { fixture: false },
+    );
+    await scenario(
+      "No-success and empty views never manufacture healthy results",
+      async ({ page, go, override, respond, axe }) => {
+        override(async ({ route, url }) => {
+          if (url.pathname === "/v1/reports/latest") {
+            await respond(route, {
+              has_success: false,
+              stale: false,
+              observed_at: timestamp,
+              last_good: null,
+              latest_attempt: run,
+            });
+            return true;
+          }
+          if (url.pathname === "/v1/inventory/latest") {
+            await respond(route, { has_snapshot: false, latest: null });
+            return true;
+          }
+          if (
+            url.pathname === "/v1/inventory/history" ||
+            url.pathname === "/v1/quarantines"
+          ) {
+            await respond(route, {
+              items: [],
+              truncated: false,
+              next_cursor: null,
+            });
+            return true;
+          }
+          return false;
+        });
+        await go("Runs & reports");
+        await page
+          .getByRole("heading", { name: "No successful publication yet" })
+          .waitFor();
+        await axe("no last-good publication");
+        await go("Inventory diff");
+        await page
+          .getByRole("heading", { name: "No inventory snapshot yet" })
+          .waitFor();
+        await axe("no inventory snapshot");
+        await go("Quarantines");
+        await page
+          .getByRole("heading", { name: "No quarantines", exact: true })
+          .waitFor();
+        await axe("empty quarantines");
+      },
+    );
+    await scenario(
+      "Hung read times out, preserves prior view, and allows recovery",
+      async ({ page, override, respond }) => {
+        await page
+          .getByText("$9,007,199,254,740,993.12", { exact: true })
+          .first()
+          .waitFor();
+        let block = true;
+        override(async ({ route, url }) => {
+          if (url.pathname === "/v1/overview" && block) {
+            await new Promise((resolve) => setTimeout(resolve, 21_000));
+            try {
+              await respond(route, overview());
+            } catch {
+              /* The real request deadline cancelled this route. */
+            }
+            return true;
+          }
+          return false;
+        });
+        await page.getByRole("button", { name: "Refresh workspace" }).click();
+        await page
+          .getByText(
+            "The service did not respond within 20 seconds. Refresh to verify the latest state.",
+            { exact: true },
+          )
+          .waitFor({ timeout: 25_000 });
+        await page
+          .getByText(
+            "Showing the last successfully loaded view. It may be out of date.",
+            { exact: true },
+          )
+          .waitFor();
+        block = false;
+        await page
+          .getByRole("button", { name: "Try again", exact: true })
+          .click();
+        await page.getByRole("alert").waitFor({ state: "hidden" });
+      },
+    );
+    await scenario(
+      "Responsive keyboard workspace 375 and 768 has no page overflow",
+      async ({ page, go, axe, check }) => {
+        for (const width of [375, 768]) {
+          await page.setViewportSize({ width, height: 900 });
+          for (const [name, file] of [
+            ["Overview", "overview"],
+            ["Current orders", "orders"],
+            ["Products & history", "products"],
+            ["Event inbox", "events"],
+            ["Quarantines", "quarantine"],
+            ["Runs & reports", "reports"],
+            ["Inventory diff", "inventory"],
+          ]) {
+            await go(name);
+            await page
+              .locator(".loading")
+              .waitFor({ state: "hidden" })
+              .catch(() => {});
+            await check(
+              page.evaluate(
+                () => document.documentElement.scrollWidth <= innerWidth + 1,
+              ),
+              `No viewport overflow ${width}/${name}`,
+            );
+            await axe(`${width} ${name}`);
+            if (
+              width === 375 &&
+              ["overview", "products", "inventory"].includes(file)
+            )
+              await page.screenshot({
+                path: path.join(OUT, `mobile-${file}.png`),
+                fullPage: true,
+              });
+          }
+          await page.keyboard.press("Tab");
+          await check(
+            page.evaluate(() => document.activeElement !== document.body),
+            "Keyboard focus retained",
+          );
+        }
+      },
+    );
+  } finally {
+    await finishHarness();
+  }
 }

@@ -456,7 +456,8 @@ export default function App() {
   useEffect(() => {
     const onHash = () => {
       const key = location.hash.slice(1);
-      if (nav.some(([id]) => id === key)) setView(key as View);
+      if (!key) setView("overview");
+      else if (nav.some(([id]) => id === key)) setView(key as View);
     };
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
@@ -464,13 +465,14 @@ export default function App() {
   const read: Reader = useCallback(
     async <T,>(path: string, options?: RequestInit) => {
       if (!session) throw new Error("Connect a session to continue.");
+      const mine = epoch.current;
       try {
         const value = await request<T>(path, session, options);
-        if (tokenRef.current !== session.access_token)
+        if (epoch.current !== mine || tokenRef.current !== session.access_token)
           throw new DOMException("Session changed", "AbortError");
         return value;
       } catch (error) {
-        if (tokenRef.current !== session.access_token)
+        if (epoch.current !== mine || tokenRef.current !== session.access_token)
           throw new DOMException("Session changed", "AbortError");
         if (error instanceof ApiError && error.status === 401)
           endSession("Your session expired. Connect again to continue.");

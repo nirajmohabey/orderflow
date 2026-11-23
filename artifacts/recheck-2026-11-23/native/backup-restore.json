@@ -1,0 +1,110 @@
+{
+  "generated_at": "2026-11-23T17:31:18.651437+00:00",
+  "source_database": "orderflow",
+  "restore_database": "orderflow_restore_faa22a8bf273",
+  "source_database_written": false,
+  "passed": true,
+  "table_hashes": {
+    "connector_cursors": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "entity_current": {
+      "rows": 5,
+      "sha256": "9afd4ee88dcefa807d85f0e1882f6913fc4d0239319fa05bdaaccf4c46fcab69"
+    },
+    "entity_revisions": {
+      "rows": 9,
+      "sha256": "93424b719d19ee126f2464dff50fd226e8162578c0d64ed59b435282d0daad35"
+    },
+    "inbox_events": {
+      "rows": 11,
+      "sha256": "74b676392432113390f1b4446471706d761762877a01349d3d6d7a4e31a76d83"
+    },
+    "ingestion_runs": {
+      "rows": 3,
+      "sha256": "7690900135c1072cd93fd148ab9ca22e096b0f5b1aa0b2a60c6e15b60d72e81e"
+    },
+    "inventory_snapshots": {
+      "rows": 1,
+      "sha256": "7f28b25139ad640c65b1faca406a96bd681a60c6feb3fa49bc490d3103af72fc"
+    },
+    "memberships": {
+      "rows": 4,
+      "sha256": "3ac1f9c8924990671f2ded66242642836ebb9da814f2b6d0529af979c5baac14"
+    },
+    "operator_audit": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pipeline_expectations": {
+      "rows": 2,
+      "sha256": "1f4bccda1e256d8830c331c159504ffa4e70994ccf4a15d5b7d76b115fbb9bf1"
+    },
+    "pipeline_expected_orders": {
+      "rows": 4,
+      "sha256": "96125e33523b762fdb2c10acd148a2311fa5875faa22ac7db841f888495e5c1c"
+    },
+    "pipeline_snapshot_rows": {
+      "rows": 16,
+      "sha256": "29826d955f65dee9000ea0f44c2034df050dad03ba7bfbabd9b30f33cc086edf"
+    },
+    "processing_partitions": {
+      "rows": 5,
+      "sha256": "201ece391acdb9eaf5d80dc9c62c8609045167d9faa7dd917aa621928a499bf5"
+    },
+    "processing_receipts": {
+      "rows": 11,
+      "sha256": "101889f63f0c197589502b57b29eaa9fccbb0feb31bbc439a660830a5ffb3713"
+    },
+    "quality_results": {
+      "rows": 31,
+      "sha256": "4053d6dd820faccf5954b268bde7af9e4409567950b6c53c358243cdad19ae5d"
+    },
+    "quarantines": {
+      "rows": 2,
+      "sha256": "d5608284f321675710b15addc710544f6bcc3fc720175950b5d9282a04981385"
+    },
+    "report_candidates": {
+      "rows": 2,
+      "sha256": "f5c858314485c6392ba830b20cfcbbb1c7443f6f87ad519982661999d9b927a6"
+    },
+    "report_locks": {
+      "rows": 1,
+      "sha256": "22c627c8117f452dcd4141eda097336d1868030a007234fb4c511dbedb2df9b3"
+    },
+    "report_publications": {
+      "rows": 1,
+      "sha256": "63e2628a0887df69cf5fe458343cbef62474beac5b84679bf9b56c9dbfa29331"
+    },
+    "request_budgets": {
+      "rows": 32,
+      "sha256": "94cfabc4c65d08c16bb844fe4d2649afd83ea4b05a9222bad7dfa8e62cb6a446"
+    },
+    "source_authorities": {
+      "rows": 3,
+      "sha256": "a6152e3bd7fdd22f1422bdf8fc5cc689017d55daee13e3999ccbf0660e41a8b4"
+    },
+    "source_credentials": {
+      "rows": 4,
+      "sha256": "feb84e095d7bd1b57b132c22847cfcaa26eefbf1e66883d65a15cd892911b11b"
+    },
+    "sources": {
+      "rows": 4,
+      "sha256": "6b09357c7455cdf64e6266fb1b210e0c8dd7cc531c7e8951d1df8f5fea7a330f"
+    },
+    "tenants": {
+      "rows": 2,
+      "sha256": "642057457150286efb7f45989b35fc11674860c9b6dde3dbd0364c40774462d9"
+    }
+  },
+  "table_count": 23,
+  "duplicate_replays": 14,
+  "new_worker_effects": 0,
+  "dump_sha256": "e2c8e7a0094c1a7b6c81df0de710105d7d086c45d8c7eb7146024ae956c45121",
+  "exported_snapshot_used": true,
+  "restore_identity_verified": true,
+  "external_objects": "Database report JSON and stored manifest hashes verified. This test does not restore a remote object store.",
+  "owned_restore_removed": true,
+  "private_dump_removed": true
+}

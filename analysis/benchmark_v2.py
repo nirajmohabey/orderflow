@@ -153,6 +153,7 @@ def percentile(values, fraction):
 
 class VisibilityObserver:
     """Observe committed receipts independently, with server-clock timestamps."""
+    IDLE_CATCHUP_SECONDS = 1.0
     def __init__(self, fixture, output, expected):
         self.fixture, self.output, self.expected = fixture, output, expected
         self.seen, self.error = {}, None
@@ -162,12 +163,32 @@ class VisibilityObserver:
         self.thread = threading.Thread(target=self.run, daemon=True)
         self.poll_ms = []
         self.last_observed_monotonic = None
+        self.idle_catchup_scans = 0
+
+    def _record_visible(self, rows, raw, scan=None):
+        for tenant_id, source, external, event, ingested, outcome, receipt_marker, observed in rows:
+            key = (tenant_id, source, external)
+            if key in self.seen:
+                continue
+            record = {"tenant_id": tenant_id, "source_id": source, "source_event_id": external, "event_id": event,
+                      "outcome": outcome, "ingested_at": ingested.isoformat(), "receipt_transaction_marker": receipt_marker.isoformat(),
+                      "first_observed_committed_at": observed.isoformat(), "visibility_latency_ms": round((observed - ingested).total_seconds() * 1000, 6)}
+            if scan == "final":
+                record["final_scan_only"] = True
+            elif scan:
+                record["observation_scan"] = scan
+            self.seen[key] = record
+            raw.write(json.dumps(record, separators=(",", ":")) + "\n")
+            self.last_observed_monotonic = time.perf_counter()
 
     def run(self):
         try:
             with psycopg.connect(**self.fixture["kwargs"], dbname=self.fixture["name"], autocommit=True) as conn, gzip.open(self.output, "wt", encoding="utf-8") as raw:
                 self.ready.set()
                 cutoff = datetime(2000, 1, 1, tzinfo=timezone.utc)
+                last_full_scan = time.perf_counter()
+                full_query = """SELECT e.tenant_id::text,e.source_id::text,e.source_event_id,e.event_id::text,e.ingested_at,r.outcome,r.committed_at,clock_timestamp()
+                    FROM orderflow.processing_receipts r JOIN orderflow.inbox_events e USING(tenant_id,event_id)"""
                 while not self.stop.is_set():
                     began = time.perf_counter()
                     for tenant in TENANTS:
@@ -175,37 +196,27 @@ class VisibilityObserver:
                             e.ingested_at,r.outcome,r.committed_at,clock_timestamp()
                             FROM orderflow.processing_receipts r JOIN orderflow.inbox_events e USING(tenant_id,event_id)
                             WHERE r.tenant_id=%s AND r.committed_at>=%s""", (tenant, cutoff)).fetchall()
-                        for tenant_id, source, external, event, ingested, outcome, receipt_marker, observed in rows:
-                            key = (tenant_id, source, external)
-                            if key in self.seen:
-                                continue
-                            latency_ms = (observed - ingested).total_seconds() * 1000
-                            record = {"tenant_id": tenant_id, "source_id": source, "source_event_id": external, "event_id": event,
-                                      "outcome": outcome, "ingested_at": ingested.isoformat(), "receipt_transaction_marker": receipt_marker.isoformat(),
-                                      "first_observed_committed_at": observed.isoformat(), "visibility_latency_ms": round(latency_ms, 6)}
-                            self.seen[key] = record
-                            raw.write(json.dumps(record, separators=(",", ":")) + "\n")
-                            self.last_observed_monotonic = time.perf_counter()
+                        self._record_visible(rows, raw)
                         if rows:
-                            # A wide overlap handles concurrent transaction-start
-                            # markers. A final full scan below catches any older
-                            # slow commit rather than losing it at a high-water mark.
+                            # This is only a fast window: now() is a transaction
+                            # marker, so an older transaction can commit later.
                             newest = max(r[6] for r in rows)
                             cutoff = max(cutoff, newest - timedelta(seconds=30))
+                    now = time.perf_counter()
+                    idle = self.last_observed_monotonic is None or now - self.last_observed_monotonic >= self.IDLE_CATCHUP_SECONDS
+                    if len(self.seen) < self.expected and idle and now - last_full_scan >= self.IDLE_CATCHUP_SECONDS:
+                        # Catch late commits BEFORE waiting for drained. A scan
+                        # only after stop cannot release the trial's drain wait.
+                        self._record_visible(conn.execute(full_query), raw, "idle_catchup")
+                        self.idle_catchup_scans += 1
+                        last_full_scan = now
                     self.poll_ms.append((time.perf_counter() - began) * 1000)
                     if len(self.seen) == self.expected:
                         self.drained.set()
                     self.stop.wait(0.10)
-                # Final complete receipt read validates the overlap assumption.
-                for tenant_id, source, external, event, ingested, outcome, receipt_marker, observed in conn.execute("""SELECT e.tenant_id::text,e.source_id::text,e.source_event_id,e.event_id::text,e.ingested_at,r.outcome,r.committed_at,clock_timestamp()
-                    FROM orderflow.processing_receipts r JOIN orderflow.inbox_events e USING(tenant_id,event_id)"""):
-                    key = (tenant_id, source, external)
-                    if key not in self.seen:
-                        record = {"tenant_id": tenant_id, "source_id": source, "source_event_id": external, "event_id": event, "outcome": outcome,
-                                  "ingested_at": ingested.isoformat(), "receipt_transaction_marker": receipt_marker.isoformat(),
-                                  "first_observed_committed_at": observed.isoformat(), "visibility_latency_ms": round((observed - ingested).total_seconds() * 1000, 6), "final_scan_only": True}
-                        self.seen[key] = record
-                        raw.write(json.dumps(record, separators=(",", ":")) + "\n")
+                # Retain the final cross-check; records first found here still
+                # fail reconciliation rather than silently repairing a trial.
+                self._record_visible(conn.execute(full_query), raw, "final")
         except Exception as error:
             self.error = type(error).__name__
             self.ready.set()
@@ -446,7 +457,7 @@ def trial(data, workers, repetition, folder, manifest, concurrency, deadline):
                           acceptance_latency_ms={"n": len(latencies), "p50": percentile(latencies, 0.5), "p95": percentile(latencies, 0.95)},
                           observed_terminal_visibility_latency_ms={"n": len(visibility), "p50": percentile(visibility, 0.5), "p95": percentile(visibility, 0.95), "max": max(visibility)},
                           visibility_latency_by_outcome_ms=visibility_groups,
-                          observer={"poll_wait_ms": 100, "max_query_cycle_ms": max(observer.poll_ms, default=0), "read_scope": "Privileged independent observer; adds measurement overhead to both worker configurations."},
+                          observer={"poll_wait_ms": 100, "idle_catchup_after_ms": observer.IDLE_CATCHUP_SECONDS * 1000, "idle_catchup_scans": observer.idle_catchup_scans, "max_query_cycle_ms": max(observer.poll_ms, default=0), "read_scope": "Privileged independent observer; adds measurement overhead to both worker configurations."},
                           reconciliation=reconciliation)
             if source_manifest() != manifest:
                 raise RuntimeError("Core source or migrations changed during the benchmark")
@@ -472,6 +483,62 @@ def trial(data, workers, repetition, folder, manifest, concurrency, deadline):
     return report
 
 
+def verify_small_gate(path, source, harness, seed, concurrency):
+    """Require six actual v2 trial records and unchanged bounded raw evidence."""
+    def need(condition, message):
+        if not condition:
+            raise RuntimeError("Future v2 100k small gate: " + message)
+
+    gate_sha = sha(path)
+    gate = json.loads(path.read_text(encoding="utf-8"))
+    need(gate.get("schema") == "orderflow-core-benchmark-v1" and gate.get("complete") is True and gate.get("passed") is True, "failed or incomplete series")
+    need(gate.get("source") == source and gate.get("harness_sha256") == harness and gate.get("seed") == seed, "source, v2 harness or seed differs")
+    need(gate.get("mix", {}).get("distinct_accepted") == 10000, "not a 10k workload")
+    pairs = {(workers, repetition) for workers in (1, 4) for repetition in (1, 2, 3)}
+    runs = gate.get("runs", [])
+    need(isinstance(runs, list) and len(runs) == 6 and {(r.get("workers"), r.get("repetition")) for r in runs} == pairs, "all six unique worker/repetition trials are required")
+    raw_root = (ROOT / "artifacts/benchmarks/raw").resolve()
+    trial_paths = set()
+
+    def check_files(items):
+        need(isinstance(items, list) and bool(items), "raw/input index missing")
+        paths = set()
+        for item in items:
+            need(isinstance(item, dict) and isinstance(item.get("path"), str), "invalid raw file index")
+            relative = Path(item["path"])
+            need(not relative.is_absolute() and ".." not in relative.parts and "\\" not in item["path"], "raw path must be project-relative")
+            current = (ROOT / relative).resolve()
+            need(current.is_relative_to(raw_root) and current.is_file(), "raw file outside bounded directory or missing")
+            need(current not in paths, "duplicate raw file index")
+            paths.add(current)
+            need(type(item.get("bytes")) is int and current.stat().st_size == item["bytes"] and sha(current) == item.get("sha256"), "raw file bytes or SHA-256 changed")
+            if current.suffix == ".gz":
+                try:
+                    with gzip.open(current, "rb") as stream:
+                        for _ in iter(lambda: stream.read(1024 * 1024), b""):
+                            pass
+                except (OSError, EOFError):
+                    raise RuntimeError("Future v2 100k small gate: invalid raw gzip/CRC") from None
+        return paths
+
+    check_files(gate.get("inputs"))
+    for run in runs:
+        need(run.get("passed") is True and run.get("owned_database_removed") is True and run.get("http_errors") == [], "failed or uncleaned trial")
+        need(run.get("source") == source and run.get("harness_sha256") == harness, "trial source or v2 harness differs")
+        need(run.get("distinct_accepted_ids") == 10000 and run.get("http_attempts") == 11000 and run.get("request_concurrency") == concurrency, "trial workload or concurrency differs")
+        checks = run.get("reconciliation", {}).get("checks", [])
+        need(run.get("reconciliation", {}).get("passed") is True and len(checks) == 19 and len({r.get("name") for r in checks}) == 19 and all(r.get("passed") is True for r in checks), "full independent reconciliation missing or failed")
+        postflight = run.get("postflight_validation", {})
+        statuses = {"alpha-operator":200, "beta-operator":200}
+        need(postflight.get("protocol_id") == "postflight-token-refresh-v1" and postflight.get("measurement_finished_before_refresh") is True and postflight.get("refresh_statuses") == statuses and postflight.get("overview_statuses") == statuses and postflight.get("cross_tenant_status") == 404, "fresh post-timing API validation missing or failed")
+        paths = check_files(run.get("raw_artifacts"))
+        need({"http-attempts.jsonl.gz", "terminal-visibility.jsonl.gz"} <= {p.name for p in paths}, "trial request/visibility raw evidence missing")
+        need(not paths.intersection(trial_paths), "different trials must not reuse the same raw files")
+        trial_paths.update(paths)
+    need(sha(path) == gate_sha, "gate changed during verification")
+    return {"path":path.relative_to(ROOT).as_posix(), "sha256":gate_sha}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--scale", type=int, choices=(10000, 100000), default=10000)
@@ -484,16 +551,15 @@ def main():
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
     if not 1 <= args.concurrency <= 64 or not args.label.replace("-", "").replace("_", "").isalnum():
-        parser.error("Concurrency must be1â€“64 and label must be alphanumeric/dash/underscore")
+        parser.error("Concurrency must be between 1 and 64; label must contain letters, digits, dashes or underscores")
     manifest = source_manifest()
     parent = ROOT / "artifacts/benchmarks"
     parent.mkdir(parents=True, exist_ok=True)
     # Larger scale is gated on a complete, successful six-run smaller series.
+    gate_binding = None
     if args.scale == 100000:
         gate_path = parent / f"{args.label}-10000-summary.json"
-        gate = json.loads(gate_path.read_text())
-        if not gate.get("complete") or not gate.get("passed") or gate["source"] != manifest or gate.get("harness_sha256") != harness_manifest():
-            raise RuntimeError("Future v2 100k requires all six v2 10k runs on the same core and exact v2 harness; historical v1 gates are not compatible")
+        gate_binding = verify_small_gate(gate_path, manifest, harness_manifest(), args.seed, args.concurrency)
     data = dataset(args.scale, args.seed)
     raw_root = parent / "raw" / f"{args.label}-{args.scale}-seed{args.seed}-{manifest['sha256'][:12]}"
     raw_root.mkdir(parents=True, exist_ok=True)
@@ -505,15 +571,15 @@ def main():
     summary_path = parent / f"{args.label}-{args.scale}-summary.json"
     summary = {"schema": "orderflow-core-benchmark-v1", "label": args.label, "generated_at": datetime.now(timezone.utc).isoformat(),
                "source": manifest, "seed": args.seed, "mix": data["mix"],
-               "environment": environment_metadata(), "harness_sha256": harness_manifest(),
+               "environment": environment_metadata(), "harness_sha256": harness_manifest(), "small_gate": gate_binding,
                "inputs": [{"path": str(p.relative_to(ROOT)).replace("\\", "/"), "sha256": sha(p), "bytes": p.stat().st_size} for p in (input_path, ledger_path)],
                "scope": "Real loopback uvicorn HTTP acceptance, PostgreSQL durable inbox and independently launched partition workers; pipeline/dbt/hosted capacity excluded.",
                "latency_definition": "Stored receipt committed_at is a transaction marker, not exact commit time. Terminal latency uses first independently observed committed visibility minus stored ingested_at on the PostgreSQL server clock; it is an upper-bound observation including polling/query overhead.",
                "required_trials": [{"workers": w, "repetition": r} for w in (1, 4) for r in (1, 2, 3)], "runs": []}
     if args.resume and summary_path.exists():
         existing = json.loads(summary_path.read_text())
-        if existing["source"] != manifest or existing["seed"] != args.seed or existing["inputs"] != summary["inputs"] or existing.get("harness_sha256") != summary["harness_sha256"]:
-            raise RuntimeError("Refusing to combine changed core, harness, seed or inputs with an existing series")
+        if existing["source"] != manifest or existing["seed"] != args.seed or existing["inputs"] != summary["inputs"] or existing.get("harness_sha256") != summary["harness_sha256"] or existing.get("small_gate") != gate_binding:
+            raise RuntimeError("Refusing to combine changed core, harness, seed, inputs or small gate with an existing series")
         summary["runs"] = existing["runs"]
     elif summary_path.exists():
         raise RuntimeError("Existing evidence preserved; use --resume for the identical series or a new --label")

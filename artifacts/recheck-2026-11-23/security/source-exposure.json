@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-11-23T17:42:58.301084+00:00",
+  "text_files_scanned": 344,
+  "unique_local_values_checked": 9,
+  "private_source_files": [
+    ".env",
+    ".env.local",
+    ".runtime/local-credentials.json",
+    ".runtime/source-keys.json"
+  ],
+  "findings": [],
+  "limitations": [
+    "Current Git index and unignored files only; deleted history, external services and binary contents are excluded.",
+    "Known-prefix and exact-generated-value checks are not an exhaustive secret detector. Values are never printed."
+  ]
+}

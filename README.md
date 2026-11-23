@@ -4,6 +4,8 @@ OrderFlow is a tenant-scoped event-to-warehouse system with an operations workbe
 
 The React interface shows current orders and products, effective price history, an event inbox, source health, terminal quarantine, run checks, last-good reports, and independent inventory differences. The recorded local demonstration includes a real dbt failure that preserves the prior successful report.
 
+**v0.1.1 intensive review:** 135 native Windows/PostgreSQL tests, 89 independent fixture checks, 17 real crash-recovery checks, and a 23-table restore/14-event replay passed. The dashboard passed 33 distinct browser scenarios, 35 responsive checks and 47 axe states with zero automated violations. Fixes cover timestamp overflow, consistent bounded history snapshots, request-budget retention, expired-session/action races, narrow layouts and backup cleanup. [Inspect the source-bound patch review](docs/REVIEW-2026-11-23.md). Current Linux, container and hosted execution remain unverified; earlier 104-test Linux and OS-image scans are historical v0.1.0 evidence. The complete benchmark remains `not_verified`.
+
 ## Architecture
 
 ```mermaid

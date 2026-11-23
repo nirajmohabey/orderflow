@@ -220,5 +220,5 @@ def parse_inventory(raw: bytes, *, reference=False):
         if metadata is None:
             raise ConnectorError("inventory_empty")
         return {**metadata, "quantities": rows, "sha256": hashlib.sha256(raw).hexdigest()}
-    except (UnicodeError, csv.Error, ValueError, TypeError) as error:
+    except (UnicodeError, csv.Error, ValueError, TypeError, OverflowError) as error:
         raise ConnectorError("inventory_invalid") from error

@@ -383,6 +383,9 @@ dd {
 .identity-label {
   min-width: 0;
 }
+.session-tools .identity-label select {
+  max-width: 100%;
+}
 main {
   padding: 24px 36px 0;
   max-width: 1680px;

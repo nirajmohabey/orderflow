@@ -42,7 +42,10 @@ class Order(ExactModel):
 def parse_time(value):
     if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?(?:Z|[+-]\d{2}:\d{2})", value):
         raise ValueError("Timestamps require RFC3339 timezone and at most six fractional digits")
-    parsed = datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(timezone.utc)
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(timezone.utc)
+    except (ValueError, OverflowError):
+        raise ValueError("Timestamp cannot be represented in UTC") from None
     if not 2000 <= parsed.year <= 2100:
         raise ValueError("Timestamp is outside the supported 2000–2100 range")
     return parsed

@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-11-23T17:28:02Z",
+  "bandit_severities": {
+    "SEVERITY.HIGH": 0,
+    "SEVERITY.LOW": 76,
+    "SEVERITY.MEDIUM": 12,
+    "SEVERITY.UNDEFINED": 0
+  },
+  "bandit_findings_suppressed": 0,
+  "unreviewed_medium_findings": [],
+  "ruff_undefined_names": 0,
+  "passed": true,
+  "policy": "Raw findings retained. Scoped review dispositions do not establish absence of vulnerabilities."
+}

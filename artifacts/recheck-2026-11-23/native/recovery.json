@@ -1,0 +1,89 @@
+{
+  "generated_at": "2026-11-23T17:31:08.701659+00:00",
+  "scope": "Real child os._exit(73), PostgreSQL rollback/commit, concurrent worker transactions in a new owned database.",
+  "observed": {
+    "inbox_events": 104,
+    "entity_revisions": 104,
+    "entity_current": 104,
+    "processing_receipts": 104
+  },
+  "worker_committed_counts": [
+    33,
+    28,
+    30,
+    9
+  ],
+  "database": "orderflow_recovery_f8fc27af0409",
+  "passed": true,
+  "checks": [
+    {
+      "name": "actual child exit73 before_materialize",
+      "passed": true
+    },
+    {
+      "name": "atomic rollback before_materialize",
+      "passed": true
+    },
+    {
+      "name": "restart commits once before_materialize",
+      "passed": true
+    },
+    {
+      "name": "replay cannot repeat effect before_materialize",
+      "passed": true
+    },
+    {
+      "name": "actual child exit73 after_revision",
+      "passed": true
+    },
+    {
+      "name": "atomic rollback after_revision",
+      "passed": true
+    },
+    {
+      "name": "restart commits once after_revision",
+      "passed": true
+    },
+    {
+      "name": "replay cannot repeat effect after_revision",
+      "passed": true
+    },
+    {
+      "name": "actual child exit73 before_commit",
+      "passed": true
+    },
+    {
+      "name": "atomic rollback before_commit",
+      "passed": true
+    },
+    {
+      "name": "restart commits once before_commit",
+      "passed": true
+    },
+    {
+      "name": "replay cannot repeat effect before_commit",
+      "passed": true
+    },
+    {
+      "name": "actual child exit73 after_commit",
+      "passed": true
+    },
+    {
+      "name": "after-commit receipt/current/revision/checkpoint durable",
+      "passed": true
+    },
+    {
+      "name": "replay cannot repeat effect after_commit",
+      "passed": true
+    },
+    {
+      "name": "four workers claim100 distinct events",
+      "passed": true
+    },
+    {
+      "name": "exact104 identities revisions current receipts checkpoints",
+      "passed": true
+    }
+  ],
+  "owned_database_removed": true
+}

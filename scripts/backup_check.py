@@ -10,7 +10,7 @@ from uuid import uuid4
 from dotenv import dotenv_values
 import psycopg
 from psycopg import sql
-from sqlalchemy.engine import make_url
+from verification_support import validate_connection_url, validate_destination_pair, report_output
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -32,7 +32,10 @@ def digest_rows(conn):
 
 def main():
     values={k:v for k,v in dotenv_values(ROOT/'.env').items() if v is not None}
-    url=make_url(values['ODF_ADMIN_DATABASE_URL'])
+    # Resolve all routing and output constraints before opening a connection.
+    url=validate_connection_url(values['ODF_ADMIN_DATABASE_URL'])
+    runtime=validate_connection_url(values['ODF_DATABASE_URL'])
+    output=report_output('artifacts/checks/backup-restore.json')
     kwargs=dict(host=url.host,port=url.port,user=url.username,password=url.password,connect_timeout=5)
     target='orderflow_restore_'+uuid4().hex[:12]
     if target==url.database: raise RuntimeError('Restore destination must be new')
@@ -45,6 +48,9 @@ def main():
     try:
         with psycopg.connect(**kwargs,dbname=url.database) as source:
             source.execute('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY')
+            source_identity=tuple(source.execute('SELECT current_database(),inet_server_addr()::text,inet_server_port()').fetchone())
+            if source_identity[0] != url.database:
+                raise RuntimeError('Connected source database differs from configured source')
             snapshot=source.execute('SELECT pg_export_snapshot()').fetchone()[0]
             baseline=digest_rows(source)
             result=subprocess.run([binary('pg_dump'),*options,'--dbname',url.database,'--format=custom','--file',str(dump),'--snapshot',snapshot],env=env,capture_output=True,timeout=90)
@@ -61,10 +67,11 @@ def main():
         # Authenticate and replay the original identity against the restored DB.
         # Terminal receipts must keep the original state, without new effects.
         overrides=dict(values)
-        overrides['ODF_DATABASE_URL']=make_url(values['ODF_DATABASE_URL']).set(database=target).render_as_string(hide_password=False)
+        overrides['ODF_DATABASE_URL']=runtime.set(database=target).render_as_string(hide_password=False)
         overrides['ODF_ADMIN_DATABASE_URL']=url.set(database=target).render_as_string(hide_password=False)
-        from verification_support import validate_destination_pair
-        validate_destination_pair(overrides['ODF_ADMIN_DATABASE_URL'],overrides['ODF_DATABASE_URL'],target)
+        destination=validate_destination_pair(overrides['ODF_ADMIN_DATABASE_URL'],overrides['ODF_DATABASE_URL'],target)
+        if destination[0] == source_identity[0] or destination[1:] != source_identity[1:]:
+            raise RuntimeError('Restore connections must target the new database on the source server')
         os.environ.update(overrides)
         from orderflow.auth import authenticate_source
         from orderflow.schemas import parse_envelope
@@ -89,18 +96,27 @@ def main():
             raise AssertionError('Restore replay changed business state')
         report.update(passed=True,table_hashes=baseline,table_count=len(baseline),duplicate_replays=duplicate_count,
                       new_worker_effects=processed,dump_sha256=hashlib.sha256(dump.read_bytes()).hexdigest(),
+                      exported_snapshot_used=True,restore_identity_verified=True,
                       external_objects='Database report JSON and stored manifest hashes verified. This test does not restore a remote object store.')
     finally:
         try:
-            from orderflow.db import dispose_engines
-            dispose_engines()
-        except ImportError: pass
-        if created:
-            with psycopg.connect(**kwargs,dbname='postgres',autocommit=True) as admin:
-                admin.execute(sql.SQL('DROP DATABASE {} WITH (FORCE)').format(sql.Identifier(target)))
-            report['owned_restore_removed']=True
-        output=ROOT/'artifacts/checks/backup-restore.json';output.parent.mkdir(parents=True,exist_ok=True)
-        output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+            try:
+                from orderflow.db import dispose_engines
+                dispose_engines()
+            except ImportError: pass
+        finally:
+            try:
+                if created:
+                    with psycopg.connect(**kwargs,dbname='postgres',autocommit=True) as admin:
+                        admin.execute(sql.SQL('DROP DATABASE {} WITH (FORCE)').format(sql.Identifier(target)))
+                        report['owned_restore_removed']=not admin.execute('SELECT 1 FROM pg_database WHERE datname=%s',(target,)).fetchone()
+            finally:
+                # Disposal/drop failures must still remove this private file.
+                # The dump includes tenant data and credentials; retain its hash only.
+                dump.unlink(missing_ok=True)
+                report['private_dump_removed']=not dump.exists()
+                output.parent.mkdir(parents=True,exist_ok=True)
+                output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
         print(json.dumps({k:report.get(k) for k in ('passed','table_count','duplicate_replays','new_worker_effects','owned_restore_removed')}))
 
 if __name__=='__main__': main()

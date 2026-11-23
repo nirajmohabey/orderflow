@@ -1,0 +1,48 @@
+{
+  "schema": "orderflow-accessibility-review-v1",
+  "recorded_at": "2026-11-23T17:41:19.353983+00:00",
+  "source_hashes": {
+    "src/App.tsx": "f434c991c27446e2aaf09d9789feb37d2ee02425a80f86905cbb66338769d0c1",
+    "src/api.ts": "1527c5220551112e9739cddc30dcd67fc683f22b3d8c0ab48a53f20a0a61e628",
+    "src/style.css": "70f8ae280b74a3257c6d9745dcba7ff89b6a26207bdde8ed7b049d2bca8591e8",
+    "src/types.ts": "da7372b42b359c53fd61d23faf5c9d2cb02cbacbc8dd3ff023377fe32b6f4a46",
+    "src/main.tsx": "575c9833bc5993d6a7b8db0587b8ecc202809448fd71842c5a4331bec6ee7977",
+    "package.json": "4859f02e19d2951d809aa1c73025e679b9a90d075bd6e8f3736584b8dc5f2462",
+    "package-lock.json": "abd5ea623d552e451dba3ee2792b3cf1b76c04ea3f047a9b47fe40b9bb2c59fa",
+    "index.html": "6a870c0a36737b284d9bb84bdad2d06eba84842d0a665a2733e5e621be40e263"
+  },
+  "automated": {
+    "mock-existing/browser-results.json": {
+      "states": 25,
+      "violations": 0,
+      "incomplete_rule_state_entries": 9,
+      "incomplete_node_occurrences": 155,
+      "incomplete_rules": {
+        "color-contrast": 9
+      }
+    },
+    "live/live-results.json": {
+      "states": 22,
+      "violations": 0,
+      "incomplete_rule_state_entries": 9,
+      "incomplete_node_occurrences": 136,
+      "incomplete_rules": {
+        "color-contrast": 9
+      }
+    }
+  },
+  "computed_style_followup": {
+    "scope": "Actual API8012/private newly owned PostgreSQL fixture; normal production client; read-only domain inspection",
+    "observations": 9,
+    "minimum_ratio": 4.586624919477331,
+    "independently_recalculated_from_three_rgb_channels": true,
+    "backgrounds_flat_and_opacity_one": true,
+    "measured_centers_unobscured_after_scroll": true
+  },
+  "assessment": "Nine representative actual-service DOM/CSS observations support the measured normal-text contrast contexts. Raw axe incomplete items remain in the47state reports; these samples do not resolve every occurrence.",
+  "limitations": [
+    "Computed color contrast only. This does not establish complete WCAG conformance.",
+    "Horizontal scrolling is intentional in labeled focusable data tables and mobile navigation. Unmeasured states and AT behavior remain unresolved.",
+    "No complete WCAG, screenshot-pixel or assistive-technology conformance claim is made."
+  ]
+}

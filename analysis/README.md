@@ -1,5 +1,7 @@
 # Benchmark status and a future verification fix
 
+> Patch version note: Current v0.1.1 native evidence is in `artifacts/recheck-2026-11-23/`. The earlier Linux/Airflow/container/OS and measured v1 workload results below are historical v0.1.0 evidence. Use `scripts/review_patch.py` for the current native review. The legacy release/partial-render tools require their matching original source; no current full performance matrix or Linux rerun is claimed.
+
 The selected release keeps `scripts/benchmark.py` v1 byte-for-byte, along with its actual reports. All six final10k trials passed. Five of six100k trials passed the full gate. The remaining one-worker repetition processed100,000 identities with zero ingestion HTTP errors and passed all16 database/observer assertions, but its three final authenticated API assertions failed. Its timed workload lasted1,852.989971seconds, longer than the30-minute fixture-token lifetime. The original report contains false assertions, not contemporaneously recorded401 statuses; expiry is the source/timing diagnosis, separately reproduced by the focused proof below.
 
 That trial remains **failed**, its original report/raw evidence remains available, and the complete100k matrix is **not verified**. Individual completed timings are partial audit evidence, not a passing six-run benchmark or a same-host speedup claim. The selected release manifest must keep benchmark status `not_verified`; no median from an incomplete passing group is promoted into the portfolio's optional benchmark field.

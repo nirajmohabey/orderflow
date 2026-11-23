@@ -1,0 +1,920 @@
+{
+  "recorded_at": "2026-11-23T17:38:28.117Z",
+  "mode": "Actual API8012/private newly owned PostgreSQL fixture; normal production client; read-only domain inspection",
+  "source_hashes": {
+    "src/App.tsx": "f434c991c27446e2aaf09d9789feb37d2ee02425a80f86905cbb66338769d0c1",
+    "src/api.ts": "1527c5220551112e9739cddc30dcd67fc683f22b3d8c0ab48a53f20a0a61e628",
+    "src/style.css": "70f8ae280b74a3257c6d9745dcba7ff89b6a26207bdde8ed7b049d2bca8591e8",
+    "src/types.ts": "da7372b42b359c53fd61d23faf5c9d2cb02cbacbc8dd3ff023377fe32b6f4a46",
+    "src/main.tsx": "575c9833bc5993d6a7b8db0587b8ecc202809448fd71842c5a4331bec6ee7977",
+    "package.json": "4859f02e19d2951d809aa1c73025e679b9a90d075bd6e8f3736584b8dc5f2462",
+    "package-lock.json": "abd5ea623d552e451dba3ee2792b3cf1b76c04ea3f047a9b47fe40b9bb2c59fa",
+    "index.html": "6a870c0a36737b284d9bb84bdad2d06eba84842d0a665a2733e5e621be40e263"
+  },
+  "source_stable": true,
+  "observations": [
+    {
+      "selector": ".history-chart text[y=\"27\"]",
+      "context": "desktop product-history chart",
+      "text": "$15.00",
+      "color": "rgb(41, 76, 88)",
+      "fill": "rgb(80, 107, 118)",
+      "is_svg_text": true,
+      "font_size": "10px",
+      "font_weight": "400",
+      "background_chain": [
+        {
+          "tag": "text",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "svg",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "FIGURE",
+          "background": "rgb(245, 250, 248)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIALOG",
+          "background": "rgb(255, 255, 255)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "MAIN",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "BODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "HTML",
+          "background": "rgb(243, 246, 247)",
+          "background_image": "none",
+          "opacity": "1"
+        }
+      ],
+      "rect": {
+        "left": 337.9093017578125,
+        "right": 372.3653869628906,
+        "top": 303.527587890625,
+        "bottom": 318.527587890625
+      },
+      "center_unobscured": true,
+      "top_at_center": "text",
+      "effective_background_rgb": [
+        245,
+        250,
+        248
+      ],
+      "computed_contrast_ratio": 5.3732907704144575,
+      "normal_or_large_text_minimum": 4.5,
+      "computed_ratio_meets_minimum": true,
+      "background_images_present": false,
+      "partial_opacity_present": false,
+      "method": "Actual private fixture DOM. CSS foreground/fill and alpha-composited ancestor background colors; sRGB relative-luminance formula. Scrolled clipped table/nav text into view; no pixel sampling or complete assistive-technology testing."
+    },
+    {
+      "selector": ".history-chart text[y=\"180\"]",
+      "context": "desktop product-history chart",
+      "text": "01 Nov 2026, 12:00:00",
+      "color": "rgb(41, 76, 88)",
+      "fill": "rgb(80, 107, 118)",
+      "is_svg_text": true,
+      "font_size": "10px",
+      "font_weight": "400",
+      "background_chain": [
+        {
+          "tag": "text",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "svg",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "FIGURE",
+          "background": "rgb(245, 250, 248)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIALOG",
+          "background": "rgb(255, 255, 255)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "MAIN",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "BODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "HTML",
+          "background": "rgb(243, 246, 247)",
+          "background_image": "none",
+          "opacity": "1"
+        }
+      ],
+      "rect": {
+        "left": 337.9093017578125,
+        "right": 451.5248107910156,
+        "top": 480.6787414550781,
+        "bottom": 495.6787109375
+      },
+      "center_unobscured": true,
+      "top_at_center": "text",
+      "effective_background_rgb": [
+        245,
+        250,
+        248
+      ],
+      "computed_contrast_ratio": 5.3732907704144575,
+      "normal_or_large_text_minimum": 4.5,
+      "computed_ratio_meets_minimum": true,
+      "background_images_present": false,
+      "partial_opacity_present": false,
+      "method": "Actual private fixture DOM. CSS foreground/fill and alpha-composited ancestor background colors; sRGB relative-luminance formula. Scrolled clipped table/nav text into view; no pixel sampling or complete assistive-technology testing."
+    },
+    {
+      "selector": "a[href=\"#inventory\"] > span",
+      "context": "375px horizontally scrolled navigation label",
+      "text": "Inventory diff",
+      "color": "rgb(188, 208, 213)",
+      "fill": "rgb(0, 0, 0)",
+      "is_svg_text": false,
+      "font_size": "14px",
+      "font_weight": "500",
+      "background_chain": [
+        {
+          "tag": "SPAN",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "A",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "NAV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "ASIDE",
+          "background": "rgb(17, 43, 53)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "BODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "HTML",
+          "background": "rgb(243, 246, 247)",
+          "background_image": "none",
+          "opacity": "1"
+        }
+      ],
+      "rect": {
+        "left": 262.4375,
+        "right": 349.078125,
+        "top": 93.5,
+        "bottom": 114.5
+      },
+      "center_unobscured": true,
+      "top_at_center": "SPAN",
+      "effective_background_rgb": [
+        17,
+        43,
+        53
+      ],
+      "computed_contrast_ratio": 9.235293757924971,
+      "normal_or_large_text_minimum": 4.5,
+      "computed_ratio_meets_minimum": true,
+      "background_images_present": false,
+      "partial_opacity_present": false,
+      "method": "Actual private fixture DOM. CSS foreground/fill and alpha-composited ancestor background colors; sRGB relative-luminance formula. Scrolled clipped table/nav text into view; no pixel sampling or complete assistive-technology testing."
+    },
+    {
+      "selector": ".table-wrap tbody tr:first-child td:nth-child(4)",
+      "context": "375px horizontally scrolled overview cell",
+      "text": "23 Nov 2026, 17:37:59 UTC",
+      "color": "rgb(33, 62, 72)",
+      "fill": "rgb(0, 0, 0)",
+      "is_svg_text": false,
+      "font_size": "14px",
+      "font_weight": "400",
+      "background_chain": [
+        {
+          "tag": "TD",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TR",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TBODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TABLE",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "SECTION",
+          "background": "rgb(255, 255, 255)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "MAIN",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "BODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "HTML",
+          "background": "rgb(243, 246, 247)",
+          "background_image": "none",
+          "opacity": "1"
+        }
+      ],
+      "rect": {
+        "left": 124.640625,
+        "right": 242.984375,
+        "top": 426.5625,
+        "bottom": 538.71875
+      },
+      "center_unobscured": true,
+      "top_at_center": "TD",
+      "effective_background_rgb": [
+        255,
+        255,
+        255
+      ],
+      "computed_contrast_ratio": 11.367989822861436,
+      "normal_or_large_text_minimum": 4.5,
+      "computed_ratio_meets_minimum": true,
+      "background_images_present": false,
+      "partial_opacity_present": false,
+      "method": "Actual private fixture DOM. CSS foreground/fill and alpha-composited ancestor background colors; sRGB relative-luminance formula. Scrolled clipped table/nav text into view; no pixel sampling or complete assistive-technology testing."
+    },
+    {
+      "selector": ".date-cell",
+      "context": "375px horizontally scrolled order timestamp",
+      "text": "02 Nov 2026, 12:00:00 UTC",
+      "color": "rgb(33, 62, 72)",
+      "fill": "rgb(0, 0, 0)",
+      "is_svg_text": false,
+      "font_size": "12px",
+      "font_weight": "400",
+      "background_chain": [
+        {
+          "tag": "TD",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TR",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TBODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TABLE",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "SECTION",
+          "background": "rgb(255, 255, 255)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "MAIN",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "BODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "HTML",
+          "background": "rgb(243, 246, 247)",
+          "background_image": "none",
+          "opacity": "1"
+        }
+      ],
+      "rect": {
+        "left": 85.234375,
+        "right": 282.71875,
+        "top": 611.015625,
+        "bottom": 671.015625
+      },
+      "center_unobscured": true,
+      "top_at_center": "TD",
+      "effective_background_rgb": [
+        255,
+        255,
+        255
+      ],
+      "computed_contrast_ratio": 11.367989822861436,
+      "normal_or_large_text_minimum": 4.5,
+      "computed_ratio_meets_minimum": true,
+      "background_images_present": false,
+      "partial_opacity_present": false,
+      "method": "Actual private fixture DOM. CSS foreground/fill and alpha-composited ancestor background colors; sRGB relative-luminance formula. Scrolled clipped table/nav text into view; no pixel sampling or complete assistive-technology testing."
+    },
+    {
+      "selector": ".table-wrap tbody tr:first-child td:nth-child(4) code",
+      "context": "375px horizontally scrolled product version",
+      "text": "v3",
+      "color": "rgb(33, 62, 72)",
+      "fill": "rgb(0, 0, 0)",
+      "is_svg_text": false,
+      "font_size": "13px",
+      "font_weight": "400",
+      "background_chain": [
+        {
+          "tag": "CODE",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TD",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TR",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TBODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TABLE",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "SECTION",
+          "background": "rgb(255, 255, 255)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "MAIN",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "BODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "HTML",
+          "background": "rgb(243, 246, 247)",
+          "background_image": "none",
+          "opacity": "1"
+        }
+      ],
+      "rect": {
+        "left": 307.359375,
+        "right": 322.609375,
+        "top": 611.71875,
+        "bottom": 626.71875
+      },
+      "center_unobscured": true,
+      "top_at_center": "CODE",
+      "effective_background_rgb": [
+        255,
+        255,
+        255
+      ],
+      "computed_contrast_ratio": 11.367989822861436,
+      "normal_or_large_text_minimum": 4.5,
+      "computed_ratio_meets_minimum": true,
+      "background_images_present": false,
+      "partial_opacity_present": false,
+      "method": "Actual private fixture DOM. CSS foreground/fill and alpha-composited ancestor background colors; sRGB relative-luminance formula. Scrolled clipped table/nav text into view; no pixel sampling or complete assistive-technology testing."
+    },
+    {
+      "selector": ".table-wrap tbody tr:first-child td:nth-child(6)",
+      "context": "375px horizontally scrolled event outcome",
+      "text": "QuarantinedTenant currency mismatch",
+      "color": "rgb(33, 62, 72)",
+      "fill": "rgb(0, 0, 0)",
+      "is_svg_text": false,
+      "font_size": "14px",
+      "font_weight": "400",
+      "background_chain": [
+        {
+          "tag": "TD",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TR",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TBODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TABLE",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "SECTION",
+          "background": "rgb(255, 255, 255)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "MAIN",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "BODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "HTML",
+          "background": "rgb(243, 246, 247)",
+          "background_image": "none",
+          "opacity": "1"
+        }
+      ],
+      "rect": {
+        "left": 249.03125,
+        "right": 338,
+        "top": 705.015625,
+        "bottom": 836.359375
+      },
+      "center_unobscured": true,
+      "top_at_center": "SMALL",
+      "effective_background_rgb": [
+        255,
+        255,
+        255
+      ],
+      "computed_contrast_ratio": 11.367989822861436,
+      "normal_or_large_text_minimum": 4.5,
+      "computed_ratio_meets_minimum": true,
+      "background_images_present": false,
+      "partial_opacity_present": false,
+      "method": "Actual private fixture DOM. CSS foreground/fill and alpha-composited ancestor background colors; sRGB relative-luminance formula. Scrolled clipped table/nav text into view; no pixel sampling or complete assistive-technology testing."
+    },
+    {
+      "selector": ".table-wrap tbody tr:first-child td:nth-child(4)",
+      "context": "375px horizontally scrolled report preview",
+      "text": "Paid",
+      "color": "rgb(33, 62, 72)",
+      "fill": "rgb(0, 0, 0)",
+      "is_svg_text": false,
+      "font_size": "14px",
+      "font_weight": "400",
+      "background_chain": [
+        {
+          "tag": "TD",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TR",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TBODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TABLE",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "SECTION",
+          "background": "rgb(255, 255, 255)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "MAIN",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "BODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "HTML",
+          "background": "rgb(243, 246, 247)",
+          "background_image": "none",
+          "opacity": "1"
+        }
+      ],
+      "rect": {
+        "left": 200.078125,
+        "right": 338,
+        "top": 424.53125,
+        "bottom": 475.53125
+      },
+      "center_unobscured": true,
+      "top_at_center": "TD",
+      "effective_background_rgb": [
+        255,
+        255,
+        255
+      ],
+      "computed_contrast_ratio": 11.367989822861436,
+      "normal_or_large_text_minimum": 4.5,
+      "computed_ratio_meets_minimum": true,
+      "background_images_present": false,
+      "partial_opacity_present": false,
+      "method": "Actual private fixture DOM. CSS foreground/fill and alpha-composited ancestor background colors; sRGB relative-luminance formula. Scrolled clipped table/nav text into view; no pixel sampling or complete assistive-technology testing."
+    },
+    {
+      "selector": ".difference",
+      "context": "375px horizontally scrolled inventory difference",
+      "text": "-2",
+      "color": "rgb(167, 102, 43)",
+      "fill": "rgb(0, 0, 0)",
+      "is_svg_text": false,
+      "font_size": "14px",
+      "font_weight": "600",
+      "background_chain": [
+        {
+          "tag": "TD",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TR",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TBODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "TABLE",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "SECTION",
+          "background": "rgb(255, 255, 255)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "MAIN",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "DIV",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "BODY",
+          "background": "rgba(0, 0, 0, 0)",
+          "background_image": "none",
+          "opacity": "1"
+        },
+        {
+          "tag": "HTML",
+          "background": "rgb(243, 246, 247)",
+          "background_image": "none",
+          "opacity": "1"
+        }
+      ],
+      "rect": {
+        "left": 118.125,
+        "right": 248.359375,
+        "top": 426.578125,
+        "bottom": 473.46875
+      },
+      "center_unobscured": true,
+      "top_at_center": "TD",
+      "effective_background_rgb": [
+        255,
+        255,
+        255
+      ],
+      "computed_contrast_ratio": 4.586624919477331,
+      "normal_or_large_text_minimum": 4.5,
+      "computed_ratio_meets_minimum": true,
+      "background_images_present": false,
+      "partial_opacity_present": false,
+      "method": "Actual private fixture DOM. CSS foreground/fill and alpha-composited ancestor background colors; sRGB relative-luminance formula. Scrolled clipped table/nav text into view; no pixel sampling or complete assistive-technology testing."
+    }
+  ],
+  "unresolved": [],
+  "pageerrors": [],
+  "scope_limitations": [
+    "Computed color contrast only. This does not establish complete WCAG conformance.",
+    "Horizontal scrolling is intentional in labeled focusable data tables and mobile navigation. Unmeasured states and AT behavior remain unresolved."
+  ]
+}

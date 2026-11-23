@@ -9,7 +9,7 @@ import subprocess
 import sys
 import time
 import psycopg
-from verification_support import ROOT, scratch_database
+from verification_support import ROOT, scratch_database, report_output
 
 def child(stage,tenant):
     from orderflow.worker import process_one
@@ -20,6 +20,7 @@ def child(stage,tenant):
     raise SystemExit(74)
 
 def main():
+    output=report_output('artifacts/checks/recovery.json')
     checks = []
     def check(name,ok):
         checks.append({'name':name,'passed':bool(ok)})
@@ -81,7 +82,6 @@ def main():
     finally:
         report['checks']=checks
         report['owned_database_removed']=fixture is not None and fixture['removed']
-        output=ROOT/'artifacts/checks/recovery.json'
         output.parent.mkdir(parents=True,exist_ok=True)
         output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
         print(json.dumps({'passed':report.get('passed'),'checks':len(checks),'owned_database_removed':report['owned_database_removed']}))

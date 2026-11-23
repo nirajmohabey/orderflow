@@ -15,14 +15,15 @@ from uuid import uuid4
 from dotenv import dotenv_values
 import psycopg
 from psycopg import sql
-from sqlalchemy.engine import make_url
+from verification_support import report_output, validate_connection_url
 
 ROOT = Path(__file__).resolve().parents[1]
 
 def main():
+    output=report_output('artifacts/checks/acceptance.json')
     values = {k:v for k,v in dotenv_values(ROOT / '.env').items() if v is not None}
-    base_admin = make_url(values['ODF_ADMIN_DATABASE_URL'])
-    base_runtime = make_url(values['ODF_DATABASE_URL'])
+    base_admin = validate_connection_url(values['ODF_ADMIN_DATABASE_URL'])
+    base_runtime = validate_connection_url(values['ODF_DATABASE_URL'])
     name = 'orderflow_acceptance_' + uuid4().hex[:12]
     kwargs = {'host':base_admin.host,'port':base_admin.port,'user':base_admin.username,
               'password':base_admin.password,'connect_timeout':5}
@@ -162,7 +163,6 @@ def main():
         report['checks'] = results
         report['finished_at'] = datetime.now(timezone.utc).isoformat()
         report['fixture_sha256'] = {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'fixtures').glob('*') if p.is_file()}
-        output = ROOT / 'artifacts/checks/acceptance.json'
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
         print(json.dumps({'passed':report.get('passed'), 'checks':len(results),'owned_database_removed':report.get('owned_database_removed')}))

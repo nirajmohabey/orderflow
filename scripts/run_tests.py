@@ -55,22 +55,22 @@ def safe_artifact(name, root=ROOT):
 def snapshot(root=ROOT):
     """Hash code, SQL, dependency inputs, fixtures and tests; never secrets."""
     selected = set()
-    for folder in ("src", "migrations", "fixtures", "tests", "scripts", "warehouse", "orchestration"):
+    for folder in ("src", "migrations", "fixtures", "tests", "scripts", "warehouse", "orchestration", "analysis", "dashboard/src", "dashboard/scripts", "infra", ".github"):
         base = root / folder
         if base.is_dir():
             for path in base.rglob("*"):
                 relative = path.relative_to(root)
                 if path.is_file() and not any(part in SKIP for part in relative.parts):
-                    if path.suffix in {".py", ".sql", ".json", ".jsonl", ".csv", ".yml", ".yaml", ".lock", ".in", ".txt", ".ps1"}:
+                    if path.suffix in {".py", ".sql", ".json", ".jsonl", ".csv", ".yml", ".yaml", ".lock", ".in", ".txt", ".ps1", ".js", ".mjs", ".ts", ".tsx", ".css", ".html", ".toml"}:
                         selected.add(path)
-    for name in ("pyproject.toml", "uv.lock", "requirements.lock", ".python-version", "Dockerfile", "Dockerfile.batch", "infra/Dockerfile.postgres", "docker-compose.yml", "dashboard/package.json", "dashboard/package-lock.json"):
+    for name in ("pyproject.toml", "uv.lock", "requirements.lock", ".python-version", "Dockerfile", "Dockerfile.batch", "infra/Dockerfile.postgres", "docker-compose.yml", "dashboard/package.json", "dashboard/package-lock.json", "dashboard/index.html", "dashboard/vite.config.ts", "dashboard/tsconfig.json", ".gitattributes", ".gitignore", ".dockerignore"):
         path = root / name
         if path.is_file():
             selected.add(path)
     files = {path.relative_to(root).as_posix(): sha(path) for path in sorted(selected)}
     if not files or not any(name.startswith("tests/") for name in files):
         raise ValueError("Expected release input/test tree is absent")
-    return {"files": files, "sha256": digest(files), "scope_version": "orderflow-test-inputs-v1"}
+    return {"files": files, "sha256": digest(files), "scope_version": "orderflow-review-inputs-v2"}
 
 
 def core_snapshot(root=ROOT):
@@ -125,10 +125,13 @@ def main(argv=None):
     parser.add_argument("--proof")
     parser.add_argument("--label", default=platform.system().lower())
     parser.add_argument("--harness", choices=tuple(HARNESS))
+    parser.add_argument("--harness-output", help="Write a harness report to a new versioned artifact path")
     args, pytest_arguments = parser.parse_known_args(argv)
     if args.harness and pytest_arguments:
         parser.error("Harness runs take no passthrough arguments")
-    target = safe_artifact(HARNESS[args.harness][1] if args.harness else args.junitxml)
+    if args.harness_output and not args.harness:
+        parser.error("--harness-output requires --harness")
+    target = safe_artifact((args.harness_output or HARNESS[args.harness][1]) if args.harness else args.junitxml)
     proof = safe_artifact(args.proof or str(target.with_suffix(".source-proof.json")))
     if target == proof:
         parser.error("Result and proof paths must differ")
@@ -142,7 +145,10 @@ def main(argv=None):
                [sys.executable, "-m", "pytest", "tests", "--junitxml=" + str(target), *pytest_arguments])
     failure = None
     try:
-        exit_code = subprocess.call(command, cwd=ROOT, env=os.environ.copy())
+        child_env=os.environ.copy()
+        if args.harness:
+            child_env['ODF_VERIFICATION_OUTPUT']=str(target)
+        exit_code = subprocess.call(command, cwd=ROOT, env=child_env)
     except (OSError, KeyboardInterrupt) as error:
         exit_code, failure = 130, type(error).__name__
     after, core_after = snapshot(), core_snapshot()

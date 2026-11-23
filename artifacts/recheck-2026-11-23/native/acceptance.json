@@ -1,0 +1,415 @@
+{
+  "started_at": "2026-11-23T17:31:04.030358+00:00",
+  "database": "orderflow_acceptance_7bdd10e03601",
+  "configured_database_reset": false,
+  "scope": "In-process HTTP handlers + real PostgreSQL; literal independent fixture oracle, not hosted performance.",
+  "observed_tenants": {
+    "11111111-1111-4111-8111-111111111111": {
+      "distinct_inbox_events": 10,
+      "terminal_receipts": 10,
+      "entity_revisions": 8,
+      "quarantined_events": 2,
+      "current_products": 2,
+      "current_orders": 2,
+      "current_order_amount_minor": 8000,
+      "paid_order_amount_minor": 8000,
+      "order_O1_version": 2,
+      "order_O2_version": 1,
+      "product_P1_version": 3,
+      "product_P1_unit_price_minor": 1500,
+      "product_P2_version": 2,
+      "product_P2_unit_price_minor": 2200,
+      "curated_product_P2_intervals": 1
+    },
+    "22222222-2222-4222-8222-222222222222": {
+      "distinct_inbox_events": 1,
+      "terminal_receipts": 1,
+      "entity_revisions": 1,
+      "quarantined_events": 0,
+      "current_products": 1,
+      "current_orders": 0,
+      "current_order_amount_minor": 0,
+      "paid_order_amount_minor": 0,
+      "product_P1_version": 1,
+      "product_P1_unit_price_minor": 700,
+      "curated_product_P2_intervals": 0
+    }
+  },
+  "distinct_identity_count": 11,
+  "passed": true,
+  "owned_database_removed": true,
+  "checks": [
+    {
+      "name": "happy_path.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "first identity distinct",
+      "passed": true
+    },
+    {
+      "name": "happy_path.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "first identity distinct",
+      "passed": true
+    },
+    {
+      "name": "happy_path.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "first identity distinct",
+      "passed": true
+    },
+    {
+      "name": "happy_path.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "first identity distinct",
+      "passed": true
+    },
+    {
+      "name": "checkpoint equals exact terminal receipts 11111111",
+      "passed": true
+    },
+    {
+      "name": "after_happy_path: distinct_inbox_events",
+      "passed": true
+    },
+    {
+      "name": "after_happy_path: terminal_receipts",
+      "passed": true
+    },
+    {
+      "name": "after_happy_path: entity_revisions",
+      "passed": true
+    },
+    {
+      "name": "after_happy_path: current_products",
+      "passed": true
+    },
+    {
+      "name": "after_happy_path: current_orders",
+      "passed": true
+    },
+    {
+      "name": "after_happy_path: current_order_amount_minor",
+      "passed": true
+    },
+    {
+      "name": "after_happy_path: paid_order_amount_minor",
+      "passed": true
+    },
+    {
+      "name": "after_happy_path: product_P1_version",
+      "passed": true
+    },
+    {
+      "name": "after_happy_path: product_P1_unit_price_minor",
+      "passed": true
+    },
+    {
+      "name": "after_happy_path: order_O1_version",
+      "passed": true
+    },
+    {
+      "name": "duplicates.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "semantic replay original identity",
+      "passed": true
+    },
+    {
+      "name": "duplicates.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "semantic replay original identity",
+      "passed": true
+    },
+    {
+      "name": "duplicates.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "semantic replay original identity",
+      "passed": true
+    },
+    {
+      "name": "late_versions.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "first identity distinct",
+      "passed": true
+    },
+    {
+      "name": "late_versions.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "first identity distinct",
+      "passed": true
+    },
+    {
+      "name": "checkpoint equals exact terminal receipts 11111111",
+      "passed": true
+    },
+    {
+      "name": "after_late_versions: distinct_inbox_events",
+      "passed": true
+    },
+    {
+      "name": "after_late_versions: terminal_receipts",
+      "passed": true
+    },
+    {
+      "name": "after_late_versions: entity_revisions",
+      "passed": true
+    },
+    {
+      "name": "after_late_versions: product_P1_version",
+      "passed": true
+    },
+    {
+      "name": "after_late_versions: product_P1_unit_price_minor",
+      "passed": true
+    },
+    {
+      "name": "after_late_versions: current_order_amount_minor",
+      "passed": true
+    },
+    {
+      "name": "equal_effective_times.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "first identity distinct",
+      "passed": true
+    },
+    {
+      "name": "equal_effective_times.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "first identity distinct",
+      "passed": true
+    },
+    {
+      "name": "checkpoint equals exact terminal receipts 11111111",
+      "passed": true
+    },
+    {
+      "name": "after_equal_effective_times: distinct_inbox_events",
+      "passed": true
+    },
+    {
+      "name": "after_equal_effective_times: terminal_receipts",
+      "passed": true
+    },
+    {
+      "name": "after_equal_effective_times: entity_revisions",
+      "passed": true
+    },
+    {
+      "name": "after_equal_effective_times: current_products",
+      "passed": true
+    },
+    {
+      "name": "after_equal_effective_times: product_P2_version",
+      "passed": true
+    },
+    {
+      "name": "after_equal_effective_times: product_P2_unit_price_minor",
+      "passed": true
+    },
+    {
+      "name": "after_equal_effective_times: curated_product_P2_intervals",
+      "passed": true
+    },
+    {
+      "name": "conflicting_versions.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "first identity distinct",
+      "passed": true
+    },
+    {
+      "name": "invalid_payloads.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "first identity distinct",
+      "passed": true
+    },
+    {
+      "name": "tenant_isolation.jsonl durable HTTP202",
+      "passed": true
+    },
+    {
+      "name": "first identity distinct",
+      "passed": true
+    },
+    {
+      "name": "checkpoint equals exact terminal receipts 11111111",
+      "passed": true
+    },
+    {
+      "name": "after_all_tenant_one: distinct_inbox_events",
+      "passed": true
+    },
+    {
+      "name": "after_all_tenant_one: terminal_receipts",
+      "passed": true
+    },
+    {
+      "name": "after_all_tenant_one: quarantined_events",
+      "passed": true
+    },
+    {
+      "name": "after_all_tenant_one: entity_revisions",
+      "passed": true
+    },
+    {
+      "name": "after_all_tenant_one: current_products",
+      "passed": true
+    },
+    {
+      "name": "after_all_tenant_one: current_orders",
+      "passed": true
+    },
+    {
+      "name": "after_all_tenant_one: current_order_amount_minor",
+      "passed": true
+    },
+    {
+      "name": "after_all_tenant_one: product_P1_version",
+      "passed": true
+    },
+    {
+      "name": "after_all_tenant_one: product_P1_unit_price_minor",
+      "passed": true
+    },
+    {
+      "name": "after_all_tenant_one: product_P2_version",
+      "passed": true
+    },
+    {
+      "name": "after_all_tenant_one: product_P2_unit_price_minor",
+      "passed": true
+    },
+    {
+      "name": "checkpoint equals exact terminal receipts 22222222",
+      "passed": true
+    },
+    {
+      "name": "after_tenant_two: distinct_inbox_events",
+      "passed": true
+    },
+    {
+      "name": "after_tenant_two: terminal_receipts",
+      "passed": true
+    },
+    {
+      "name": "after_tenant_two: entity_revisions",
+      "passed": true
+    },
+    {
+      "name": "after_tenant_two: current_products",
+      "passed": true
+    },
+    {
+      "name": "after_tenant_two: current_orders",
+      "passed": true
+    },
+    {
+      "name": "after_tenant_two: product_P1_version",
+      "passed": true
+    },
+    {
+      "name": "after_tenant_two: product_P1_unit_price_minor",
+      "passed": true
+    },
+    {
+      "name": "exact raw revision keys across both tenants",
+      "passed": true
+    },
+    {
+      "name": "exact current keys versions and payloads",
+      "passed": true
+    },
+    {
+      "name": "fixture session alpha-operator",
+      "passed": true
+    },
+    {
+      "name": "fixture session alpha-viewer",
+      "passed": true
+    },
+    {
+      "name": "fixture session beta-operator",
+      "passed": true
+    },
+    {
+      "name": "cross-tenant existing event hidden",
+      "passed": true
+    },
+    {
+      "name": "unauthenticated event denied",
+      "passed": true
+    },
+    {
+      "name": "viewer retry forbidden",
+      "passed": true
+    },
+    {
+      "name": "operator cannot reopen terminal event",
+      "passed": true
+    },
+    {
+      "name": "history HTTP P1",
+      "passed": true
+    },
+    {
+      "name": "literal half-open history P1",
+      "passed": true
+    },
+    {
+      "name": "history HTTP P2",
+      "passed": true
+    },
+    {
+      "name": "literal half-open history P2",
+      "passed": true
+    },
+    {
+      "name": "checkpoint equals exact terminal receipts 11111111",
+      "passed": true
+    },
+    {
+      "name": "checkpoint equals exact terminal receipts 22222222",
+      "passed": true
+    }
+  ],
+  "finished_at": "2026-11-23T17:31:06.439275+00:00",
+  "fixture_sha256": {
+    "batch_oracle.json": "395ba9bfd1936aa4e3abd00123d62f8f936de7ad563012fa81a47ac3b57406a6",
+    "conflicting_versions.jsonl": "a8119f3c97d88e59a12e82fee50fa6f26f988f963badf4b7043cf58b867526f2",
+    "duplicates.jsonl": "b9b265ea85b3268ce1e14cc017712c03411d3261c4cbfe2ab10d04d65831101e",
+    "equal_effective_times.jsonl": "c84e284e4f9569ee7a9cf54f4aaa316664714621b257195226f98458c76c67bb",
+    "expected_state.json": "86d6c6da07cdc590bd3c3a5ba31516ab574b5a9819b83690bb864ec75fb7c478",
+    "happy_path.jsonl": "24b6da6d119681e1c4bc747bf7d9311f84bb2df7209fef178eff0b647312fbf5",
+    "invalid_payloads.jsonl": "1335944db22365db731f67214fa0d033c35c1dca4488ad401bd29a21b8ff8259",
+    "inventory_reference.csv": "e7301ac8f61e75185e200cabe7121fbaed7d15fcc57529496b561e2608a662c5",
+    "inventory_snapshot.csv": "a6a904b24bb43bb64b7768ee8973319dfacc6a8a2b7f6ef9597a290e6b710db0",
+    "late_versions.jsonl": "3327b6d4c3b10eeee0bf865e313e4aa7e1c99b33fef27ac498772c960820de67",
+    "README.md": "ce190897fd13d5bb877944c2fb9a9d8a038a43beea986a1fa1e6e00817c901ae",
+    "seed_metadata.json": "e95309f7c30a1f308e760bc8b26d9e1b300d60d32bf3929afd4783288f30f0a7",
+    "tenant_isolation.jsonl": "6e80a63a22971a8f1c741642198e79b632260f688bb59a394345132b71e886bf"
+  }
+}

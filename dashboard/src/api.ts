@@ -71,16 +71,19 @@ export async function request<T>(
     );
   }
   if (!response.ok) {
-    const problem = data as {
-      code?: string;
-      message?: string;
-      request_id?: string;
-    };
+    const problem =
+      data !== null && typeof data === "object" && !Array.isArray(data)
+        ? (data as Record<string, unknown>)
+        : {};
     throw new ApiError(
       response.status,
-      problem.code ?? "request_failed",
-      problem.message ?? `The request failed (${response.status}).`,
-      problem.request_id ?? response.headers.get("X-Request-ID") ?? undefined,
+      typeof problem.code === "string" ? problem.code : "request_failed",
+      typeof problem.message === "string"
+        ? problem.message
+        : `The request failed (${response.status}).`,
+      typeof problem.request_id === "string"
+        ? problem.request_id
+        : (response.headers.get("X-Request-ID") ?? undefined),
     );
   }
   return data as T;

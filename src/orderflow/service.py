@@ -15,6 +15,7 @@ from .db import primitive, tenant_transaction
 from .schemas import canonical_envelope, canonical_payload, partition_key
 
 STATES = {"pending", "retry_wait", "completed", "quarantined"}
+MAX_HISTORY_REVISIONS = 1000
 
 
 class DomainError(Exception):
@@ -54,7 +55,7 @@ def rate_limit(tenant_id, subject, action):
             DO UPDATE SET used=orderflow.request_budgets.used+1 RETURNING used"""), {"tenant": str(tenant_id), "key": key, "bucket": bucket}).scalar_one()
         if used > settings.requests_per_minute:
             raise DomainError(429, "rate_limited", "The request budget was exceeded; retry later.")
-        if used % 256 == 0:
+        if used == 1 or used % 256 == 0:
             conn.execute(text("DELETE FROM orderflow.request_budgets WHERE tenant_id=:tenant AND minute_bucket<:old"), {"tenant": str(tenant_id), "old": bucket - 2})
 
 
@@ -318,17 +319,27 @@ def product_history(principal, entity_id):
     params = {"tenant": principal.tenant_id, "entity": entity_id}
     with tenant_transaction(principal.tenant_id, principal.subject, principal.role) as conn:
         _member(conn, principal)
-        # Bound a highly versioned entity rather than silently truncating history.
-        count = conn.execute(text("SELECT count(*) FROM (SELECT 1 FROM orderflow.entity_revisions WHERE tenant_id=:tenant AND entity_type='product' AND entity_id=:entity LIMIT 1001) versions"), params).scalar_one()
-        if count == 0:
+        # Admission and both representations share one bounded statement snapshot.
+        # A new revision cannot arrive between a count, raw read and interval read.
+        params["history_limit"] = MAX_HISTORY_REVISIONS + 1
+        history = _rows(conn, """WITH history AS MATERIALIZED (
+            SELECT entity_version,effective_at,event_id,payload FROM orderflow.entity_revisions
+            WHERE tenant_id=:tenant AND entity_type='product' AND entity_id=:entity
+            ORDER BY entity_version LIMIT :history_limit),
+            selected AS (
+                SELECT DISTINCT ON(effective_at) entity_version,effective_at FROM history
+                ORDER BY effective_at,entity_version DESC),
+            intervals AS (
+                SELECT entity_version,effective_at AS valid_from,
+                    lead(effective_at) OVER(ORDER BY effective_at) AS valid_to FROM selected)
+            SELECT h.*,i.entity_version AS interval_version,i.valid_from,i.valid_to
+            FROM history h LEFT JOIN intervals i USING(entity_version) ORDER BY h.entity_version""", params)
+        if not history:
             _missing()
-        if count > 1000:
+        if len(history) > MAX_HISTORY_REVISIONS:
             raise DomainError(422, "history_budget_exceeded", "This entity requires an offline history export.")
-        raw = _rows(conn, "SELECT entity_version,effective_at,event_id,payload FROM orderflow.entity_revisions WHERE tenant_id=:tenant AND entity_type='product' AND entity_id=:entity ORDER BY entity_version", params)
-        intervals = _rows(conn, """WITH selected AS (
-            SELECT DISTINCT ON(effective_at) entity_version,effective_at,payload
-            FROM orderflow.entity_revisions WHERE tenant_id=:tenant AND entity_type='product' AND entity_id=:entity
-            ORDER BY effective_at,entity_version DESC)
-            SELECT entity_version,effective_at AS valid_from,lead(effective_at) OVER(ORDER BY effective_at) AS valid_to,payload
-            FROM selected ORDER BY effective_at""", params)
+        raw = [{key: row[key] for key in ("entity_version", "effective_at", "event_id", "payload")} for row in history]
+        intervals = sorted(({"entity_version": row["interval_version"], "valid_from": row["valid_from"],
+                             "valid_to": row["valid_to"], "payload": row["payload"]}
+                            for row in history if row["interval_version"] is not None), key=lambda row: row["valid_from"])
         return primitive({"entity_id": entity_id, "raw_revisions": raw, "intervals": intervals})
