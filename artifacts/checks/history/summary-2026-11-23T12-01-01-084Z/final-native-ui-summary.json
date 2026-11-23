@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-11-23T11:36:40.177Z",
+  "core_and_sql_sha256": "d961cd0bc9b2c5fa517bc0de9ff0cfadd8a65fee6cae0b8f17991608f62bf7e9",
+  "test_inputs_sha256": "4b163c804f0ec8804b2dc1bfdc2f6562280bbc7b02bc20750597fdd290849035",
+  "native_full_suite": {
+    "tests": 104,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "time_seconds": 130.174,
+    "passed": true,
+    "source_changed": false
+  },
+  "harnesses": {
+    "acceptance": {
+      "passed": true,
+      "checks": 89
+    },
+    "recovery": {
+      "passed": true,
+      "checks": 17
+    },
+    "backup": {
+      "passed": true,
+      "tables": 23,
+      "replays": 14,
+      "new_effects": 0
+    }
+  },
+  "serving_data_preserved": true,
+  "serving_tables": 23,
+  "private_env_preserved": true,
+  "isolated_browser": {
+    "passed": 18,
+    "total": 18,
+    "source_stable": true,
+    "axe_states": 25
+  },
+  "actual_browser": {
+    "passed": 10,
+    "total": 10,
+    "source_stable": true,
+    "axe_states": 22,
+    "pageerrors": [],
+    "console_errors": [],
+    "observations": {
+      "report": {
+        "has_success": true,
+        "stale": true,
+        "latest_attempt_status": "failed"
+      },
+      "inventory": {
+        "has_snapshot": true,
+        "status": "fail"
+      }
+    },
+    "video": "video/page@73636a4cd771f3c7d9969a0bf598c6d7.webm"
+  },
+  "frontend_hashes": {
+    "src/App.tsx": "540fa56d55d41bff930ac1b15b6d2053a86d86d00880a02f1b7676999e694183",
+    "src/api.ts": "5f5f840aff1c0ba7e46eadb3285cbaf22544a9b2e8a5f29e04cffd1c95cec053",
+    "src/style.css": "d745bd1db8e355245b41086d299d4d3fe8a10cf6d8184b0c9e7ca6d5fe2f1bb7",
+    "src/types.ts": "da7372b42b359c53fd61d23faf5c9d2cb02cbacbc8dd3ff023377fe32b6f4a46",
+    "src/main.tsx": "575c9833bc5993d6a7b8db0587b8ecc202809448fd71842c5a4331bec6ee7977",
+    "package.json": "f47c969fe61d5a07c2ca5c12bd81faa9544c432832acbf21456da909dd3f4757",
+    "package-lock.json": "fcc611ae2a19bfaaa2ce4fb0bde4fdb2fc745e0c43b741141e714f6260ee18bf",
+    "index.html": "6a870c0a36737b284d9bb84bdad2d06eba84842d0a665a2733e5e621be40e263"
+  }
+}

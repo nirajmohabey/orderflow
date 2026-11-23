@@ -2,13 +2,16 @@ ORDERFLOW BENCHMARK ANALYSIS
 
 This optional, offline renderer is separate from the application runtime.
 It reads only the selected completed summaries and their bound raw evidence.
-It first executes the release verifier's full benchmark integrity checks and
-refuses missing, failed, stale or incomplete evidence. It does not connect to
-PostgreSQL or start a workload. There are no replacement or simulated results.
+Its default mode executes the release verifier's full benchmark checks and
+refuses failed or incomplete series. Explicit partial-audit mode instead checks
+all original source/raw hashes and preserves the known failed API postflight.
+It does not connect to PostgreSQL or start a workload. No results are replaced.
 
 From the project root, with the pinned Python interpreter available:
 
-  uv run --frozen --with matplotlib==3.11.2 python analysis/render_benchmarks.py
+  uv run --frozen --with matplotlib==3.11.2 python analysis/render_benchmarks.py --partial-audit
+
+Without --partial-audit the current larger series is correctly rejected.
 
 Matplotlib 3.11.2 was the actual renderer used. This optional analysis package
 is not installed into the production images and is outside their selected

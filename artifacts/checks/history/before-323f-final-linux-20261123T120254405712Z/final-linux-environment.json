@@ -1,0 +1,20 @@
+{
+  "schema": "orderflow-final-linux-environment-v1",
+  "sandbox_name": "orderflow-final-source-proof",
+  "snapshot": "snap_VroLt6lB8PEDt5AnT6r1LtpdJEf0",
+  "private_ports_only": true,
+  "started_at": "2026-11-23T11:32:50.262143+00:00",
+  "source_sha256": "4b163c804f0ec8804b2dc1bfdc2f6562280bbc7b02bc20750597fdd290849035",
+  "source_files": 96,
+  "platform": "Linux-6.18.56-x86_64-with-glibc2.43",
+  "python": "3.12.14",
+  "postgres_start_exit_code": 0,
+  "os_release": "PRETTY_NAME=\"Ubuntu 26.04.1 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"26.04\"\nVERSION=\"26.04.1 LTS (Resolute Raccoon)\"\nVERSION_CODENAME=resolute\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=resolute\nLOGO=ubuntu-logo\n",
+  "exit_code": 0,
+  "finished_at": "2026-11-23T11:34:04.754486+00:00",
+  "source_unchanged": true,
+  "postgres_version": "18.6 (Ubuntu 18.6-0ubuntu0.26.04.1)",
+  "postgres_observation": "Actual /usr/lib/postgresql/18/bin/postgres --version; pg_lsclusters showed18/main online port5432",
+  "sandbox_final_status": "stopped",
+  "sandbox_non_persistent": true
+}

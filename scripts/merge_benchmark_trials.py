@@ -68,7 +68,7 @@ def main():
              'source':reference.get('source'),'harness_sha256':reference.get('harness_sha256'),'wrapper_sha256':reference.get('wrapper_sha256'),
              'small_gate':reference.get('gate'),'seed':reference.get('seed'),'inputs':reference.get('inputs'),'mix':reference.get('mix'),
              'topology':reference.get('topology'),'declared_allocation':{k:reference.get('declared_sandbox',{}).get(k) for k in ('runtime_pin','runtime_pin_kind','base_image_name','vcpus','memory_mib')},
-             'groups':groups,'actual_reports':[{'path':str(path),'sha256':benchmark.sha(path),'workers':v.get('workers'),'repetition':v.get('repetition'),'passed':v.get('passed'),'environment':v.get('environment'),'postgresql':v.get('trial',{}).get('postgresql')} for path,v in loaded],
+             'groups':groups,'actual_reports':[{'path':path.as_posix(),'sha256':benchmark.sha(path),'workers':v.get('workers'),'repetition':v.get('repetition'),'passed':v.get('passed'),'environment':v.get('environment'),'postgresql':v.get('trial',{}).get('postgresql')} for path,v in loaded],
              'limitations':['Separate microVMs introduce host/cache/filesystem/I/O noise despite identical declared allocations and image/core/input hashes.',
                             'Per-trial p95 values are retained individually; they are not averaged or presented as a pooled percentile.',
                             'Observed throughput is local synthetic HTTP/core-worker behavior, not a hosted service SLO or a causal speedup proof.']}

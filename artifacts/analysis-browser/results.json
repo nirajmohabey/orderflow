@@ -1,0 +1,146 @@
+{
+  "recorded_at": "2026-11-23T12:15:45.375Z",
+  "html": "OrderFlow_Analysis.html",
+  "scope": "Browser rendering, local evidence links, keyboard, mobile, assets and automated accessibility. Statistical calculations/provenance remain separately verified by the release/benchmark artifacts.",
+  "checks": [
+    {
+      "name": "actual rendered HTML loads",
+      "passed": true
+    },
+    {
+      "name": "document title identifies OrderFlow",
+      "passed": true
+    },
+    {
+      "name": "one primary heading",
+      "passed": true
+    },
+    {
+      "name": "partial large verification is explicit",
+      "passed": true
+    },
+    {
+      "name": "small six-trial success is explicit",
+      "passed": true
+    },
+    {
+      "name": "failed large row remains failed",
+      "passed": true
+    },
+    {
+      "name": "workload control selects small series",
+      "passed": true
+    },
+    {
+      "name": "six small rows retained",
+      "passed": true
+    },
+    {
+      "name": "keyboard selects large series",
+      "passed": true
+    },
+    {
+      "name": "visible vector chart has an accessible label",
+      "passed": true
+    },
+    {
+      "name": "no page overflow 375",
+      "passed": true
+    },
+    {
+      "name": "plots/images load 375",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "image text alternatives 375",
+      "passed": true
+    },
+    {
+      "name": "automated accessibility 375",
+      "passed": true
+    },
+    {
+      "name": "no page overflow 768",
+      "passed": true
+    },
+    {
+      "name": "plots/images load 768",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "image text alternatives 768",
+      "passed": true
+    },
+    {
+      "name": "automated accessibility 768",
+      "passed": true
+    },
+    {
+      "name": "no page overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "plots/images load 1440",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "image text alternatives 1440",
+      "passed": true
+    },
+    {
+      "name": "automated accessibility 1440",
+      "passed": true
+    },
+    {
+      "name": "keyboard moves between workload selectors",
+      "passed": true
+    },
+    {
+      "name": "print exposes both workloads",
+      "passed": true
+    },
+    {
+      "name": "print hides interactive selectors",
+      "passed": true
+    },
+    {
+      "name": "no uncaught JavaScript errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "no broken local assets",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "self-contained resources",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "accessibility": [
+    {
+      "width": 375,
+      "violations": []
+    },
+    {
+      "width": 768,
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "violations": []
+    }
+  ],
+  "errors": [],
+  "badResponses": [],
+  "externalResources": [],
+  "source_sha256": "cbb0de4dd67e1834efc154eb5c7b58533a976df4b906f9cca8d1fdb75c8c221f",
+  "source_stable": true,
+  "passed": 28,
+  "total": 28
+}

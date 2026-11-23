@@ -1,6 +1,6 @@
 {
   "schema": "orderflow-test-source-proof-v1",
-  "generated_at": "2026-11-23T11:33:17.280494+00:00",
+  "generated_at": "2026-11-23T12:00:12.094290+00:00",
   "label": "windows",
   "kind": "backup",
   "python": "3.12.14",
@@ -9,12 +9,12 @@
   "complete_default_suite": false,
   "pytest_arguments": [],
   "exit_code": 0,
-  "elapsed_seconds": 2.48499999998603,
+  "elapsed_seconds": 2.405999999959022,
   "result": {
     "path": "artifacts/checks/backup-restore.json",
-    "sha256": "b63d741fa54ef0d232b6bc38fba27339c7cc28b13b3c72b4d8bd3b22318ec2ee",
+    "sha256": "5a7ca939db4cff999cc567df6f1cec2e1870fc4fb4ecc07fac3ef95bdaeba117",
     "fresh": true,
-    "prior_sha256": "a9a0e77552cc0dd7dd9dc58e744fa388b1d546caf8cf8570e0960f2a8d62a935"
+    "prior_sha256": "b63d741fa54ef0d232b6bc38fba27339c7cc28b13b3c72b4d8bd3b22318ec2ee"
   },
   "counts": null,
   "source_before": {
@@ -65,7 +65,7 @@
       "scripts/collect_dependencies.py": "ca63cc991918387b1d37b47dc461682991e458835b1981d4717f70556ced5120",
       "scripts/container_setup.py": "4f165d90cb8b7219e6e00ac66a65dd75efec1e2b6c3eb59b0286f35825b5f42e",
       "scripts/docker_env.py": "9e38c2faa4817cabf2371de29d280d2079d9137e9aec226483fa5cf1321b1591",
-      "scripts/merge_benchmark_trials.py": "3f1f6b5c24aeb839c5c98d80b4e7ef2946f3ff45d8362236734b93b6b4517094",
+      "scripts/merge_benchmark_trials.py": "f9be23bf4f486ffe5c6a3d774c2ac3625647d05fc54845ca7e756dbf2f1baa11",
       "scripts/merge_small_benchmark_gate.py": "a66473dad55d0d8efdcea2cd7ce6c68324cdad1965e33546a1d95ecee23ad0d6",
       "scripts/package_release.py": "2f7389d40cc2647cc501b3dea58e0a04924c7918dcb6a707ef3005ae872e38a8",
       "scripts/pipeline.py": "60767cdec4cdcbee8ab941d7123263b8297cb0be9dc8668ecee927e18d55f0c7",
@@ -116,7 +116,7 @@
       "warehouse/tests/revision_key_unique.sql": "631b90b0767d64ecf454e504cc8976d15620d684a12b23d1b9612fd120a33dd2",
       "warehouse/tests/total_reconciliation.sql": "0a29ff1d1131ac1a6b71d15421646991e6f7ae6ec9594cab893ea1bb9b4ece05"
     },
-    "sha256": "4b163c804f0ec8804b2dc1bfdc2f6562280bbc7b02bc20750597fdd290849035",
+    "sha256": "323f194ea7e9f2a0282ce7253054bf980a3ed7e3bb17b10976a9ee53ddc41217",
     "scope_version": "orderflow-test-inputs-v1"
   },
   "source_after": {
@@ -167,7 +167,7 @@
       "scripts/collect_dependencies.py": "ca63cc991918387b1d37b47dc461682991e458835b1981d4717f70556ced5120",
       "scripts/container_setup.py": "4f165d90cb8b7219e6e00ac66a65dd75efec1e2b6c3eb59b0286f35825b5f42e",
       "scripts/docker_env.py": "9e38c2faa4817cabf2371de29d280d2079d9137e9aec226483fa5cf1321b1591",
-      "scripts/merge_benchmark_trials.py": "3f1f6b5c24aeb839c5c98d80b4e7ef2946f3ff45d8362236734b93b6b4517094",
+      "scripts/merge_benchmark_trials.py": "f9be23bf4f486ffe5c6a3d774c2ac3625647d05fc54845ca7e756dbf2f1baa11",
       "scripts/merge_small_benchmark_gate.py": "a66473dad55d0d8efdcea2cd7ce6c68324cdad1965e33546a1d95ecee23ad0d6",
       "scripts/package_release.py": "2f7389d40cc2647cc501b3dea58e0a04924c7918dcb6a707ef3005ae872e38a8",
       "scripts/pipeline.py": "60767cdec4cdcbee8ab941d7123263b8297cb0be9dc8668ecee927e18d55f0c7",
@@ -218,7 +218,7 @@
       "warehouse/tests/revision_key_unique.sql": "631b90b0767d64ecf454e504cc8976d15620d684a12b23d1b9612fd120a33dd2",
       "warehouse/tests/total_reconciliation.sql": "0a29ff1d1131ac1a6b71d15421646991e6f7ae6ec9594cab893ea1bb9b4ece05"
     },
-    "sha256": "4b163c804f0ec8804b2dc1bfdc2f6562280bbc7b02bc20750597fdd290849035",
+    "sha256": "323f194ea7e9f2a0282ce7253054bf980a3ed7e3bb17b10976a9ee53ddc41217",
     "scope_version": "orderflow-test-inputs-v1"
   },
   "core_before": {

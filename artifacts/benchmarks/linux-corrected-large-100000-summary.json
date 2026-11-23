@@ -1,0 +1,256 @@
+{
+  "schema": "orderflow-parallel-large-series-v1",
+  "generated_at": "2026-11-23T12:11:07.667476+00:00",
+  "complete": true,
+  "passed": false,
+  "issues": [
+    "linux-corrected-large-100000-workers1-rep1.json: failed or incomplete actual trial"
+  ],
+  "missing_trials": [],
+  "source": {
+    "files": {
+      "src/orderflow/__init__.py": "e957dc257d7a30059155725db2c02be65426439801fd57469e673804bbfe1c55",
+      "src/orderflow/config.py": "a2bca207eb20c1e4947e8f2faf776b2aa20047cbc1a74d4f5e6c4fb44a1d4743",
+      "src/orderflow/db.py": "ac96be767e7034851f4c6e37f24a5945f8c5664a74ca76be89e155921fec7b4c",
+      "src/orderflow/schemas.py": "e45e1383af7d2b93a679cc9f12908b9a6954a9fa8de5c2f0d285257f3a4fac3a",
+      "src/orderflow/auth.py": "e5b93db0135e912c4fce0d3ef6fe03376de73e246c475b7b102927de208f7cd2",
+      "src/orderflow/service.py": "d9198b91e41bf658d4e663f1232a84441955a7f4345505faaeb29f8bc59bf902",
+      "src/orderflow/worker.py": "78d74e0ee34981b515eae328e267cc338fc6415e2b3309ec12b05b69633569ea",
+      "src/orderflow/api.py": "7894ce27f6d5d93443b4dea7b7b1a55714558f8a6454bec341afae370ac7689a",
+      "migrations/001_core.sql": "6d005c4a7e98ba1c35c8e9416844ff8de037418e73560920db49ae423fde21a8",
+      "migrations/002_pipeline.sql": "de65c606b975cd6036923069f8fc15944623e0f1bc3be3e5c59f299862f0bb44",
+      "migrations/003_version_claim_lookup.sql": "cde8ef89e970311b412292ec1fb9f53b36b2c9f1c47d0dc14571e789c538a175",
+      "migrations/004_eligible_claim_window.sql": "dcb9d272260e22ebe36b80d0009df68a3ca147138f6ac3bf5999b0713e561941"
+    },
+    "sha256": "d961cd0bc9b2c5fa517bc0de9ff0cfadd8a65fee6cae0b8f17991608f62bf7e9"
+  },
+  "harness_sha256": {
+    "scripts/benchmark.py": "bf9a8d7da1d7fb2e448c2da8a89d02fc4de30ba7db4204b83a8176bf3198d644",
+    "scripts/verification_support.py": "d13d828276b38c0103fbcf237aa2ddba337341ea8592e1b39a8aa538dc6c2e5a",
+    "fixtures/seed_metadata.json": "e95309f7c30a1f308e760bc8b26d9e1b300d60d32bf3929afd4783288f30f0a7",
+    "uv.lock": "4f09f1205c077530d8bc4dba82d2b47f4749aa92eacbb4039f6ac4113be21ef9"
+  },
+  "wrapper_sha256": "0c50ff00a02e4c0d0370242d3b0732da9a4614d5c0dbe94fa4300207212045be",
+  "small_gate": {
+    "sha256": "cb42335a002d149b1bcbdf5adf4ebcd442c92131704387809fb46cbcb80a5c58",
+    "small_trials": 6,
+    "label": "linux-corrected",
+    "inputs": [
+      {
+        "path": "artifacts/benchmarks/raw/linux-corrected-10000-seed20261123-d961cd0bc9b2/input.jsonl.gz",
+        "sha256": "5bf1fd8c9cbab680909b36f872c9991e84dee3786cee6ebd320bd5cb6eb15a34",
+        "bytes": 236128
+      },
+      {
+        "path": "artifacts/benchmarks/raw/linux-corrected-10000-seed20261123-d961cd0bc9b2/truth-ledger.jsonl.gz",
+        "sha256": "7b0b0d1cd9c935d7d033809bf12beb729581478ba5915eb7bddc72eb70563135",
+        "bytes": 127825
+      }
+    ]
+  },
+  "seed": 20261123,
+  "inputs": [
+    {
+      "path": "artifacts/benchmarks/raw/linux-corrected-large-100000-seed20261123-d961cd0bc9b2/input.jsonl.gz",
+      "sha256": "a4b8246de6baa5e98aae77baed74ff88409d7865fbafe2846e7ed952481e2969",
+      "bytes": 2647533
+    },
+    {
+      "path": "artifacts/benchmarks/raw/linux-corrected-large-100000-seed20261123-d961cd0bc9b2/truth-ledger.jsonl.gz",
+      "sha256": "71471720bb32e13454c417769de346821ede73ef24db2e98fba38660f59e7161",
+      "bytes": 1250801
+    }
+  ],
+  "mix": {
+    "distinct_accepted": 100000,
+    "base_revisions": 94000,
+    "duplicate_revision_events": 5000,
+    "business_quarantines": 1000,
+    "http_replays": 10000,
+    "http_attempts": 110000
+  },
+  "topology": "One trial per separately provisioned private Linux2-vCPU/4-GiB microVM, using the same pinned image digest or provider immutable prepared snapshot, core/locks/input generator. A snapshot ID is recorded as a provider snapshot, never represented as a fabricated base-image SHA. Cross-VM host, filesystem/cache and I/O variation remains a confounder; this is not a controlled same-host speedup experiment.",
+  "declared_allocation": {
+    "runtime_pin": "snapshot:snap_VroLt6lB8PEDt5AnT6r1LtpdJEf0",
+    "runtime_pin_kind": "provider_immutable_snapshot",
+    "base_image_name": "vercel/sandbox/universal",
+    "vcpus": 2,
+    "memory_mib": 4096
+  },
+  "groups": {
+    "1": {
+      "actual_trials": 3,
+      "successful_trials": 2,
+      "terminal_receipts_per_second": [
+        75.61941665281698,
+        60.41279270973447
+      ],
+      "median_terminal_receipts_per_second": 68.01610468127572,
+      "range_terminal_receipts_per_second": [
+        60.41279270973447,
+        75.61941665281698
+      ],
+      "per_trial_p95_acceptance_ms": [
+        441.806977,
+        438.257294,
+        426.421328
+      ],
+      "per_trial_p95_observed_visibility_ms": [
+        1099497.635,
+        640497.514,
+        963811.278
+      ]
+    },
+    "4": {
+      "actual_trials": 3,
+      "successful_trials": 3,
+      "terminal_receipts_per_second": [
+        90.22672811488053,
+        92.23823080189274,
+        90.62966961460434
+      ],
+      "median_terminal_receipts_per_second": 90.62966961460434,
+      "range_terminal_receipts_per_second": [
+        90.22672811488053,
+        92.23823080189274
+      ],
+      "per_trial_p95_acceptance_ms": [
+        599.131191,
+        574.776213,
+        593.002965
+      ],
+      "per_trial_p95_observed_visibility_ms": [
+        543.893,
+        540.571,
+        543.3
+      ]
+    }
+  },
+  "actual_reports": [
+    {
+      "path": "artifacts/benchmarks/linux-corrected-large-100000-workers1-rep1.json",
+      "sha256": "ebc2514c7d4e1586f46b08b2fe8ab21f2f55824f0d95f81457dfb08a13609b6a",
+      "workers": 1,
+      "repetition": 1,
+      "passed": false,
+      "environment": {
+        "python": "3.12.14 (main, Sep 29 2026, 15:01:18) [Clang 22.1.3 ]",
+        "platform": "Linux-6.18.56-x86_64-with-glibc2.43",
+        "cpu_count": 2,
+        "processor": "",
+        "cgroup_cpu.max": "max 100000",
+        "cgroup_memory.max": "4294967296"
+      },
+      "postgresql": {
+        "version": "PostgreSQL 18.6 (Ubuntu 18.6-0ubuntu0.26.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0, 64-bit",
+        "max_connections": "100",
+        "shared_buffers": "128MB"
+      }
+    },
+    {
+      "path": "artifacts/benchmarks/linux-corrected-large-100000-workers1-rep2.json",
+      "sha256": "47a14e0e940a4a7724af60a36778a365f90bce170d4b44d2e76b528c8e831692",
+      "workers": 1,
+      "repetition": 2,
+      "passed": true,
+      "environment": {
+        "python": "3.12.14 (main, Sep 29 2026, 15:01:18) [Clang 22.1.3 ]",
+        "platform": "Linux-6.18.56-x86_64-with-glibc2.43",
+        "cpu_count": 2,
+        "processor": "",
+        "cgroup_cpu.max": "max 100000",
+        "cgroup_memory.max": "4294967296"
+      },
+      "postgresql": {
+        "version": "PostgreSQL 18.6 (Ubuntu 18.6-0ubuntu0.26.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0, 64-bit",
+        "max_connections": "100",
+        "shared_buffers": "128MB"
+      }
+    },
+    {
+      "path": "artifacts/benchmarks/linux-corrected-large-100000-workers1-rep3.json",
+      "sha256": "46493a64059f9fedf17c3158024056815f231d91e9a75586ff5117996bcd8209",
+      "workers": 1,
+      "repetition": 3,
+      "passed": true,
+      "environment": {
+        "python": "3.12.14 (main, Sep 29 2026, 15:01:18) [Clang 22.1.3 ]",
+        "platform": "Linux-6.18.56-x86_64-with-glibc2.43",
+        "cpu_count": 2,
+        "processor": "",
+        "cgroup_cpu.max": "max 100000",
+        "cgroup_memory.max": "4294967296"
+      },
+      "postgresql": {
+        "version": "PostgreSQL 18.6 (Ubuntu 18.6-0ubuntu0.26.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0, 64-bit",
+        "max_connections": "100",
+        "shared_buffers": "128MB"
+      }
+    },
+    {
+      "path": "artifacts/benchmarks/linux-corrected-large-100000-workers4-rep1.json",
+      "sha256": "a814a8ac82b99eca18b5780685ff408aff47c6811c9042352b57b09d42114f67",
+      "workers": 4,
+      "repetition": 1,
+      "passed": true,
+      "environment": {
+        "python": "3.12.14 (main, Sep 29 2026, 15:01:18) [Clang 22.1.3 ]",
+        "platform": "Linux-6.18.56-x86_64-with-glibc2.43",
+        "cpu_count": 2,
+        "processor": "",
+        "cgroup_cpu.max": "max 100000",
+        "cgroup_memory.max": "4294967296"
+      },
+      "postgresql": {
+        "version": "PostgreSQL 18.6 (Ubuntu 18.6-0ubuntu0.26.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0, 64-bit",
+        "max_connections": "100",
+        "shared_buffers": "128MB"
+      }
+    },
+    {
+      "path": "artifacts/benchmarks/linux-corrected-large-100000-workers4-rep2.json",
+      "sha256": "9dac1bbab09659e9a1aba577801e19fab13c7073af96b3c540475cba7fb2f762",
+      "workers": 4,
+      "repetition": 2,
+      "passed": true,
+      "environment": {
+        "python": "3.12.14 (main, Sep 29 2026, 15:01:18) [Clang 22.1.3 ]",
+        "platform": "Linux-6.18.56-x86_64-with-glibc2.43",
+        "cpu_count": 2,
+        "processor": "",
+        "cgroup_cpu.max": "max 100000",
+        "cgroup_memory.max": "4294967296"
+      },
+      "postgresql": {
+        "version": "PostgreSQL 18.6 (Ubuntu 18.6-0ubuntu0.26.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0, 64-bit",
+        "max_connections": "100",
+        "shared_buffers": "128MB"
+      }
+    },
+    {
+      "path": "artifacts/benchmarks/linux-corrected-large-100000-workers4-rep3.json",
+      "sha256": "d2bae4db5af677d4a73df578a64d504bf753005d06bc89da76a34cd619ff5c9c",
+      "workers": 4,
+      "repetition": 3,
+      "passed": true,
+      "environment": {
+        "python": "3.12.14 (main, Sep 29 2026, 15:01:18) [Clang 22.1.3 ]",
+        "platform": "Linux-6.18.56-x86_64-with-glibc2.43",
+        "cpu_count": 2,
+        "processor": "",
+        "cgroup_cpu.max": "max 100000",
+        "cgroup_memory.max": "4294967296"
+      },
+      "postgresql": {
+        "version": "PostgreSQL 18.6 (Ubuntu 18.6-0ubuntu0.26.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0, 64-bit",
+        "max_connections": "100",
+        "shared_buffers": "128MB"
+      }
+    }
+  ],
+  "limitations": [
+    "Separate microVMs introduce host/cache/filesystem/I/O noise despite identical declared allocations and image/core/input hashes.",
+    "Per-trial p95 values are retained individually; they are not averaged or presented as a pooled percentile.",
+    "Observed throughput is local synthetic HTTP/core-worker behavior, not a hosted service SLO or a causal speedup proof."
+  ]
+}

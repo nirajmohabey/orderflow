@@ -1,0 +1,12 @@
+{
+  "observed_at": "2026-11-23T12:07:19Z",
+  "provider": "Vercel Sandbox",
+  "action": "Create one matching private 2-vCPU verification retry from the prepared snapshot",
+  "status": "blocked",
+  "http_status": 402,
+  "reason": "Hobby plan usage limit exceeded",
+  "reset_at": "2026-12-01T00:00:00Z",
+  "paid_upgrade_performed": false,
+  "retry_created": false,
+  "scope": "No matching Linux retry was executed after the quota rejection. Existing failed benchmark evidence remains unchanged."
+}

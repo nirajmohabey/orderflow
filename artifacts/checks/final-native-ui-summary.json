@@ -1,30 +1,34 @@
 {
-  "recorded_at": "2026-11-23T11:36:40.177Z",
+  "recorded_at": "2026-11-23T12:01:01.087Z",
   "core_and_sql_sha256": "d961cd0bc9b2c5fa517bc0de9ff0cfadd8a65fee6cae0b8f17991608f62bf7e9",
-  "test_inputs_sha256": "4b163c804f0ec8804b2dc1bfdc2f6562280bbc7b02bc20750597fdd290849035",
+  "test_inputs_sha256": "323f194ea7e9f2a0282ce7253054bf980a3ed7e3bb17b10976a9ee53ddc41217",
   "native_full_suite": {
     "tests": 104,
     "errors": 0,
     "failures": 0,
     "skipped": 0,
-    "time_seconds": 130.174,
+    "time_seconds": 128.583,
     "passed": true,
-    "source_changed": false
+    "source_changed": false,
+    "recorded_at": "2026-11-23T11:59:57.274303+00:00"
   },
   "harnesses": {
     "acceptance": {
       "passed": true,
-      "checks": 89
+      "checks": 89,
+      "recorded_at": "2026-11-23T12:00:00.874166+00:00"
     },
     "recovery": {
       "passed": true,
-      "checks": 17
+      "checks": 17,
+      "recorded_at": "2026-11-23T12:00:09.041563+00:00"
     },
     "backup": {
       "passed": true,
       "tables": 23,
       "replays": 14,
-      "new_effects": 0
+      "new_effects": 0,
+      "recorded_at": "2026-11-23T12:00:12.094290+00:00"
     }
   },
   "serving_data_preserved": true,
@@ -34,7 +38,8 @@
     "passed": 18,
     "total": 18,
     "source_stable": true,
-    "axe_states": 25
+    "axe_states": 25,
+    "recorded_at": "2026-11-23T11:35:17.791Z"
   },
   "actual_browser": {
     "passed": 10,
@@ -54,7 +59,8 @@
         "status": "fail"
       }
     },
-    "video": "video/page@73636a4cd771f3c7d9969a0bf598c6d7.webm"
+    "video": "video/page@73636a4cd771f3c7d9969a0bf598c6d7.webm",
+    "recorded_at": "2026-11-23T11:35:34.596Z"
   },
   "frontend_hashes": {
     "src/App.tsx": "540fa56d55d41bff930ac1b15b6d2053a86d86d00880a02f1b7676999e694183",
@@ -65,5 +71,13 @@
     "package.json": "f47c969fe61d5a07c2ca5c12bd81faa9544c432832acbf21456da909dd3f4757",
     "package-lock.json": "fcc611ae2a19bfaaa2ce4fb0bde4fdb2fc745e0c43b741141e714f6260ee18bf",
     "index.html": "6a870c0a36737b284d9bb84bdad2d06eba84842d0a665a2733e5e621be40e263"
-  }
+  },
+  "native_updated_at": "2026-11-23T11:59:57.274303+00:00",
+  "previous_summary": {
+    "path": "outputs/orderflow/artifacts/checks/history/summary-2026-11-23T12-01-01-084Z/final-native-ui-summary.json",
+    "sha256": "720f50d5f3ca1ea3def80404fcbcc81fa5e36bbd2bc1d85d6501c101a816fef0",
+    "test_inputs_sha256": "4b163c804f0ec8804b2dc1bfdc2f6562280bbc7b02bc20750597fdd290849035"
+  },
+  "ui_reexecuted_for_metadata_only_change": false,
+  "note": "Native and harness proofs were rerun after the metadata-only path portability fix. The frontend/backend runtime code is unchanged; browser evidence retains its original actual execution timestamps."
 }

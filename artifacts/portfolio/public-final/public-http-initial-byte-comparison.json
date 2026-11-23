@@ -1,0 +1,106 @@
+{
+  "recorded_at": "2026-11-23T12:18:57.621491+00:00",
+  "passed": false,
+  "base": "https://portfolio-niraj-mohabeys-projects.vercel.app",
+  "portfolio_commit": "58bc4ceadb4963d136fbc75c0382b08c3978ddd7",
+  "github_status": {
+    "context": "Vercel",
+    "state": "success",
+    "target_url": "https://vercel.com/niraj-mohabeys-projects/portfolio/8rK1761tgqWoLQiXwhBpa28AcYCo"
+  },
+  "resources": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 176022,
+      "sha256": "f1d982a98f6a95720ded92a6cfd40ba1e9bb4ebe7fdd186485ec276609f95df6",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/projects/orderflow",
+      "status": 200,
+      "bytes": 93692,
+      "sha256": "e34c40bb9ea45d41b74ead4cfceb93855c345394e7cd11b67ee79dec2a3d2509",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/projects/resolvelab",
+      "status": 200,
+      "bytes": 90110,
+      "sha256": "c7b478960de6272a333504a9332e9e2177b02d54570e68ee1dee3170460b1137",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/orderflow/evidence.json",
+      "status": 200,
+      "bytes": 7222,
+      "sha256": "08dbec439db8544b54df02bfebd2fc1df196a69534783c44cd2151b13c41f501",
+      "content_type": "application/json; charset=utf-8",
+      "matches_committed_blob": true,
+      "committed_sha256": "08dbec439db8544b54df02bfebd2fc1df196a69534783c44cd2151b13c41f501"
+    },
+    {
+      "path": "/orderflow/benchmark-analysis.html",
+      "status": 200,
+      "bytes": 169388,
+      "sha256": "c91f3280ae81a06aa459703735f48b686191eb0c6e5bd4ce0aed61ad073e592e",
+      "content_type": "text/html; charset=utf-8",
+      "matches_committed_blob": true,
+      "committed_sha256": "c91f3280ae81a06aa459703735f48b686191eb0c6e5bd4ce0aed61ad073e592e",
+      "matches_reviewed_artifact": false,
+      "reviewed_sha256": "cbb0de4dd67e1834efc154eb5c7b58533a976df4b906f9cca8d1fdb75c8c221f"
+    },
+    {
+      "path": "/orderflow/benchmark.png",
+      "status": 200,
+      "bytes": 89542,
+      "sha256": "866266c05b3b101ae361714d143b48473bdc9a6b5ca8924e85527190cea391ae",
+      "content_type": "image/png",
+      "matches_committed_blob": true,
+      "committed_sha256": "866266c05b3b101ae361714d143b48473bdc9a6b5ca8924e85527190cea391ae",
+      "matches_reviewed_artifact": true,
+      "reviewed_sha256": "866266c05b3b101ae361714d143b48473bdc9a6b5ca8924e85527190cea391ae"
+    },
+    {
+      "path": "/orderflow/benchmark-audit.json",
+      "status": 200,
+      "bytes": 30501,
+      "sha256": "412c4eccacef0ce8505334a349cdf1df34d939bb83eb67c5504d0d0a65f46b05",
+      "content_type": "application/json; charset=utf-8",
+      "matches_committed_blob": true,
+      "committed_sha256": "412c4eccacef0ce8505334a349cdf1df34d939bb83eb67c5504d0d0a65f46b05",
+      "matches_reviewed_artifact": false,
+      "reviewed_sha256": "d95de7ca69b3968a78ea6dcf3cdd1b760fb1f3a4936858d7ae88381fc30946a7"
+    },
+    {
+      "path": "/orderflow/demo.mp4",
+      "status": 200,
+      "bytes": 1313911,
+      "sha256": "d51cd08bb654cbc229d0681d146a936f00eba38056868680186cd2d8954b73e9",
+      "content_type": "video/mp4",
+      "matches_committed_blob": true,
+      "committed_sha256": "d51cd08bb654cbc229d0681d146a936f00eba38056868680186cd2d8954b73e9",
+      "matches_reviewed_artifact": true,
+      "reviewed_sha256": "d51cd08bb654cbc229d0681d146a936f00eba38056868680186cd2d8954b73e9"
+    },
+    {
+      "path": "/NIRAJMOHABEY_AI.pdf",
+      "status": 200,
+      "bytes": 133118,
+      "sha256": "d9bf41d6429b661e1a10ae96a5716473e1bb2110828c65a60fdc490be1b5df9e",
+      "content_type": "application/pdf",
+      "matches_committed_blob": true,
+      "committed_sha256": "d9bf41d6429b661e1a10ae96a5716473e1bb2110828c65a60fdc490be1b5df9e",
+      "matches_reviewed_artifact": true,
+      "reviewed_sha256": "d9bf41d6429b661e1a10ae96a5716473e1bb2110828c65a60fdc490be1b5df9e"
+    }
+  ],
+  "evidence_flags": {
+    "benchmark": null,
+    "sourcePublic": false,
+    "core": 104,
+    "large_trials_passed": 5,
+    "large_trials_total": 6
+  },
+  "scope": "Actual publicHTTP200 and exact committed/reviewed static artifacts; partial workload audit remains separate from verified application behavior."
+}

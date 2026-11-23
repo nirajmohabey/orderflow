@@ -1,0 +1,36 @@
+{
+  "recorded_at": "2026-11-23T12:16:41.001808+00:00",
+  "passed": true,
+  "base": "http://127.0.0.1:3128",
+  "preview_pid": 751132,
+  "orderflow": {
+    "passed": 76,
+    "total": 76,
+    "source_stable": true
+  },
+  "resolvelab": {
+    "passed": 39,
+    "total": 39
+  },
+  "accessibility": {
+    "states": 6,
+    "violations": 0
+  },
+  "benchmark_field": null,
+  "partial_audit": {
+    "passed": 5,
+    "failed": 1,
+    "gate_status": "not_verified"
+  },
+  "copied_artifacts": {
+    "public/orderflow/benchmark-analysis.html": "cbb0de4dd67e1834efc154eb5c7b58533a976df4b906f9cca8d1fdb75c8c221f",
+    "public/orderflow/benchmark.png": "866266c05b3b101ae361714d143b48473bdc9a6b5ca8924e85527190cea391ae",
+    "public/orderflow/benchmark-audit.json": "d95de7ca69b3968a78ea6dcf3cdd1b760fb1f3a4936858d7ae88381fc30946a7"
+  },
+  "review": {
+    "server_rendering": "Static trusted local evidence; no new client directive, hook, fetch waterfall or privileged API mutation.",
+    "accessibility": "Semantic audit heading/descriptive links; actual HTML selectors checked by mouse/keyboard, contained mobile tables,6boundedaxe states0violations.",
+    "claim_boundaries": "Originalfailedtrial remainsfalse; missingoriginalstatusescaveatandquota visible; partiallargeseries hasnoaggregate median andcentralbenchmarknull.",
+    "limitations": "Manual condensed React review plus recorded build/browser/a11y evidence; not fullWCAG/performance/security certification."
+  }
+}

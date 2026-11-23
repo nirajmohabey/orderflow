@@ -1,0 +1,108 @@
+{
+  "recorded_at": "2026-11-23T12:21:05.465589+00:00",
+  "passed": true,
+  "portfolio_commit": "58bc4ceadb4963d136fbc75c0382b08c3978ddd7",
+  "public_base": "https://portfolio-niraj-mohabeys-projects.vercel.app",
+  "public_case_study": "https://portfolio-niraj-mohabeys-projects.vercel.app/projects/orderflow",
+  "public_analysis": "https://portfolio-niraj-mohabeys-projects.vercel.app/orderflow/benchmark-analysis.html",
+  "deployment": {
+    "context": "Vercel",
+    "state": "success",
+    "target_url": "https://vercel.com/niraj-mohabeys-projects/portfolio/8rK1761tgqWoLQiXwhBpa28AcYCo"
+  },
+  "checks": {
+    "orderflow": {
+      "passed": 76,
+      "total": 76,
+      "source_stable": true
+    },
+    "resolvelab": {
+      "passed": 39,
+      "total": 39
+    },
+    "accessibility": {
+      "states": 6,
+      "automated_violations": 0
+    }
+  },
+  "evidence_flags": {
+    "benchmark": null,
+    "sourcePublic": false,
+    "core": 104,
+    "large_trials_passed": 5,
+    "large_trials_total": 6
+  },
+  "preview_cleanup": {
+    "passed": true,
+    "stopped_ports": [
+      3117,
+      3118,
+      3128
+    ],
+    "native_api_listener_ownership_unchanged": true
+  },
+  "investigations": "Initial direct HTML/JSON byte comparisons reflect only Git CRLF/LF normalization; exact committed bytes and canonical reviewed text match. Initial preview path guard protected the .bin/../next process until its canonical owned path was verified. Initial artifacts remain retained.",
+  "evidence_files": {
+    "accessibility.json": {
+      "sha256": "44c6dc73fe8660cb1e65aceb8442b6f7e3f0f6bbda3f09c70aeecb0824ebd184",
+      "bytes": 747
+    },
+    "analysis-desktop.png": {
+      "sha256": "fbaf1c5286005d34376e0e915dcaf575f431c4ad8fa49bceca76ee5bfb05b98e",
+      "bytes": 87802
+    },
+    "analysis-mobile.png": {
+      "sha256": "cce97afc85bf5d2ec07d42a790a1a8f8fa362d37c6cf14855b33bd0e4cb9686a",
+      "bytes": 41218
+    },
+    "audit-link-desktop.png": {
+      "sha256": "50eef7f88ff6d5c6efc68cee4a88580b8d850fd3fd27cc20978aad540eea3dfb",
+      "bytes": 48088
+    },
+    "audit-link-mobile.png": {
+      "sha256": "e7e57628a21323684896009960700cf949607b21e7fd977207dd0221d63e2156",
+      "bytes": 50528
+    },
+    "case-study-1440.png": {
+      "sha256": "2e65922165804fd19ade2e2a676d7c436a26c31103365d2a2b46001d6aa52eb6",
+      "bytes": 107548
+    },
+    "case-study-375.png": {
+      "sha256": "98208d6d00df2a07aff555525ea97537e14f4b25cd5c122be9b1574a99d163a6",
+      "bytes": 79449
+    },
+    "feature-desktop.png": {
+      "sha256": "9dff6d6dd36cac5ce678009f5dba8df4e29089c2f982e520b5013b2d53e9a1c1",
+      "bytes": 137638
+    },
+    "feature-mobile.png": {
+      "sha256": "862a56321e307f6fde93b72967da732091182e23525e8a2a7629cc7f72b9d0f9",
+      "bytes": 87657
+    },
+    "orderflow-results.json": {
+      "sha256": "9c0c927efb58b03c0fb2895e508c19788afec7c565bbdc1464d157534cbfde14",
+      "bytes": 8493
+    },
+    "preview-cleanup-initial.json": {
+      "sha256": "98e21a55b2f694cb81df770cbf7bc12c07f865e9f8e1af4826b000299ca7169d",
+      "bytes": 1288
+    },
+    "preview-cleanup.json": {
+      "sha256": "9e6cebf55a5b1c680517f5ba96c134308e00172745233fa6afbef750f0613686",
+      "bytes": 1236
+    },
+    "public-http-initial-byte-comparison.json": {
+      "sha256": "88de83f3fcfed18bfe395f4914f8abe3cc13515cae2e439b15654f1d5c4ad655",
+      "bytes": 4319
+    },
+    "public-http-provenance.json": {
+      "sha256": "5dd22377b709c71113b7e89bc3f76eee4c8fbecabe2031d3c68b3656ff3312aa",
+      "bytes": 5254
+    },
+    "resolvelab-results.json": {
+      "sha256": "02f44f478a3b982c878db38f83dd0ef06ab7aaa46404aa1367b5f0a6137eee16",
+      "bytes": 3250
+    }
+  },
+  "scope": "Public presentation, media, resume, scoped project chat and six recorded accessibility states. Benchmark remains not_verified; source stays private; no hosted OrderFlow runtime or full WCAG claim."
+}

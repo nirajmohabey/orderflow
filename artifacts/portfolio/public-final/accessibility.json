@@ -1,0 +1,31 @@
+{
+  "recordedAt": "2026-11-23T12:19:13.447Z",
+  "base": "https://portfolio-niraj-mohabeys-projects.vercel.app",
+  "scans": [
+    {
+      "name": "desktop OrderFlow feature",
+      "violations": []
+    },
+    {
+      "name": "desktop case study with partial audit",
+      "violations": []
+    },
+    {
+      "name": "mobile case study with partial audit",
+      "violations": []
+    },
+    {
+      "name": "200 percent text case study with partial audit",
+      "violations": []
+    },
+    {
+      "name": "desktop partial100k audit",
+      "violations": []
+    },
+    {
+      "name": "mobile completed10k audit",
+      "violations": []
+    }
+  ],
+  "limitation": "Automated scans of these recorded states do not establish full WCAG conformance."
+}

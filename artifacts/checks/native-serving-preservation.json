@@ -1,6 +1,6 @@
 {
   "before": {
-    "recorded_at": "2026-11-23T11:29:25.717938+00:00",
+    "recorded_at": "2026-11-23T11:57:46.998962+00:00",
     "database": "orderflow",
     "host": "127.0.0.1",
     "port": 55449,
@@ -96,8 +96,8 @@
         "sha256": "63e2628a0887df69cf5fe458343cbef62474beac5b84679bf9b56c9dbfa29331"
       },
       "request_budgets": {
-        "rows": 26,
-        "sha256": "b3148bf35132fe3779371ef2371023c9fb4951bd7ec5d3e7c4ca3f0c029dffb8"
+        "rows": 32,
+        "sha256": "94cfabc4c65d08c16bb844fe4d2649afd83ea4b05a9222bad7dfa8e62cb6a446"
       },
       "source_authorities": {
         "rows": 3,
@@ -118,7 +118,7 @@
     }
   },
   "after": {
-    "recorded_at": "2026-11-23T11:33:18.219228+00:00",
+    "recorded_at": "2026-11-23T12:00:13.047372+00:00",
     "database": "orderflow",
     "host": "127.0.0.1",
     "port": 55449,
@@ -214,8 +214,8 @@
         "sha256": "63e2628a0887df69cf5fe458343cbef62474beac5b84679bf9b56c9dbfa29331"
       },
       "request_budgets": {
-        "rows": 26,
-        "sha256": "b3148bf35132fe3779371ef2371023c9fb4951bd7ec5d3e7c4ca3f0c029dffb8"
+        "rows": 32,
+        "sha256": "94cfabc4c65d08c16bb844fe4d2649afd83ea4b05a9222bad7dfa8e62cb6a446"
       },
       "source_authorities": {
         "rows": 3,

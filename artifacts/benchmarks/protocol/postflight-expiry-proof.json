@@ -1,0 +1,70 @@
+{
+  "recorded_at": "2026-11-23T12:11:32.236553+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "name": "real fixture sign-in succeeds",
+      "passed": true
+    },
+    {
+      "name": "equivalent older-than30min fixture bearer is rejected",
+      "passed": true
+    },
+    {
+      "name": "alpha-operator fresh sign-in succeeds",
+      "passed": true
+    },
+    {
+      "name": "alpha-operator fresh bearer accesses overview",
+      "passed": true
+    },
+    {
+      "name": "beta-operator fresh sign-in succeeds",
+      "passed": true
+    },
+    {
+      "name": "beta-operator fresh bearer accesses overview",
+      "passed": true
+    },
+    {
+      "name": "new owned Beta event durably accepted",
+      "passed": true
+    },
+    {
+      "name": "fresh Beta token reads the actual existing event",
+      "passed": true
+    },
+    {
+      "name": "fresh Alpha token receives404 for actual Beta event",
+      "passed": true
+    },
+    {
+      "name": "selected104-test source inputs unchanged",
+      "passed": true
+    },
+    {
+      "name": "only the fresh owned verification database was removed",
+      "passed": true
+    }
+  ],
+  "http_statuses": {
+    "expired_bearer_overview": 401,
+    "alpha-operator_fresh_signin": 200,
+    "alpha-operator_fresh_overview": 200,
+    "beta-operator_fresh_signin": 200,
+    "beta-operator_fresh_overview": 200,
+    "beta_own_event": 200,
+    "alpha_cross_tenant_event": 404
+  },
+  "selected_source_sha256": "323f194ea7e9f2a0282ce7253054bf980a3ed7e3bb17b10976a9ee53ddc41217",
+  "selected_source_unchanged": true,
+  "owned_database_removed": true,
+  "proof_script_sha256": "152cc64c94a39bac016271370ce698d2c972df9d1230b21ff34bffa29713a534",
+  "future_harness_sha256": "cc645a431500b97573f291b9f1d48c335f534c3539dcad485655b6e29e187631",
+  "scope": "One separate native real-PostgreSQL/loopback-HTTP expiry/refresh/tenant proof, not an added test in the selected104 suite or a rerun of100k.",
+  "limitations": [
+    "Old v1 reports retain their actual false postflight booleans; the missing contemporaneous HTTP statuses are not reconstructed.",
+    "This bounded reproduction establishes expiry and fresh-login behavior; it does not promote a failed or incomplete benchmark matrix.",
+    "The expired synthetic token preserves the real30min lifetime but backdates issuance/expiry; system clocks and auth source are unchanged."
+  ]
+}

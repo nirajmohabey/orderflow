@@ -154,6 +154,8 @@ Evidence entry points:
 
 The CI workflow is [.github/workflows/acceptance.yml](.github/workflows/acceptance.yml). A committed workflow is configuration; inspect its run evidence before claiming a remote green run. Core/API, pipeline, independent-oracle, recovery, browser, and accessibility counts are different denominators and must not be summed into one quality score.
 
+The recorded v1 benchmark remains historical evidence: its complete10k gate passed, but the100k matrix is not verified. One completed timed workload exceeded the30-minute fixture-token lifetime and failed its final authenticated API assertions; that failed result is preserved. A quota-blocked retry was not replaced with invented evidence. The versioned future harness obtains fresh credentials after timing and requires its own new full gate. See [analysis/README.md](analysis/README.md) for the limitation, separate expiry reproduction, and future v2 commands.
+
 ## Scope, hosting, and source visibility
 
 All retailer identities, source records, inventory references, and measured workloads are synthetic. Local and container verification establishes the recorded behavior, not customer adoption, unattended production readiness, or business lift. Automated accessibility scans cover recorded states and do not establish full WCAG conformance.

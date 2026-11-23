@@ -1,0 +1,11 @@
+{
+  "scope": "Versioned future analysis harness only; no mixed compatibility, original promotion or executed v2 performance claim.",
+  "original_benchmark_sha256": "bf9a8d7da1d7fb2e448c2da8a89d02fc4de30ba7db4204b83a8176bf3198d644",
+  "future_harness_sha256": "cc645a431500b97573f291b9f1d48c335f534c3539dcad485655b6e29e187631",
+  "focused_proof_script_sha256": "152cc64c94a39bac016271370ce698d2c972df9d1230b21ff34bffa29713a534",
+  "diff_sha256": "11cec0c1f7cf86b759df429db52483f7f60ce8a7ea18a34f0e918d6b43646d96",
+  "selected_source_sha256": "323f194ea7e9f2a0282ce7253054bf980a3ed7e3bb17b10976a9ee53ddc41217",
+  "selected_source_restored": true,
+  "original_failed_report_sha256": "ebc2514c7d4e1586f46b08b2fe8ab21f2f55824f0d95f81457dfb08a13609b6a",
+  "benchmark_complete": false
+}

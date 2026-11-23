@@ -1,0 +1,336 @@
+{
+  "recorded_at": "2026-11-23T12:19:06.547Z",
+  "base": "https://portfolio-niraj-mohabeys-projects.vercel.app",
+  "checks": [
+    {
+      "name": "homepage HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "ResolveLab remains before OrderFlow",
+      "passed": true
+    },
+    {
+      "name": "OrderFlow case-study link",
+      "passed": true
+    },
+    {
+      "name": "feature reads central evidence",
+      "passed": true
+    },
+    {
+      "name": "project cards preserve priority",
+      "passed": true
+    },
+    {
+      "name": "case accordion keyboard opens",
+      "passed": true
+    },
+    {
+      "name": "case accordion has control relationship",
+      "passed": true
+    },
+    {
+      "name": "case accordion keyboard closes",
+      "passed": true
+    },
+    {
+      "name": "homepage no overflow 375",
+      "passed": true
+    },
+    {
+      "name": "case-study HTTP 200 375",
+      "passed": true
+    },
+    {
+      "name": "case-study no overflow 375",
+      "passed": true
+    },
+    {
+      "name": "single semantic main and h1 375",
+      "passed": true
+    },
+    {
+      "name": "keyboard validation anchor 375",
+      "passed": true
+    },
+    {
+      "name": "homepage no overflow 768",
+      "passed": true
+    },
+    {
+      "name": "case-study HTTP 200 768",
+      "passed": true
+    },
+    {
+      "name": "case-study no overflow 768",
+      "passed": true
+    },
+    {
+      "name": "single semantic main and h1 768",
+      "passed": true
+    },
+    {
+      "name": "keyboard validation anchor 768",
+      "passed": true
+    },
+    {
+      "name": "homepage no overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "case-study HTTP 200 1440",
+      "passed": true
+    },
+    {
+      "name": "case-study no overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "single semantic main and h1 1440",
+      "passed": true
+    },
+    {
+      "name": "keyboard validation anchor 1440",
+      "passed": true
+    },
+    {
+      "name": "case-study metadata",
+      "passed": true
+    },
+    {
+      "name": "canonical path",
+      "passed": true
+    },
+    {
+      "name": "check scope: core",
+      "passed": true
+    },
+    {
+      "name": "check scope: pipeline",
+      "passed": true
+    },
+    {
+      "name": "check scope: airflow",
+      "passed": true
+    },
+    {
+      "name": "check scope: dbt",
+      "passed": true
+    },
+    {
+      "name": "check scope: fixture",
+      "passed": true
+    },
+    {
+      "name": "check scope: recovery",
+      "passed": true
+    },
+    {
+      "name": "check scope: destination",
+      "passed": true
+    },
+    {
+      "name": "check scope: live",
+      "passed": true
+    },
+    {
+      "name": "check scope: mock",
+      "passed": true
+    },
+    {
+      "name": "pipeline count is explicitly a subset",
+      "passed": true
+    },
+    {
+      "name": "Airflow and dbt denominators stay distinct",
+      "passed": true
+    },
+    {
+      "name": "security shows selected dependency and OS scopes",
+      "passed": true
+    },
+    {
+      "name": "unavailable fixes are not presented as harmless",
+      "passed": true
+    },
+    {
+      "name": "unfinished benchmark has no numerical section",
+      "passed": true
+    },
+    {
+      "name": "security detail artifact",
+      "passed": true
+    },
+    {
+      "name": "partial workload audit link is explicit",
+      "passed": true
+    },
+    {
+      "name": "partial verification is not promoted to a complete benchmark",
+      "passed": true
+    },
+    {
+      "name": "partial audit asset /orderflow/benchmark-analysis.html",
+      "passed": true
+    },
+    {
+      "name": "partial audit asset /orderflow/benchmark-audit.json",
+      "passed": true
+    },
+    {
+      "name": "partial audit asset /orderflow/benchmark.png",
+      "passed": true
+    },
+    {
+      "name": "grounded chat discloses incomplete large verification",
+      "passed": true
+    },
+    {
+      "name": "explicit local synthetic limits",
+      "passed": true
+    },
+    {
+      "name": "private source has no repository CTA",
+      "passed": true
+    },
+    {
+      "name": "silent controlled video",
+      "passed": true
+    },
+    {
+      "name": "recorded demo plays",
+      "passed": true
+    },
+    {
+      "name": "asset /orderflow/evidence.json",
+      "passed": true
+    },
+    {
+      "name": "asset /orderflow/overview.png",
+      "passed": true
+    },
+    {
+      "name": "asset /orderflow/demo.mp4",
+      "passed": true
+    },
+    {
+      "name": "asset /orderflow/history.png",
+      "passed": true
+    },
+    {
+      "name": "asset /orderflow/reports.png",
+      "passed": true
+    },
+    {
+      "name": "asset /orderflow/inventory.png",
+      "passed": true
+    },
+    {
+      "name": "sitemap includes OrderFlow",
+      "passed": true
+    },
+    {
+      "name": "llms includes OrderFlow URL",
+      "passed": true
+    },
+    {
+      "name": "grounded chat: What is OrderFlow?",
+      "passed": true
+    },
+    {
+      "name": "grounded chat: How does OrderFlow work?",
+      "passed": true
+    },
+    {
+      "name": "grounded chat: How was OrderFlow validated?",
+      "passed": true
+    },
+    {
+      "name": "grounded chat: What are OrderFlow limitations?",
+      "passed": true
+    },
+    {
+      "name": "grounded chat: How does OrderFlow handle inventory failures?",
+      "passed": true
+    },
+    {
+      "name": "OrderFlow contextual follow-up",
+      "passed": true
+    },
+    {
+      "name": "ResolveLab remains chat flagship",
+      "passed": true
+    },
+    {
+      "name": "OrderFlow appears in relevant portfolio topic: What case studies can I read?",
+      "passed": true
+    },
+    {
+      "name": "OrderFlow appears in relevant portfolio topic: Tell me about data engineering",
+      "passed": true
+    },
+    {
+      "name": "partial audit page HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "partial audit preserves failed original outcome",
+      "passed": true
+    },
+    {
+      "name": "partial audit workload selector",
+      "passed": true
+    },
+    {
+      "name": "partial audit keyboard workload selector",
+      "passed": true
+    },
+    {
+      "name": "partial audit mobile page contains table overflow",
+      "passed": true
+    },
+    {
+      "name": "partial audit JSON retains nonpassing benchmark gate",
+      "passed": true
+    },
+    {
+      "name": "200 percent text has no page overflow",
+      "passed": true
+    },
+    {
+      "name": "no uncaught browser errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "no broken local responses",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "failedRequests": [],
+  "passed": 76,
+  "total": 76,
+  "source_hashes": {
+    "content/orderflow.ts": "015ddf0cd4d5dfa7c7ab5b4b7ea8c5d16d4745fa4435a97932fa92f193f6f1c0",
+    "components/orderflow-feature.tsx": "14aee1f4880fe3329c3850022c37085177cbf16e2fb4d95e519e9698076d2218",
+    "components/orderflow-validation.tsx": "93251fbc28bf1543ac89c4d7102bb3b2d3b1c647d884ecd8628c718867d45956",
+    "components/hero.tsx": "b0a930869ba224e47e57fcd52391f3bea9239cfef770e6d87b5abb249e39f56d",
+    "content/config.ts": "9b44784f056b4411a763b999e4a55f98a05c1ca48420fb4633c2477773182848",
+    "app/projects/orderflow/page.tsx": "75e68254e0a707c70ff18bc69267d965fc4fa015a928176b205d1465064344c5",
+    "app/api/chat/route.ts": "6a6db3a1517ec791085380d3851853481405c21d3fd50ef96f2a4f14d452a2f6",
+    "app/sitemap.ts": "1669078e37f7a0a47321f832294ace29c6879380ef1b695a0890320e96e61fdb",
+    "app/llms.txt/route.ts": "f94451b202b7361e9d77041a49d2559c401eb4517141cbb86f4e6657a71f33a3",
+    "data/projects/orderflow.md": "a4ae127cd75dd87d416399731227e87226e5909df9fd762d8092be9156bfd711",
+    "public/orderflow/evidence.json": "dbc035a9682e1917157022c0e908aa0b941ac4dd7522fe3664e30ff5f648d1e6",
+    "public/orderflow/security-review.json": "290f6dc98dec689118d09f238c145e115d30c02a108e9b005abff253c889e5c8",
+    "public/orderflow/benchmark-analysis.html": "cbb0de4dd67e1834efc154eb5c7b58533a976df4b906f9cca8d1fdb75c8c221f",
+    "public/orderflow/benchmark-audit.json": "d95de7ca69b3968a78ea6dcf3cdd1b760fb1f3a4936858d7ae88381fc30946a7",
+    "public/orderflow/benchmark.png": "866266c05b3b101ae361714d143b48473bdc9a6b5ca8924e85527190cea391ae",
+    "public/orderflow/demo.mp4": "d51cd08bb654cbc229d0681d146a936f00eba38056868680186cd2d8954b73e9",
+    "scripts/check-orderflow.mjs": "3370e402c4381c20601327371221762b8d836c67352fb15d590a44b3d9a44522"
+  },
+  "source_stable": true
+}

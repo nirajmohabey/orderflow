@@ -1,0 +1,173 @@
+{
+  "checks": [
+    {
+      "name": "home HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "flagship exists",
+      "passed": true
+    },
+    {
+      "name": "flagship metrics use JSON",
+      "passed": true
+    },
+    {
+      "name": "case study CTA",
+      "passed": true
+    },
+    {
+      "name": "accordion keyboard opens",
+      "passed": true
+    },
+    {
+      "name": "accordion keyboard closes",
+      "passed": true
+    },
+    {
+      "name": "home no horizontal overflow 375",
+      "passed": true
+    },
+    {
+      "name": "home no horizontal overflow 768",
+      "passed": true
+    },
+    {
+      "name": "home no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "case study HTTP 200 375",
+      "passed": true
+    },
+    {
+      "name": "case study no horizontal overflow 375",
+      "passed": true
+    },
+    {
+      "name": "case study HTTP 200 768",
+      "passed": true
+    },
+    {
+      "name": "case study no horizontal overflow 768",
+      "passed": true
+    },
+    {
+      "name": "case study HTTP 200 1440",
+      "passed": true
+    },
+    {
+      "name": "case study no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "dedicated page title",
+      "passed": true
+    },
+    {
+      "name": "silent controlled video",
+      "passed": true
+    },
+    {
+      "name": "poster matches evidence",
+      "passed": true
+    },
+    {
+      "name": "demo plays with finite duration",
+      "passed": true
+    },
+    {
+      "name": "resume asset",
+      "passed": true,
+      "detail": 200
+    },
+    {
+      "name": "evidence JSON asset",
+      "passed": true,
+      "detail": 200
+    },
+    {
+      "name": "poster asset",
+      "passed": true,
+      "detail": 200
+    },
+    {
+      "name": "report asset",
+      "passed": true,
+      "detail": 200
+    },
+    {
+      "name": "screenshot 0 asset",
+      "passed": true,
+      "detail": 200
+    },
+    {
+      "name": "screenshot 1 asset",
+      "passed": true,
+      "detail": 200
+    },
+    {
+      "name": "screenshot 2 asset",
+      "passed": true,
+      "detail": 200
+    },
+    {
+      "name": "screenshot 3 asset",
+      "passed": true,
+      "detail": 200
+    },
+    {
+      "name": "analysis 0 asset",
+      "passed": true,
+      "detail": 200
+    },
+    {
+      "name": "analysis 1 asset",
+      "passed": true,
+      "detail": 200
+    },
+    {
+      "name": "analysis 2 asset",
+      "passed": true,
+      "detail": 200
+    },
+    {
+      "name": "sitemap contains case study",
+      "passed": true
+    },
+    {
+      "name": "llms contains flagship",
+      "passed": true
+    },
+    {
+      "name": "chat: What is ResolveLab?",
+      "passed": true
+    },
+    {
+      "name": "chat: How does ResolveLab work?",
+      "passed": true
+    },
+    {
+      "name": "chat: How was ResolveLab evaluated?",
+      "passed": true
+    },
+    {
+      "name": "chat: What are ResolveLab limitations?",
+      "passed": true
+    },
+    {
+      "name": "chat: What is your flagship project?",
+      "passed": true
+    },
+    {
+      "name": "ResolveLab contextual follow-up",
+      "passed": true
+    },
+    {
+      "name": "no uncaught browser errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": []
+}

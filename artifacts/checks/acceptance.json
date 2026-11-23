@@ -1,6 +1,6 @@
 {
-  "started_at": "2026-11-23T11:33:04.111047+00:00",
-  "database": "orderflow_acceptance_2f4adfb38282",
+  "started_at": "2026-11-23T11:59:58.709472+00:00",
+  "database": "orderflow_acceptance_f9405b40e81f",
   "configured_database_reset": false,
   "scope": "In-process HTTP handlers + real PostgreSQL; literal independent fixture oracle, not hosted performance.",
   "observed_tenants": {
@@ -396,7 +396,7 @@
       "passed": true
     }
   ],
-  "finished_at": "2026-11-23T11:33:05.846072+00:00",
+  "finished_at": "2026-11-23T12:00:00.585669+00:00",
   "fixture_sha256": {
     "batch_oracle.json": "395ba9bfd1936aa4e3abd00123d62f8f936de7ad563012fa81a47ac3b57406a6",
     "conflicting_versions.jsonl": "a8119f3c97d88e59a12e82fee50fa6f26f988f963badf4b7043cf58b867526f2",

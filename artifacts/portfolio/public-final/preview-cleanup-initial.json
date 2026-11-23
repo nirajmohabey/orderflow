@@ -1,0 +1,53 @@
+{
+  "records": [
+    {
+      "stopped": true,
+      "port": 3117,
+      "basis": "Verified loopback listener and exact workspace Next.js executable/port command",
+      "pid": 613620
+    },
+    {
+      "stopped": false,
+      "port": 3118,
+      "basis": "Ownership guard did not match; process preserved",
+      "pid": 678332
+    },
+    {
+      "stopped": true,
+      "port": 3128,
+      "basis": "Verified loopback listener and exact workspace Next.js executable/port command",
+      "pid": 751132
+    }
+  ],
+  "native_api_listeners_after": [
+    {
+      "LocalPort": 8000,
+      "OwningProcess": 594492
+    },
+    {
+      "LocalPort": 8010,
+      "OwningProcess": 667488
+    }
+  ],
+  "remaining_preview_listeners": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 3118,
+      "OwningProcess": 678332
+    }
+  ],
+  "scope": "Only verified owned portfolio QA Node previews; no native project API or database process targeted",
+  "native_api_listeners_before": [
+    {
+      "LocalPort": 8000,
+      "OwningProcess": 594492
+    },
+    {
+      "LocalPort": 8010,
+      "OwningProcess": 667488
+    }
+  ],
+  "passed": false,
+  "recorded_at": "2026-11-23T12:20:08.7732008Z",
+  "native_api_listener_ownership_unchanged": true
+}
