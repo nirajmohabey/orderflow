@@ -2,6 +2,7 @@
 from contextlib import contextmanager
 import hashlib
 import json
+import os
 from pathlib import Path
 import threading
 from uuid import UUID
@@ -18,8 +19,9 @@ def get_engine(url=None):
     url = url or Settings.from_env().database_url
     with _lock:
         if url not in _engines:
-            _engines[url] = create_engine(url, pool_pre_ping=True, pool_size=8, max_overflow=8,
-                                         pool_timeout=5, connect_args={"connect_timeout": 5})
+            serverless = os.environ.get("VERCEL") == "1" or os.environ.get("ODF_SERVERLESS") == "true"
+            _engines[url] = create_engine(url, pool_pre_ping=True, pool_size=1 if serverless else 8, max_overflow=1 if serverless else 8,
+                                         pool_recycle=180, pool_timeout=5, connect_args={"connect_timeout": 10 if serverless else 5})
         return _engines[url]
 
 

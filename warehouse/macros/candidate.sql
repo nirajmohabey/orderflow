@@ -12,5 +12,5 @@
   {{ return(value) }}
 {%- endmacro %}
 {% macro candidate_alias(name) -%}
-  {{ return(name ~ '_' ~ checked_uuid(var('run_id'))|replace('-', '')) }}
+  {{ return(name ~ '_' ~ checked_uuid(var('build_id',var('run_id')))|replace('-', '')) }}
 {%- endmacro %}

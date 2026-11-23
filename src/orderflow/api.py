@@ -3,6 +3,8 @@ from contextlib import asynccontextmanager
 import asyncio
 import logging
 import os
+import hmac
+import httpx
 from uuid import UUID, uuid4
 
 from fastapi import Depends, FastAPI, Header, Query, Request
@@ -21,6 +23,7 @@ from . import __version__, service
 from .auth import AuthError, Principal, SourcePrincipal, authenticate_source, fixture_identity, issue_fixture_token, verify_bearer
 from .config import ROOT, Settings
 from .db import get_engine
+from . import neon_auth, hosted_jobs
 from .schemas import ExactModel, RetryRequest, parse_envelope, strict_json
 
 log = logging.getLogger("orderflow.http")
@@ -180,10 +183,24 @@ def auth_config():
         for alias in ("alpha-operator", "alpha-viewer", "beta-operator", "beta-viewer"):
             try:
                 p = fixture_identity(alias)
-                identities.append({"id": alias, "label": alias.replace("-", " · ").title(), "tenant_id": p.tenant_id, "role": p.role})
+                identities.append({"id": alias, "label": alias.replace("-", " Ã‚Â· ").title(), "tenant_id": p.tenant_id, "role": p.role})
             except AuthError:
                 continue
-    return {"mode": "fixture" if enabled else "bearer", "fixture_login_enabled": enabled, "identities": identities}
+    return {"mode": "neon" if settings.neon_auth_url else "fixture" if enabled else "bearer",
+            "configured": bool(settings.neon_auth_url), "auth_base_url": "/auth" if settings.neon_auth_url else None,
+            "fixture_login_enabled": enabled, "identities": identities}
+
+
+@app.api_route("/auth",methods=["GET","POST","OPTIONS"],include_in_schema=False)
+@app.api_route("/auth/{path:path}",methods=["GET","POST","OPTIONS"],include_in_schema=False)
+async def neon_auth_proxy(request: Request,path: str=""):
+    settings=Settings.from_env()
+    if not settings.neon_auth_url:
+        raise service.DomainError(404,"not_found","The requested resource was not found.")
+    try:
+        return await neon_auth.proxy(request,path,settings)
+    except (neon_auth.NeonAuthError, httpx.HTTPError):
+        raise service.DomainError(502,"identity_unavailable","The identity service is temporarily unavailable.") from None
 
 
 class FixtureLogin(ExactModel):
@@ -208,7 +225,9 @@ async def ingest(source_id: UUID, request: Request, p: SourcePrincipal = Depends
         envelope = parse_envelope(await request.body())
     except (ValidationError, ValueError, UnicodeError):
         raise service.DomainError(422, "invalid_envelope", "The event does not match the typed envelope contract.") from None
-    return await run_in_threadpool(service.accept_event, p, envelope)
+    result=await run_in_threadpool(service.accept_event,p,envelope)
+    await hosted_jobs.dispatch_due(p.tenant_id)
+    return result
 
 
 @app.get("/v1/events/{event_id}")
@@ -217,9 +236,11 @@ def event(event_id: UUID, p: Principal = Depends(identity)):
 
 
 @app.post("/v1/events/{event_id}/retry", status_code=202)
-def retry(event_id: UUID, body: RetryRequest, p: Principal = Depends(identity)):
+async def retry(event_id: UUID, body: RetryRequest, p: Principal = Depends(identity)):
     service.rate_limit(p.tenant_id, p.subject, "operator_retry")
-    return service.retry_event(p, event_id, body.reason)
+    result=await run_in_threadpool(service.retry_event,p,event_id,body.reason)
+    await hosted_jobs.dispatch_due(p.tenant_id)
+    return result
 
 
 @app.get("/v1/sources/{source_id}/status")
@@ -295,6 +316,49 @@ def latest_inventory(source_id: UUID | None = None, p: Principal = Depends(ident
 def inventory_history(source_id: UUID | None = None, limit: int = Query(10, ge=1, le=20), p: Principal = Depends(identity)):
     from .pipeline import read_inventory_history
     return read_inventory_history(p.tenant_id, source_id, limit)
+
+
+class DailyJob(ExactModel):
+    source_id: UUID
+    start: str
+    end: str
+    oracle: dict
+
+
+class InventoryJob(ExactModel):
+    source_id: UUID
+    observed_csv: str
+    reference_csv: str
+
+
+@app.post("/v1/jobs/daily",status_code=202)
+async def daily_job(body: DailyJob,p: Principal=Depends(identity),idempotency_key: str|None=Header(default=None)):
+    job=await run_in_threadpool(hosted_jobs.enqueue_request,p,"daily",body.model_dump(mode="json"),idempotency_key)
+    await hosted_jobs.dispatch_due(p.tenant_id)
+    return {"job_id":job,"status_url":"/v1/jobs/"+job}
+
+
+@app.post("/v1/jobs/inventory",status_code=202)
+async def inventory_job(body: InventoryJob,p: Principal=Depends(identity),idempotency_key: str|None=Header(default=None)):
+    job=await run_in_threadpool(hosted_jobs.enqueue_request,p,"inventory",body.model_dump(mode="json"),idempotency_key)
+    await hosted_jobs.dispatch_due(p.tenant_id)
+    return {"job_id":job,"status_url":"/v1/jobs/"+job}
+
+
+@app.get("/v1/jobs/{job_id}")
+def hosted_job_status(job_id: UUID,p: Principal=Depends(identity)):
+    return hosted_jobs.job_status(p,job_id)
+
+
+@app.get("/_internal/outbox",include_in_schema=False)
+async def repair_outbox(request: Request):
+    secret=os.environ.get("CRON_SECRET","")
+    if len(secret)<32 or not hmac.compare_digest(request.headers.get("authorization",""),"Bearer "+secret):
+        raise AuthError(404,"not_found","The requested resource was not found.")
+    count=0
+    for tenant in Settings.from_env().worker_tenants:
+        count+=await hosted_jobs.dispatch_due(tenant)
+    return {"published":count,"operation":"outbox_dispatch_only"}
 
 
 dist = ROOT / "dashboard/dist"

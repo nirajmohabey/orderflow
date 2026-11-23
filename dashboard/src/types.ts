@@ -15,6 +15,8 @@ export type Session = {
 };
 export type Config = {
   mode: string;
+  configured?: boolean;
+  auth_base_url?: string;
   fixture_login_enabled: boolean;
   identities: { id: string; label: string; tenant_id: string; role: string }[];
 };

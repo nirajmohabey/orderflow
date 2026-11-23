@@ -1,4 +1,4 @@
-"""Finite snapshot → immutable exports → real dbt checks → last-good pointer."""
+"""Finite snapshot ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ immutable exports ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ real dbt checks ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ last-good pointer."""
 from datetime import datetime, timedelta, timezone
 import hashlib
 import json
@@ -14,7 +14,7 @@ from sqlalchemy.exc import IntegrityError
 
 from .connectors import ConnectorError, MAX_CSV_BYTES, parse_inventory
 from .db import get_engine, primitive, tenant_transaction
-from .objects import LocalObjectStore, ObjectError
+from .objects import LocalObjectStore, PostgresObjectStore, ObjectError
 
 ROOT = Path(__file__).resolve().parents[2]
 REQUIRED_TESTS = {"order_reconciliation", "total_reconciliation", "expectation_row_count", "history_nonoverlap",
@@ -39,24 +39,38 @@ def timestamp(value):
     return value.astimezone(timezone.utc)
 
 
-def object_store():
+def object_store(tenant_id=None):
+    if os.environ.get("ODF_OBJECT_STORAGE") == "postgres":
+        if tenant_id is None: raise PipelineError("object_tenant_required")
+        return PostgresObjectStore(tenant_id)
+    if os.environ.get("VERCEL") == "1": raise PipelineError("durable_object_storage_required")
     return LocalObjectStore(os.environ.get("ODF_OBJECT_ROOT", str(ROOT / ".runtime/objects")))
 
 
-def start_run(tenant_id, source_id, start, end):
+def start_run(tenant_id, source_id, start, end, *, run_id=None):
     start, end = timestamp(start), timestamp(end)
     if end <= start or end - start > timedelta(days=31):
         raise PipelineError("invalid_interval")
-    run_id = str(uuid4())
+    run_id = str(UUID(str(run_id))) if run_id else str(uuid4())
     with tenant_transaction(tenant_id, actor_subject="pipeline", role="pipeline") as conn:
         source = conn.execute(text("SELECT connector_type FROM orderflow.sources WHERE tenant_id=:t AND source_id=:s AND enabled"),
                               {"t": str(tenant_id), "s": str(source_id)}).scalar_one_or_none()
         if source is None:
             raise PipelineError("source_not_available")
         conn.execute(text("""INSERT INTO orderflow.ingestion_runs(tenant_id,run_id,source_id,status,interval_start,interval_end,started_at)
-            VALUES(:t,:r,:s,'running',:start,:end,clock_timestamp())"""),
+            VALUES(:t,:r,:s,'running',:start,:end,clock_timestamp()) ON CONFLICT DO NOTHING"""),
             {"t": str(tenant_id), "r": run_id, "s": str(source_id), "start": start, "end": end})
+        existing=conn.execute(text("SELECT source_id,interval_start,interval_end FROM orderflow.ingestion_runs WHERE tenant_id=:t AND run_id=:r"), {"t":str(tenant_id),"r":run_id}).one()
+        if str(existing[0])!=str(source_id) or existing[1]!=start or existing[2]!=end: raise PipelineError("run_identity_conflict")
     return run_id
+
+
+def _assert_job_fence(conn, tenant_id, lease):
+    if lease is None: return
+    job_id, token=lease
+    row=conn.execute(text("SELECT 1 FROM orderflow.hosted_jobs WHERE tenant_id=:t AND job_id=:j AND status='running' AND lease_token=:token AND lease_until>clock_timestamp() FOR UPDATE"),
+                     {"t":str(tenant_id),"j":str(job_id),"token":str(token)}).one_or_none()
+    if row is None: raise PipelineError("job_lease_lost")
 
 
 def _check(conn, tenant_id, run_id, name, status, observed=None, expected=None):
@@ -65,8 +79,9 @@ def _check(conn, tenant_id, run_id, name, status, observed=None, expected=None):
         {"t": str(tenant_id), "r": str(run_id), "name": name[:200], "status": status, "observed": observed, "expected": expected})
 
 
-def fail_run(tenant_id, run_id, code):
+def fail_run(tenant_id, run_id, code, *, lease=None):
     with tenant_transaction(tenant_id, actor_subject="pipeline", role="pipeline") as conn:
+        _assert_job_fence(conn,tenant_id,lease)
         conn.execute(text("""UPDATE orderflow.ingestion_runs SET status='failed',finished_at=clock_timestamp(),failure_code=:code
             WHERE tenant_id=:t AND run_id=:r AND status IN ('queued','running')"""), {"t": str(tenant_id), "r": str(run_id), "code": code[:100]})
         conn.execute(text("""UPDATE orderflow.report_candidates SET status='failed' WHERE tenant_id=:t AND run_id=:r
@@ -113,37 +128,43 @@ def load_oracle(path, tenant_id):
             "order_count": oracle["order_count"], "order_total_minor": oracle["order_total_minor"]}
 
 
-def stage_daily(tenant_id, source_id, start, end, oracle_path, *, store=None, fault=None):
+def stage_daily(tenant_id, source_id, start, end, oracle_path, *, store=None, fault=None, run_id=None, lease=None):
     tenant_id, source_id = str(UUID(str(tenant_id))), str(UUID(str(source_id)))
     start, end = timestamp(start), timestamp(end)
     if end-start != timedelta(days=1) or start.time() != datetime.min.time():
         raise PipelineError("fixed_daily_interval_required")
     oracle = load_oracle(oracle_path, tenant_id)
-    store = store or object_store()
-    run_id = start_run(tenant_id, source_id, start, end)
+    store = store or object_store(tenant_id)
+    run_id = start_run(tenant_id, source_id, start, end, run_id=run_id)
     try:
         with tempfile.TemporaryDirectory(prefix="orderflow-export-") as temporary:
             files = []
             with tenant_transaction(tenant_id, actor_subject="pipeline", role="pipeline") as conn:
+                _assert_job_fence(conn,tenant_id,lease)
                 p = {"t": tenant_id, "r": run_id, "end": end}
                 conn.execute(text("INSERT INTO orderflow.report_locks(tenant_id,report_key) VALUES(:t,'daily') ON CONFLICT DO NOTHING"), p)
                 conn.execute(text("SELECT 1 FROM orderflow.report_locks WHERE tenant_id=:t AND report_key='daily' FOR UPDATE"), p)
                 currency = conn.execute(text("SELECT currency FROM orderflow.tenants WHERE tenant_id=:t"), p).scalar_one().strip()
                 if any(row["currency"] != currency for row in oracle["orders"]):
                     raise PipelineError("oracle_currency_mismatch")
-                conn.execute(text("""INSERT INTO orderflow.report_candidates(tenant_id,run_id,status,oracle_sha256,project_sha256)
-                    VALUES(:t,:r,'staging',:oracle,:project)"""), {**p, "oracle": hashlib.sha256(encoded(oracle)).hexdigest(), "project": _project_hash()})
-                conn.execute(text("""INSERT INTO orderflow.pipeline_expectations(tenant_id,run_id,order_total_minor,order_count,currency)
-                    VALUES(:t,:r,:total,:count,:currency)"""), {**p, "total": oracle["order_total_minor"], "count": oracle["order_count"], "currency": currency})
-                if oracle["orders"]:
-                    conn.execute(text("""INSERT INTO orderflow.pipeline_expected_orders(tenant_id,run_id,entity_id,entity_version,total_minor,currency,status)
-                        VALUES(:t,:r,:entity_id,:entity_version,:total_minor,:currency,:status)"""), [{**p, **row} for row in oracle["orders"]])
-                # One INSERT SELECT is one PostgreSQL snapshot. Late materialized
-                # versions already committed are included regardless of arrival day.
-                conn.execute(text("""INSERT INTO orderflow.pipeline_snapshot_rows
-                    (tenant_id,run_id,entity_type,entity_id,entity_version,source_id,event_id,effective_at,payload)
-                    SELECT tenant_id,:r,entity_type,entity_id,entity_version,source_id,event_id,effective_at,payload
-                    FROM orderflow.entity_revisions WHERE tenant_id=:t AND effective_at<:end"""), p)
+                prior=conn.execute(text("SELECT status,manifest,oracle_sha256,project_sha256 FROM orderflow.report_candidates WHERE tenant_id=:t AND run_id=:r"),p).mappings().one_or_none()
+                if prior and (prior['oracle_sha256']!=hashlib.sha256(encoded(oracle)).hexdigest() or prior['project_sha256']!=_project_hash()): raise PipelineError("run_identity_conflict")
+                if prior and prior['manifest'] is not None: return {"tenant_id":tenant_id,"run_id":run_id}
+                if prior and prior['status']!='staging': raise PipelineError("candidate_not_staged")
+                if prior is None:
+                    conn.execute(text("""INSERT INTO orderflow.report_candidates(tenant_id,run_id,status,oracle_sha256,project_sha256)
+                        VALUES(:t,:r,'staging',:oracle,:project)"""), {**p, "oracle": hashlib.sha256(encoded(oracle)).hexdigest(), "project": _project_hash()})
+                    conn.execute(text("""INSERT INTO orderflow.pipeline_expectations(tenant_id,run_id,order_total_minor,order_count,currency)
+                        VALUES(:t,:r,:total,:count,:currency)"""), {**p, "total": oracle["order_total_minor"], "count": oracle["order_count"], "currency": currency})
+                    if oracle["orders"]:
+                        conn.execute(text("""INSERT INTO orderflow.pipeline_expected_orders(tenant_id,run_id,entity_id,entity_version,total_minor,currency,status)
+                            VALUES(:t,:r,:entity_id,:entity_version,:total_minor,:currency,:status)"""), [{**p, **row} for row in oracle["orders"]])
+                    # One INSERT SELECT is one PostgreSQL snapshot. Late materialized
+                    # versions already committed are included regardless of arrival day.
+                    conn.execute(text("""INSERT INTO orderflow.pipeline_snapshot_rows
+                        (tenant_id,run_id,entity_type,entity_id,entity_version,source_id,event_id,effective_at,payload)
+                        SELECT tenant_id,:r,entity_type,entity_id,entity_version,source_id,event_id,effective_at,payload
+                        FROM orderflow.entity_revisions WHERE tenant_id=:t AND effective_at<:end"""), p)
                 result = conn.execution_options(stream_results=True).execute(text("""SELECT tenant_id,entity_type,entity_id,entity_version,
                     source_id,event_id,effective_at,payload FROM orderflow.pipeline_snapshot_rows
                     WHERE tenant_id=:t AND run_id=:r ORDER BY entity_type,entity_id,entity_version"""), p)
@@ -175,12 +196,13 @@ def stage_daily(tenant_id, source_id, start, end, oracle_path, *, store=None, fa
                         "oracle_sha256": hashlib.sha256(encoded(oracle)).hexdigest(), "storage": store.kind}
             reference = store.put_immutable(prefix + "/source_manifest.json", encoded(manifest)).as_dict()
             with tenant_transaction(tenant_id, actor_subject="pipeline", role="pipeline") as conn:
+                _assert_job_fence(conn,tenant_id,lease)
                 conn.execute(text("UPDATE orderflow.report_candidates SET manifest=CAST(:m AS jsonb) WHERE tenant_id=:t AND run_id=:r AND status='staging'"),
                              {"t": tenant_id, "r": run_id, "m": encoded({"source": manifest, "source_manifest_object": reference}).decode()})
             if fault: fault("after_staged_manifest", run_id)
             return {"tenant_id": tenant_id, "run_id": run_id}
-    except Exception:
-        fail_run(tenant_id, run_id, "snapshot_export_failed")
+    except Exception as error:
+        if getattr(error,"code",None)!="job_lease_lost": fail_run(tenant_id, run_id, "snapshot_export_failed",lease=lease)
         raise
 
 
@@ -210,10 +232,10 @@ def _relation(name, run_id):
     return '"orderflow_warehouse"."' + name + "_" + UUID(str(run_id)).hex + '"'
 
 
-def _model_preview(tenant_id, run_id):
+def _model_preview(tenant_id, run_id, build_id=None):
     with get_engine(os.environ["ODF_DBT_DATABASE_URL"]).begin() as conn:
         conn.execute(text("SELECT set_config('orderflow.tenant_id',:t,true)"), {"t": str(tenant_id)})
-        order_table, history_table = _relation("order_facts", run_id), _relation("product_history", run_id)
+        order_table, history_table = _relation("order_facts", build_id or run_id), _relation("product_history", build_id or run_id)
         totals = dict(conn.execute(text(f"SELECT count(*) AS order_count,coalesce(sum(total_minor),0) AS order_total_minor FROM {order_table}")).mappings().one())
         totals["product_count"] = conn.execute(text(f"SELECT count(distinct entity_id) FROM {history_table}")).scalar_one()
         orders = [dict(row) for row in conn.execute(text(f"SELECT entity_id,entity_version,total_minor,currency,status FROM {order_table} ORDER BY entity_id LIMIT 101")).mappings()]
@@ -222,12 +244,13 @@ def _model_preview(tenant_id, run_id):
                       "preview_limit": 100, "preview_truncated": len(orders)>100 or len(history)>100})
 
 
-def check_daily(tenant_id, run_id, *, store=None, test_corrupt_total=False, fault=None):
-    store = store or object_store(); run_id = str(UUID(str(run_id))); tenant_id = str(UUID(str(tenant_id)))
+def check_daily(tenant_id, run_id, *, store=None, test_corrupt_total=False, fault=None, lease=None, build_id=None):
+    store = store or object_store(tenant_id); run_id = str(UUID(str(run_id))); tenant_id = str(UUID(str(tenant_id)))
     candidate = _candidate(tenant_id, run_id)
     if candidate["status"] == "checked": return {"tenant_id": tenant_id, "run_id": run_id}
     if candidate["status"] != "staging" or not candidate["manifest"]: raise PipelineError("candidate_not_staged")
     if test_corrupt_total and os.environ.get("ODF_APP_ENV") != "local": raise PipelineError("test_fault_disabled")
+    temporary_work=None
     try:
         original = candidate["manifest"]; source = original["source"]; ref = original["source_manifest_object"]
         if store.get(ref["key"], expected_sha256=ref["sha256"]) != encoded(source): raise PipelineError("source_manifest_mismatch")
@@ -239,20 +262,31 @@ def check_daily(tenant_id, run_id, *, store=None, test_corrupt_total=False, faul
             count += rows; digest.update(raw)
         if count != source["row_count"] or digest.hexdigest() != candidate["snapshot_sha256"]: raise PipelineError("snapshot_hash_mismatch")
         if candidate["project_sha256"] != _project_hash(): raise PipelineError("dbt_project_changed")
-        work = ROOT / ".runtime/dbt" / run_id; work.mkdir(parents=True, exist_ok=True)
+        build_id=str(UUID(str(build_id))) if build_id else run_id
+        serverless=os.environ.get("VERCEL")=="1" or os.environ.get("ODF_SERVERLESS")=="true"
+        if serverless:
+            temporary_work=tempfile.TemporaryDirectory(prefix="orderflow-dbt-"+build_id+"-")
+            work=Path(temporary_work.name)
+        else:
+            work=ROOT/".runtime/dbt"/build_id;work.mkdir(parents=True,exist_ok=True)
         executable = os.environ.get("ODF_DBT_EXECUTABLE", str(ROOT / ".venv-dbt" / ("Scripts/dbt.exe" if os.name=="nt" else "bin/dbt")))
+        command_prefix=[executable]
+        if os.environ.get("VERCEL")=="1" or os.environ.get("ODF_SERVERLESS")=="true":
+            import sys
+            command_prefix=[sys.executable,"-m","dbt.cli.main"]
         artifacts = []; results = None
         for phase in ["run", "test"]:
-            command = [executable, "--log-path", str(work/"logs"), phase, "--project-dir", str(ROOT/"warehouse"),
+            command = command_prefix + ["--log-path", str(work/"logs"), phase, "--project-dir", str(ROOT/"warehouse"),
                        "--profiles-dir", str(ROOT/"warehouse"), "--target-path", str(work), "--vars",
-                       json.dumps({"tenant_id": tenant_id, "run_id": run_id, "test_corrupt_total": bool(test_corrupt_total)})]
+                       json.dumps({"tenant_id": tenant_id, "run_id": run_id, "build_id":build_id, "test_corrupt_total": bool(test_corrupt_total)})]
             with (work/(phase+".log")).open("wb") as output:
-                completed = subprocess.run(command, stdout=output, stderr=subprocess.STDOUT, env=_dbt_environment(tenant_id), timeout=180)
+                completed = subprocess.run(command, stdout=output, stderr=subprocess.STDOUT, env=_dbt_environment(tenant_id), timeout=90 if lease else 180)
             path = work/"run_results.json"
             results = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
             if results:
-                artifacts.append(store.put_immutable(f"reports/{tenant_id}/{run_id}/dbt-{phase}-results.json", encoded(results)).as_dict())
+                artifacts.append(store.put_immutable(f"reports/{tenant_id}/{run_id}/dbt-{phase}-"+(build_id+"-" if lease else "")+"results.json", encoded(results)).as_dict())
             with tenant_transaction(tenant_id, actor_subject="pipeline", role="pipeline") as conn:
+                _assert_job_fence(conn,tenant_id,lease)
                 _check(conn, tenant_id, run_id, "dbt_"+phase+"_execution", "pass" if completed.returncode==0 else "error", completed.returncode, 0)
                 if phase=="test" and results:
                     for item in results.get("results", []):
@@ -261,29 +295,35 @@ def check_daily(tenant_id, run_id, *, store=None, test_corrupt_total=False, faul
             if fault: fault("after_dbt_"+phase, run_id)
         names = {item["unique_id"].split(".")[2] for item in results["results"]}
         if not REQUIRED_TESTS <= names or any(item["status"] != "pass" for item in results["results"]): raise PipelineError("required_dbt_checks_missing")
-        preview = _model_preview(tenant_id, run_id)
+        preview = _model_preview(tenant_id, run_id, build_id)
         with tenant_transaction(tenant_id, role="pipeline") as conn:
             currency = conn.execute(text("SELECT currency FROM orderflow.pipeline_expectations WHERE tenant_id=:t AND run_id=:r"), {"t":tenant_id,"r":run_id}).scalar_one().strip()
         preview["summary"].update(currency=currency, raw_revision_count=source["row_count"])
         manifest = {**original, "dbt_artifacts": artifacts, "required_tests": sorted(REQUIRED_TESTS), "dbt_tests_passed": len(results["results"]),
-                    "test_corrupt_total": bool(test_corrupt_total), "project_sha256": candidate["project_sha256"]}
-        reference = store.put_immutable(f"reports/{tenant_id}/{run_id}/report_manifest.json", encoded(manifest))
+                    "test_corrupt_total": bool(test_corrupt_total), "build_id":build_id, "project_sha256": candidate["project_sha256"]}
+        manifest_key=f"reports/{tenant_id}/{run_id}/report_manifest"+("-"+build_id if lease else "")+".json"
+        reference = store.put_immutable(manifest_key, encoded(manifest))
         payload = {**preview, "manifest": manifest, "manifest_sha256": reference.sha256, "storage": store.kind,
+                   "manifest_object":reference.as_dict(),
                    "artifact_availability": "local_only" if store.kind=="local" else "configured_object_store"}
         with tenant_transaction(tenant_id, actor_subject="pipeline", role="pipeline") as conn:
+            _assert_job_fence(conn,tenant_id,lease)
             conn.execute(text("""UPDATE orderflow.report_candidates SET status='checked',manifest=CAST(:m AS jsonb),manifest_sha256=:sha,
                 report_payload=CAST(:payload AS jsonb) WHERE tenant_id=:t AND run_id=:r AND status='staging'"""),
                 {"t":tenant_id,"r":run_id,"m":encoded(manifest).decode(),"sha":reference.sha256,"payload":encoded(payload).decode()})
         return {"tenant_id":tenant_id,"run_id":run_id}
-    except Exception:
-        fail_run(tenant_id, run_id, "dbt_or_artifact_check_failed")
+    except Exception as error:
+        if getattr(error,"code",None)!="job_lease_lost": fail_run(tenant_id, run_id, "dbt_or_artifact_check_failed",lease=lease)
         raise
+    finally:
+        if temporary_work is not None:temporary_work.cleanup()
 
 
-def _publish_daily(tenant_id, run_id, *, fault=None):
+def _publish_daily(tenant_id, run_id, *, fault=None, lease=None):
     tenant_id, run_id = str(UUID(str(tenant_id))), str(UUID(str(run_id)))
     if fault: fault("before_pointer_commit", run_id)
     with tenant_transaction(tenant_id, actor_subject="pipeline", role="pipeline") as conn:
+        _assert_job_fence(conn,tenant_id,lease)
         p = {"t":tenant_id,"r":run_id}
         conn.execute(text("SELECT 1 FROM orderflow.report_locks WHERE tenant_id=:t AND report_key='daily' FOR UPDATE"), p)
         candidate = conn.execute(text("""SELECT c.*,r.interval_start,r.interval_end FROM orderflow.report_candidates c
@@ -309,20 +349,21 @@ def _publish_daily(tenant_id, run_id, *, fault=None):
     return read_latest_report(tenant_id)
 
 
-def publish_daily(tenant_id, run_id, *, store=None, fault=None):
-    store=store or object_store()
+def publish_daily(tenant_id, run_id, *, store=None, fault=None, lease=None):
+    store=store or object_store(tenant_id)
     try:
         candidate=_candidate(tenant_id,run_id)
         if candidate['status']=='checked':
-            raw=store.get(f"reports/{UUID(str(tenant_id))}/{UUID(str(run_id))}/report_manifest.json",
+            key=(candidate.get('report_payload') or {}).get('manifest_object',{}).get('key') or f"reports/{UUID(str(tenant_id))}/{UUID(str(run_id))}/report_manifest.json"
+            raw=store.get(key,
                           expected_sha256=candidate['manifest_sha256'])
             if raw!=encoded(candidate['manifest']): raise PipelineError('report_manifest_mismatch')
             manifest=candidate['manifest']
             for item in manifest['source']['objects']+manifest['dbt_artifacts']:
                 store.get(item['key'],expected_sha256=item['sha256'])
-        return _publish_daily(tenant_id,run_id,fault=fault)
-    except Exception:
-        fail_run(tenant_id,run_id,'report_publication_failed')
+        return _publish_daily(tenant_id,run_id,fault=fault,lease=lease)
+    except Exception as error:
+        if getattr(error,'code',None)!='job_lease_lost': fail_run(tenant_id,run_id,'report_publication_failed',lease=lease)
         raise
 
 
@@ -364,14 +405,15 @@ def read_latest_report(tenant_id):
     return primitive({"has_success":last is not None,"stale":stale,"observed_at":now,"last_good":good,"latest_attempt":latest})
 
 
-def reconcile_inventory(tenant_id, source_id, observed_path, reference_path, *, store=None):
-    store=store or object_store(); tenant_id=str(UUID(str(tenant_id)));source_id=str(UUID(str(source_id)))
+def reconcile_inventory(tenant_id, source_id, observed_path, reference_path, *, store=None, run_id=None, lease=None):
+    store=store or object_store(tenant_id); tenant_id=str(UUID(str(tenant_id)));source_id=str(UUID(str(source_id)))
     with Path(observed_path).open('rb') as source:observed_raw=source.read(MAX_CSV_BYTES+1)
     with Path(reference_path).open('rb') as source:reference_raw=source.read(MAX_CSV_BYTES+1)
     observed=parse_inventory(observed_raw);reference=parse_inventory(reference_raw,reference=True)
     if observed["tenant_id"]!=tenant_id or reference["tenant_id"]!=tenant_id or observed["as_of"]!=reference["as_of"]:
         raise ConnectorError("inventory_scope_or_asof_mismatch")
     with tenant_transaction(tenant_id,role="pipeline") as conn:
+        _assert_job_fence(conn,tenant_id,lease)
         kind=conn.execute(text('SELECT connector_type FROM orderflow.sources WHERE tenant_id=:t AND source_id=:s AND enabled'),
                           {'t':tenant_id,'s':source_id}).scalar_one_or_none()
         if kind!='csv':raise PipelineError('inventory_csv_source_required')
@@ -379,7 +421,7 @@ def reconcile_inventory(tenant_id, source_id, observed_path, reference_path, *, 
     if existing:
         if (existing["observed_sha256"],existing["reference_sha256"])!=(observed["sha256"],reference["sha256"]): raise PipelineError("inventory_identity_conflict")
         return existing["report"]
-    run_id=start_run(tenant_id,source_id,timestamp(observed["as_of"]),timestamp(observed["as_of"])+timedelta(seconds=1))
+    run_id=start_run(tenant_id,source_id,timestamp(observed["as_of"]),timestamp(observed["as_of"])+timedelta(seconds=1),run_id=run_id)
     try:
         differences=[]
         for sku in sorted(set(observed["quantities"])|set(reference["quantities"])):
@@ -404,6 +446,7 @@ def reconcile_inventory(tenant_id, source_id, observed_path, reference_path, *, 
         manifest_ref=store.put_immutable(f"reports/{tenant_id}/{source_id}/{observed['snapshot_id']}/manifest.json",encoded(manifest))
         report.update(manifest=manifest,manifest_sha256=manifest_ref.sha256)
         with tenant_transaction(tenant_id,actor_subject="inventory-connector",role="pipeline") as conn:
+            _assert_job_fence(conn,tenant_id,lease)
             conn.execute(text("""INSERT INTO orderflow.inventory_snapshots(tenant_id,source_id,snapshot_id,reference_id,run_id,as_of,
                 observed_sha256,reference_sha256,manifest_sha256,status,report) VALUES(:t,:s,:snapshot,:reference,:r,:asof,:oh,:rh,:mh,:status,CAST(:report AS jsonb))"""),
                 {"t":tenant_id,"s":source_id,"snapshot":observed["snapshot_id"],"reference":reference["reference_id"],"r":run_id,"asof":timestamp(observed["as_of"]),
@@ -413,15 +456,15 @@ def reconcile_inventory(tenant_id, source_id, observed_path, reference_path, *, 
                          {"t":tenant_id,"r":run_id,"status":"failed" if differences else "succeeded","failure":"inventory_difference" if differences else None})
         return report
     except IntegrityError:
-        fail_run(tenant_id,run_id,"inventory_duplicate_attempt")
+        fail_run(tenant_id,run_id,"inventory_duplicate_attempt",lease=lease)
         with tenant_transaction(tenant_id,role="pipeline") as conn:
             prior=conn.execute(text("SELECT observed_sha256,reference_sha256,report FROM orderflow.inventory_snapshots WHERE tenant_id=:t AND source_id=:s AND snapshot_id=:snapshot"),
                                {"t":tenant_id,"s":source_id,"snapshot":observed["snapshot_id"]}).mappings().one_or_none()
         if prior and (prior['observed_sha256'],prior['reference_sha256'])==(observed['sha256'],reference['sha256']):
             return prior['report']
         raise
-    except Exception:
-        fail_run(tenant_id,run_id,"inventory_report_failed")
+    except Exception as error:
+        if getattr(error,'code',None)!='job_lease_lost':fail_run(tenant_id,run_id,"inventory_report_failed",lease=lease)
         raise
 
 

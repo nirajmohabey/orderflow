@@ -73,6 +73,8 @@ def accept_event(source, envelope):
         if existing:
             if not hmac.compare_digest(existing["envelope_sha256"], envelope_hash):
                 raise DomainError(409, "event_identity_conflict", "This source event identity already has different semantic content.")
+            from .hosted_jobs import enqueue_drain
+            if existing['status'] in {'pending','retry_wait'}:enqueue_drain(conn,source.tenant_id)
             return primitive({"event_id": existing["event_id"], "duplicate": True, "status": existing["status"]})
         if envelope.partition_key != partition_key(envelope.entity_type, envelope.entity_id):
             raise DomainError(422, "invalid_partition", "The partition does not match the stable entity partition.")
@@ -94,6 +96,8 @@ def accept_event(source, envelope):
             if not hmac.compare_digest(existing["envelope_sha256"], envelope_hash):
                 raise DomainError(409, "event_identity_conflict", "This source event identity already has different semantic content.")
             result = {"event_id": existing["event_id"], "duplicate": True, "status": existing["status"]}
+        from .hosted_jobs import enqueue_drain
+        enqueue_drain(conn,source.tenant_id)
     # The context manager committed before the acceptance response is returned.
     return primitive(result)
 
@@ -125,6 +129,8 @@ def retry_event(principal, event_id, reason):
             raise DomainError(409, "event_not_retryable", "Only a nonterminal retry-wait event can be expedited.")
         conn.execute(text("UPDATE orderflow.inbox_events SET status='pending',available_at=now() WHERE tenant_id=:tenant AND event_id=:id"), {"tenant": p.tenant_id, "id": str(event_id)})
         conn.execute(text("INSERT INTO orderflow.operator_audit(tenant_id,actor_subject,action,target_type,target_id,reason) VALUES(:tenant,:actor,'expedite_retry','event',:id,:reason)"), {"tenant": p.tenant_id, "actor": p.subject, "id": str(event_id), "reason": reason})
+        from .hosted_jobs import enqueue_drain
+        enqueue_drain(conn,p.tenant_id)
         return {"event_id": str(event_id), "status": "pending"}
 
 

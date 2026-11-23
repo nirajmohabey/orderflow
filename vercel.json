@@ -1,11 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "python build.py",
+  "framework": "fastapi",
+  "buildCommand": "npm --prefix dashboard ci && npm --prefix dashboard run build",
   "functions": {
-    "app.py": {
-      "maxDuration": 30,
-      "includeFiles": "dashboard/dist/**",
-      "excludeFiles": "{artifacts/**,tests/**,dashboard/node_modules/**,.runtime/**,.venv*/**,.env*,.git/**,work/**}"
+    "**/*.py": {
+      "maxDuration": 300,
+      "excludeFiles": "{.env*,.runtime/**,.venv*/**,node_modules/**,dashboard/node_modules/**,tests/**,artifacts/**,work/**,analysis/**,orchestration/**,scripts/**,.git/**,docs/**,*.zip,*.mp4,*.webm}"
     }
-  }
+  },
+  "crons": [{"path": "/_internal/outbox", "schedule": "0 4 * * *"}]
 }

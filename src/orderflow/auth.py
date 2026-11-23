@@ -50,17 +50,22 @@ def verify_bearer(token, requested_tenant_id=None):
         raise AuthError()
     try:
         tenant = str(UUID(str(requested_tenant_id))) if requested_tenant_id else None
-        claims = jwt.decode(token, settings.auth_secret if settings.jwt_algorithm == "HS256" else settings.jwt_public_key,
-                            algorithms=[settings.jwt_algorithm], issuer=settings.jwt_issuer,
-                            audience=settings.jwt_audience, leeway=0,
-                            options={"require": ["iss", "sub", "aud", "exp", "iat"], "verify_iat": True})
+        if settings.neon_auth_url:
+            from .neon_auth import decode_token
+            claims = decode_token(token)
+        else:
+            claims = jwt.decode(token, settings.auth_secret if settings.jwt_algorithm == "HS256" else settings.jwt_public_key,
+                                algorithms=[settings.jwt_algorithm], issuer=settings.jwt_issuer,
+                                audience=settings.jwt_audience, leeway=0,
+                                options={"require": ["iss", "sub", "aud", "exp", "iat"], "verify_iat": True})
         subject = claims["sub"]
         if not isinstance(subject, str) or not 1 <= len(subject) <= 200:
             raise ValueError
     except (jwt.PyJWTError, ValueError, TypeError):
         raise AuthError() from None
     with get_engine().begin() as conn:
-        rows = conn.execute(text("SELECT * FROM orderflow.resolve_member(:issuer,:subject,CAST(:tenant AS uuid))"), {"issuer": settings.jwt_issuer, "subject": subject, "tenant": tenant}).mappings().all()
+        issuer = claims["iss"] if settings.neon_auth_url else settings.jwt_issuer
+        rows = conn.execute(text("SELECT * FROM orderflow.resolve_member(:issuer,:subject,CAST(:tenant AS uuid))"), {"issuer": issuer, "subject": subject, "tenant": tenant}).mappings().all()
     if len(rows) != 1:
         raise AuthError(403, "membership_required", "An active membership in the requested tenant is required.")
     row = rows[0]

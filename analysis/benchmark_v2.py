@@ -29,7 +29,6 @@ from verification_support import ROOT, scratch_database
 
 TENANTS = ("11111111-1111-4111-8111-111111111111", "22222222-2222-4222-8222-222222222222")
 SOURCES = ("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa", "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb", "dddddddd-dddd-4ddd-8ddd-dddddddddddd")
-CORE_FILES = tuple("src/orderflow/" + name + ".py" for name in ("__init__", "config", "db", "schemas", "auth", "service", "worker", "api"))
 
 
 def sha(path):
@@ -37,13 +36,14 @@ def sha(path):
 
 
 def source_manifest():
-    files = {name: sha(ROOT / name) for name in CORE_FILES}
+    files = {p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / "src/orderflow").rglob("*.py"))}
     files.update({str(p.relative_to(ROOT)).replace("\\", "/"): sha(p) for p in sorted((ROOT / "migrations").glob("*.sql"))})
     return {"files": files, "sha256": hashlib.sha256(json.dumps(files, sort_keys=True).encode()).hexdigest()}
 
 
 def harness_manifest():
-    return {name: sha(ROOT / name) for name in ("analysis/benchmark_v2.py", "scripts/verification_support.py", "fixtures/seed_metadata.json", "uv.lock")}
+    return {name: sha(ROOT / name) for name in ("analysis/benchmark_v2.py", "scripts/verification_support.py", "fixtures/seed_metadata.json",
+            "pyproject.toml", "uv.lock", "requirements.lock", "dashboard/package.json", "dashboard/package-lock.json")}
 
 
 def environment_metadata():

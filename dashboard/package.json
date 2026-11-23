@@ -1,6 +1,6 @@
 {
   "name": "orderflow-dashboard",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,6 +12,7 @@
     "test:live": "node scripts/live-check.mjs"
   },
   "dependencies": {
+    "better-auth": "1.7.27",
     "lossless-json": "4.3.4",
     "react": "19.3.1",
     "react-dom": "19.3.1"

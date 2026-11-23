@@ -57,6 +57,29 @@ def test_v2_small_gate_accepts_six_complete_current_bound_trials(gate):
     assert len(result["sha256"]) == 64
 
 
+def test_v2_source_snapshot_covers_new_imported_package_modules(benchmark,monkeypatch,tmp_path):
+    monkeypatch.setattr(benchmark,'ROOT',tmp_path)
+    package=tmp_path/'src/orderflow';package.mkdir(parents=True)
+    (tmp_path/'migrations').mkdir()
+    for name in ['api','hosted_jobs','neon_auth','objects','pipeline']:(package/(name+'.py')).write_text(name)
+    first=benchmark.source_manifest()
+    assert {f'src/orderflow/{name}.py' for name in ['api','hosted_jobs','neon_auth','objects','pipeline']} <= first['files'].keys()
+    (package/'hosted_jobs.py').write_text('changed')
+    assert benchmark.source_manifest()['sha256']!=first['sha256']
+
+
+def test_v2_harness_snapshot_binds_runtime_and_frontend_dependencies(benchmark,monkeypatch,tmp_path):
+    monkeypatch.setattr(benchmark,'ROOT',tmp_path)
+    names=['analysis/benchmark_v2.py','scripts/verification_support.py','fixtures/seed_metadata.json',
+           'pyproject.toml','uv.lock','requirements.lock','dashboard/package.json','dashboard/package-lock.json']
+    for name in names:
+        path=tmp_path/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(name)
+    first=benchmark.harness_manifest()
+    assert set(first)==set(names)
+    (tmp_path/'dashboard/package-lock.json').write_text('changed dependency')
+    assert benchmark.harness_manifest()!=first
+
+
 @pytest.mark.parametrize("problem", ["empty", "duplicate", "failed", "cleanup", "source", "reconciliation", "postflight"])
 def test_v2_small_gate_rejects_flag_only_or_incomplete_evidence(gate, problem):
     first = gate.value["runs"][0]

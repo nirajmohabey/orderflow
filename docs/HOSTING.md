@@ -1,6 +1,6 @@
 # Hosting and account boundaries
 
-The selected providers are Vercel and Neon. The separate `orderflow` Vercel project is linked to the account; no backend deployment or managed database is claimed. Neon still requires the owner to accept its marketplace terms. The public portfolio presents the recorded, tested local system.
+The selected providers are Vercel and Neon. This file describes the original deployment preparation; the newer production implementation and required hosted checks are documented in [PRODUCTION.md](PRODUCTION.md). Historical local/Linux/container evidence does not establish a current hosted pass.
 
 `app.py`, `build.py` and `vercel.json` prepare the existing FastAPI application and compiled React assets without changing ingestion semantics. Builds never migrate, seed a database or start the polling worker. This configuration follows the [official FastAPI entrypoint/build/static guidance](https://vercel.com/docs/frameworks/backend/fastapi); it is a prepared configuration, not a successful hosted acceptance result.
 

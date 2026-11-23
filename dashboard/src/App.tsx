@@ -9,6 +9,8 @@ import {
 } from "react";
 import type { FormEvent, ReactNode } from "react";
 import { ApiError, json, money, number, request, time, title } from "./api";
+import { neonSignOut, neonToken, passwordResetPending } from "./auth";
+import { AuthForm } from "./AuthForm";
 import type {
   Config,
   Entity,
@@ -368,6 +370,8 @@ export default function App() {
     [connecting, setConnecting] = useState(false),
     [authError, setAuthError] = useState<unknown>(null),
     [configTick, setConfigTick] = useState(0);
+  const [signingOut, setSigningOut] = useState(false),
+    [authNotice, setAuthNotice] = useState("");
   const [view, setView] = useState<View>(() =>
     nav.some(([key]) => key === location.hash.slice(1))
       ? (location.hash.slice(1) as View)
@@ -387,14 +391,25 @@ export default function App() {
     if (message) setAuthError(new Error(message));
   }, []);
   const connect = useCallback(
-    async (id: string, token?: string, tenantId?: string) => {
+    async (
+      id: string,
+      token?: string,
+      tenantId?: string,
+      provider?: Config,
+      credentials?: { email: string; password: string },
+    ) => {
       const mine = ++epoch.current;
       tokenRef.current = null;
       setSession(null);
       setConnecting(true);
       setAuthError(null);
       setIdentity(id);
+      setAuthNotice("");
       try {
+        if (provider) {
+          token = (await neonToken(provider, credentials)) ?? undefined;
+          if (mine !== epoch.current || !token) return;
+        }
         let next: Session;
         if (token)
           next = {
@@ -428,7 +443,13 @@ export default function App() {
         }
       } catch (error) {
         if (mine === epoch.current) {
-          setAuthError(error);
+          setAuthError(
+            provider && error instanceof ApiError && error.status === 403
+              ? new Error(
+                  "You are signed in, but this account has no active workspace membership. Ask the workspace owner to grant access, then sign in again.",
+                )
+              : error,
+          );
           setIdentity("");
         }
       } finally {
@@ -446,6 +467,8 @@ export default function App() {
           setConfig(c);
           if (c.fixture_login_enabled && c.identities.length)
             void connect(c.identities[0].id);
+          else if (c.mode === "neon" && c.configured && !passwordResetPending())
+            void connect("", undefined, undefined, c);
         }
       })
       .catch((error) => {
@@ -453,6 +476,41 @@ export default function App() {
       });
     return () => controller.abort();
   }, [configTick, connect]);
+  useEffect(() => {
+    if (config?.mode !== "neon" || !session) return;
+    try {
+      const claims = JSON.parse(
+        atob(
+          session.access_token
+            .split(".")[1]
+            .replace(/-/g, "+")
+            .replace(/_/g, "/"),
+        ),
+      );
+      if (Number.isFinite(claims.exp)) {
+        const timer = setTimeout(
+          () => endSession("Your session expired. Sign in again to continue."),
+          Math.max(0, claims.exp * 1000 - Date.now()),
+        );
+        return () => clearTimeout(timer);
+      }
+    } catch {
+      /* The server remains responsible for token validation. */
+    }
+  }, [session, config?.mode, endSession]);
+  const disconnect = async () => {
+    endSession();
+    if (config?.mode !== "neon") return;
+    const mine = epoch.current;
+    setSigningOut(true);
+    try {
+      await neonSignOut(config);
+    } catch (error) {
+      if (mine === epoch.current) setAuthError(error);
+    } finally {
+      setSigningOut(false);
+    }
+  };
   useEffect(() => {
     const onHash = () => {
       const key = location.hash.slice(1);
@@ -511,6 +569,12 @@ export default function App() {
               <a
                 key={id}
                 href={`#${id}`}
+                onFocus={(event) =>
+                  event.currentTarget.scrollIntoView({
+                    block: "nearest",
+                    inline: "nearest",
+                  })
+                }
                 aria-current={view === id ? "page" : undefined}
                 onClick={() => changeView(id)}
               >
@@ -573,7 +637,7 @@ export default function App() {
                   </button>
                   <button
                     className="icon-button"
-                    onClick={() => endSession()}
+                    onClick={() => void disconnect()}
                     aria-label="Disconnect session"
                   >
                     <Icon name="logout" />
@@ -621,7 +685,36 @@ export default function App() {
                     }
                   />
                 )}
-                {config?.fixture_login_enabled ? (
+                {authNotice && (
+                  <div role="status" className="notice success">
+                    {authNotice}
+                  </div>
+                )}
+                {config?.mode === "neon" ? (
+                  <AuthForm
+                    config={config}
+                    busy={connecting}
+                    signingOut={signingOut}
+                    signIn={(credentials) =>
+                      void connect(
+                        "",
+                        undefined,
+                        tenantInput || undefined,
+                        config,
+                        credentials,
+                      )
+                    }
+                    signOut={() => void disconnect()}
+                    notice={(message) => {
+                      setAuthError(null);
+                      setAuthNotice(message);
+                    }}
+                    error={(error) => {
+                      setAuthNotice("");
+                      setAuthError(error);
+                    }}
+                  />
+                ) : config?.fixture_login_enabled ? (
                   <div className="connect-options">
                     <label htmlFor="login-identity">
                       Local fixture identity
@@ -721,7 +814,7 @@ export default function App() {
               <span>
                 OrderFlow <span className="muted">/</span> Operations workbench
               </span>
-              <span>UTC timestamps · Exact minor-unit amounts · v0.1</span>
+              <span>UTC timestamps · Exact minor-unit amounts · v0.2.0</span>
             </footer>
           </main>
         </div>

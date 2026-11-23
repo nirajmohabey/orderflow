@@ -25,6 +25,7 @@ class Settings:
     allowed_hosts: tuple[str, ...]
     allowed_origins: tuple[str, ...]
     worker_tenants: tuple[str, ...]
+    neon_auth_url: str = ""
 
     @classmethod
     def from_env(cls):
@@ -54,14 +55,24 @@ class Settings:
         secret = os.environ.get("ODF_AUTH_SECRET", "")
         if len(secret.encode()) < 32:
             raise RuntimeError("ODF_AUTH_SECRET requires at least 32 bytes")
-        algorithm = os.environ.get("ODF_JWT_ALGORITHM", "HS256")
-        if algorithm not in {"HS256", "RS256"}:
-            raise RuntimeError("ODF_JWT_ALGORITHM must be HS256 or RS256")
+        from .neon_auth import configuration
+        neon = configuration()
+        algorithm = "EdDSA" if neon else os.environ.get("ODF_JWT_ALGORITHM", "HS256")
+        if algorithm not in {"HS256", "RS256", "EdDSA"}:
+            raise RuntimeError("ODF_JWT_ALGORITHM must be HS256, RS256 or EdDSA")
         public_key = os.environ.get("ODF_JWT_PUBLIC_KEY", "").replace("\\n", "\n")
         if algorithm == "RS256" and not public_key.startswith("-----BEGIN PUBLIC KEY-----"):
             raise RuntimeError("RS256 requires a configured public key")
         hosts = tuple(v.strip() for v in os.environ.get("ODF_ALLOWED_HOSTS", "localhost,127.0.0.1,testserver").split(",") if v.strip())
         origins = tuple(v.strip() for v in os.environ.get("ODF_ALLOWED_ORIGINS", "http://127.0.0.1:8010,http://localhost:8010").split(",") if v.strip())
+        if os.environ.get("VERCEL") == "1" and app_env == "production":
+            platform_hosts = []
+            for name in ("VERCEL_URL", "VERCEL_PROJECT_PRODUCTION_URL"):
+                value = os.environ.get(name, "").lower()
+                if value and all(c.isalnum() or c in ".-" for c in value) and "." in value:
+                    platform_hosts.append(value)
+            hosts = tuple(dict.fromkeys((*hosts, *platform_hosts)))
+            origins = tuple(dict.fromkeys((*origins, *("https://" + host for host in platform_hosts))))
         if not hosts or "*" in hosts or "*" in origins:
             raise RuntimeError("Exact host and origin allowlists are required")
         if app_env == "production" and any(urlsplit(v).scheme != "https" or urlsplit(v).path not in {"", "/"} for v in origins):
@@ -74,8 +85,8 @@ class Settings:
         except ValueError:
             raise RuntimeError("Invalid body timeout or worker tenant configuration") from None
         return cls(url, app_env, demo, secret,
-                   os.environ.get("ODF_JWT_ISSUER", "https://orderflow.local.invalid"),
+                   neon["origin"] if neon else os.environ.get("ODF_JWT_ISSUER", "https://orderflow.local.invalid"),
                    os.environ.get("ODF_JWT_AUDIENCE", "orderflow-api"), algorithm, public_key,
                    integer("ODF_REQUEST_MAX_BYTES", 65536, 1024, 1048576), timeout,
                    integer("ODF_MAX_ATTEMPTS", 5, 1, 10),
-                   integer("ODF_REQUESTS_PER_MINUTE", 6000, 1, 1000000), hosts, origins, tenants)
+                   integer("ODF_REQUESTS_PER_MINUTE", 6000, 1, 1000000), hosts, origins, tenants, neon["base"] if neon else "")

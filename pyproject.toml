@@ -1,12 +1,21 @@
 [project]
 name = "orderflow"
-version = "0.1.1"
+version = "0.2.0"
 description = "Durable, tenant-isolated operational data ingestion and quality reporting"
 requires-python = ">=3.12,<3.13"
 dependencies = [
-  "fastapi==0.165.0", "uvicorn==0.54.0", "sqlalchemy==2.1.9",
-  "psycopg[binary]==3.3.9", "pydantic==2.14.4", "PyJWT[crypto]==2.15.1",
-  "cryptography==50.0.2", "python-dotenv==1.2.4", "httpx==0.28.1",
+  "fastapi==0.165.0",
+  "uvicorn==0.54.0",
+  "sqlalchemy==2.1.9",
+  "psycopg[binary]==3.3.9",
+  "pydantic==2.14.4",
+  "PyJWT[crypto]==2.15.1",
+  "cryptography==50.0.2",
+  "python-dotenv==1.2.4",
+  "httpx==0.28.1",
+  "vercel-queue[typed]==0.11.2",
+  "dbt-core==1.12.7",
+  "dbt-postgres==1.11.0",
 ]
 
 [dependency-groups]
@@ -23,3 +32,7 @@ packages = ["src/orderflow"]
 testpaths = ["tests"]
 addopts = "-ra"
 
+
+
+[[tool.vercel.subscribers]]
+entrypoint = "queue_worker"

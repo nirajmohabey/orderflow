@@ -1,4 +1,6 @@
-"""Vercel's supported FastAPI entrypoint; no migration or worker side effects."""
-from orderflow.api import app
+"""Vercel ASGI entrypoint; no database initialization at import time."""
+from pathlib import Path
+import sys
 
-__all__=['app']
+sys.path.insert(0,str(Path(__file__).resolve().parent/'src'))
+from orderflow.api import app

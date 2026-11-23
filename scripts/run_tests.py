@@ -19,7 +19,6 @@ import time
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
-CORE_NAMES = ("__init__", "config", "db", "schemas", "auth", "service", "worker", "api")
 SKIP = {"__pycache__", ".pytest_cache", "node_modules", "target", "logs"}
 HARNESS = {
     "acceptance": ("scripts/acceptance.py", "artifacts/checks/acceptance.json"),
@@ -63,18 +62,18 @@ def snapshot(root=ROOT):
                 if path.is_file() and not any(part in SKIP for part in relative.parts):
                     if path.suffix in {".py", ".sql", ".json", ".jsonl", ".csv", ".yml", ".yaml", ".lock", ".in", ".txt", ".ps1", ".js", ".mjs", ".ts", ".tsx", ".css", ".html", ".toml"}:
                         selected.add(path)
-    for name in ("pyproject.toml", "uv.lock", "requirements.lock", ".python-version", "Dockerfile", "Dockerfile.batch", "infra/Dockerfile.postgres", "docker-compose.yml", "dashboard/package.json", "dashboard/package-lock.json", "dashboard/index.html", "dashboard/vite.config.ts", "dashboard/tsconfig.json", ".gitattributes", ".gitignore", ".dockerignore"):
+    for name in ("app.py", "queue_worker.py", "build.py", "vercel.json", ".vercelignore", "pyproject.toml", "uv.lock", "requirements.lock", ".python-version", "Dockerfile", "Dockerfile.batch", "infra/Dockerfile.postgres", "docker-compose.yml", "dashboard/package.json", "dashboard/package-lock.json", "dashboard/index.html", "dashboard/vite.config.ts", "dashboard/tsconfig.json", ".gitattributes", ".gitignore", ".dockerignore"):
         path = root / name
         if path.is_file():
             selected.add(path)
     files = {path.relative_to(root).as_posix(): sha(path) for path in sorted(selected)}
     if not files or not any(name.startswith("tests/") for name in files):
         raise ValueError("Expected release input/test tree is absent")
-    return {"files": files, "sha256": digest(files), "scope_version": "orderflow-review-inputs-v2"}
+    return {"files": files, "sha256": digest(files), "scope_version": "orderflow-production-inputs-v3"}
 
 
 def core_snapshot(root=ROOT):
-    files = {f"src/orderflow/{name}.py": sha(root / f"src/orderflow/{name}.py") for name in CORE_NAMES}
+    files = {path.relative_to(root).as_posix():sha(path) for path in sorted((root / "src/orderflow").rglob("*.py"))}
     files.update({path.relative_to(root).as_posix(): sha(path) for path in sorted((root / "migrations").glob("*.sql"))})
     return {"files": files, "sha256": digest(files)}
 

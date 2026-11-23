@@ -17,6 +17,8 @@ const DIST = path.resolve(
 await fs.mkdir(OUT, { recursive: true });
 const sourceFiles = [
   "src/App.tsx",
+  "src/auth.ts",
+  "src/AuthForm.tsx",
   "src/api.ts",
   "src/types.ts",
   "src/style.css",
@@ -366,11 +368,14 @@ export async function scenario(name, fn, options = {}) {
       if (await handler({ route, request: req, url, tenant, role, respond }))
         return;
     if (p === "/v1/auth/config")
-      return respond(route, {
-        mode: fixture ? "fixture" : "bearer",
-        fixture_login_enabled: fixture,
-        identities: fixture ? identities : [],
-      });
+      return respond(
+        route,
+        options.authConfig ?? {
+          mode: fixture ? "fixture" : "bearer",
+          fixture_login_enabled: fixture,
+          identities: fixture ? identities : [],
+        },
+      );
     if (p === "/v1/dev/session") {
       const id = JSON.parse(req.postData()).identity_id,
         [t, r] = id.split("-");
@@ -526,7 +531,12 @@ export async function scenario(name, fn, options = {}) {
     }
   };
   try {
-    await page.goto(origin);
+    await options.prepare?.({
+      page,
+      override: (handler) => overrides.unshift(handler),
+      respond,
+    });
+    await page.goto(origin + (options.urlSuffix || ""));
     if (fixture)
       await page
         .getByRole("heading", { name: "Operations overview" })
@@ -554,7 +564,7 @@ export async function scenario(name, fn, options = {}) {
   }
   await context.close();
 }
-export { ROOT, OUT, sourceId, history, event, entity };
+export { ROOT, OUT, sourceId, history, event, entity, overview };
 export async function finishHarness(expected = 18) {
   const after = await hashes();
   const reportOut = {

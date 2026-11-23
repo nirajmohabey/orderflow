@@ -126,3 +126,40 @@ class S3ObjectStore:
             if self.get(key, expected_sha256=digest) != data:
                 raise ObjectError("Immutable object identity conflict")
         return StoredObject(key, digest, len(data))
+
+
+class PostgresObjectStore:
+    """Immutable bytea objects scoped by forced RLS; no function disk dependency."""
+    kind = "postgres"
+
+    def __init__(self, tenant_id):
+        from uuid import UUID
+        self.tenant_id = str(UUID(str(tenant_id)))
+
+    def get(self, key, *, expected_sha256=None):
+        from sqlalchemy import text
+        from .db import tenant_transaction
+        key = validate_key(key)
+        with tenant_transaction(self.tenant_id,role="pipeline") as conn:
+            row = conn.execute(text("SELECT content,sha256 FROM orderflow.stored_objects WHERE tenant_id=:t AND object_key=:k"),
+                               {"t":self.tenant_id,"k":key}).one_or_none()
+        if row is None: raise ObjectError("Object is unavailable")
+        data = bytes(row[0])
+        digest = hashlib.sha256(data).hexdigest()
+        if len(data)>MAX_OBJECT_BYTES or digest != row[1] or (expected_sha256 and digest != expected_sha256):
+            raise ObjectError("Object checksum or byte limit mismatch")
+        return data
+
+    def put_immutable(self, key, data):
+        from sqlalchemy import text
+        from .db import tenant_transaction
+        key = validate_key(key)
+        if not isinstance(data,bytes) or len(data)>MAX_OBJECT_BYTES: raise ObjectError("Object exceeds the byte limit")
+        digest = hashlib.sha256(data).hexdigest()
+        with tenant_transaction(self.tenant_id,role="pipeline") as conn:
+            conn.execute(text("INSERT INTO orderflow.stored_objects(tenant_id,object_key,sha256,content) VALUES(:t,:k,:h,:v) ON CONFLICT DO NOTHING"),
+                         {"t":self.tenant_id,"k":key,"h":digest,"v":data})
+            existing = conn.execute(text("SELECT sha256,content FROM orderflow.stored_objects WHERE tenant_id=:t AND object_key=:k"),
+                                    {"t":self.tenant_id,"k":key}).one()
+            if existing[0] != digest or bytes(existing[1]) != data: raise ObjectError("Immutable object identity conflict")
+        return StoredObject(key,digest,len(data))
