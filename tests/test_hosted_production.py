@@ -291,6 +291,22 @@ def test_daily_job_queue_runs_real_dbt_and_keeps_last_good(pipeline_db,monkeypat
     complete_fixture(core)
     monkeypatch.setenv('ODF_QUEUE_ENABLED','true');monkeypatch.setenv('ODF_WORKER_TENANTS',TENANT+','+BETA)
     monkeypatch.setenv('ODF_OBJECT_STORAGE','postgres');monkeypatch.setenv('ODF_SERVERLESS','true')
+    real_run=pipeline.subprocess.run
+    # Reproduce the actual Vercel limitation in each real dbt child. The CLI
+    # must still execute its SQL models/tests and preserve a failed last-good.
+    bootstrap="""import multiprocessing.synchronize as sync
+import runpy,sys
+def unavailable(*args,**kwargs):
+    raise FileNotFoundError(2,'Process semaphores are unavailable')
+sync.SemLock.__init__=unavailable
+sys.argv=sys.argv[1:]
+runpy.run_path(sys.argv[0],run_name='__main__')
+"""
+    def no_process_semaphores(command,**kwargs):
+        if len(command)>1 and command[1].endswith('dbt_runtime.py'):
+            command=[command[0],'-c',bootstrap,*command[1:]]
+        return real_run(command,**kwargs)
+    monkeypatch.setattr(pipeline.subprocess,'run',no_process_semaphores)
     wakes=[]
     async def send(topic,payload,**options):wakes.append(payload);return 'mock-queue-message'
     monkeypatch.setattr(jobs,'send',send)
@@ -326,6 +342,21 @@ def test_daily_job_queue_runs_real_dbt_and_keeps_last_good(pipeline_db,monkeypat
     retained=pipeline.read_latest_report(TENANT)
     assert retained['stale'] and retained['latest_attempt']['status']=='failed'
     assert retained['last_good']['manifest_sha256']==prior_hash
+
+
+def test_finite_dbt_thread_pool_does_not_use_process_semaphores(monkeypatch):
+    import multiprocessing.synchronize as sync
+    import dbt.mp_context
+    from orderflow.dbt_runtime import configure
+    original=dbt.mp_context._MP_CONTEXT
+    monkeypatch.setattr(dbt.mp_context,'_MP_CONTEXT',original)
+    def unavailable(*args,**kwargs):raise FileNotFoundError(2,'Process semaphores are unavailable')
+    monkeypatch.setattr(sync.SemLock,'__init__',unavailable)
+    configure()
+    from dbt.graph.thread_pool import DbtThreadPool
+    with DbtThreadPool(2) as pool:
+        assert pool.map(abs,[-3,-2,1])==[3,2,1]
+        assert pool.max_threads==2
 
 
 def test_failed_dbt_diagnostic_is_bounded_and_redacts_environment_credentials(tmp_path):

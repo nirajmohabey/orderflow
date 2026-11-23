@@ -302,7 +302,7 @@ def check_daily(tenant_id, run_id, *, store=None, test_corrupt_total=False, faul
         command_prefix=[executable]
         if os.environ.get("VERCEL")=="1" or os.environ.get("ODF_SERVERLESS")=="true":
             import sys
-            command_prefix=[sys.executable,"-m","dbt.cli.main"]
+            command_prefix=[sys.executable,str(Path(__file__).with_name('dbt_runtime.py'))]
         artifacts = []; results = None
         for phase in ["run", "test"]:
             command = command_prefix + ["--log-path", str(work/"logs"), phase, "--project-dir", str(ROOT/"warehouse"),

@@ -1,6 +1,6 @@
 {
-  "reviewed_at": "2026-11-23T19:31:23.676193+00:00",
-  "scan_generated_at": "2026-11-23T19:31:03Z",
+  "reviewed_at": "2026-11-23T19:49:50.867442+00:00",
+  "scan_generated_at": "2026-11-23T19:49:05Z",
   "tools": {
     "bandit": "1.9.4",
     "ruff": "0.17.6"
@@ -72,41 +72,41 @@
       "signature": {
         "test_id": "B608",
         "path": "src/orderflow/pipeline.py",
-        "line": 239,
-        "snippet_sha256": "dd02d957a79dc18ca26f832e34461187974b2d48292495cae206e9adc6ce2c52"
-      },
-      "scanner_message": "Possible SQL injection vector through string-based query construction.",
-      "disposition": "reviewed bounded call site; retained without suppression",
-      "assessment": "SQL identifiers are produced only by _relation: a two-name model allowlist, fixed warehouse schema and canonical UUID.hex suffix. Both run_id and the new per-attempt build_id are parsed as UUIDs before interpolation. Tenant and data values remain bind parameters. Current source and each exact snippet are bound; this is not approval for arbitrary identifiers."
-    },
-    {
-      "signature": {
-        "test_id": "B608",
-        "path": "src/orderflow/pipeline.py",
-        "line": 240,
-        "snippet_sha256": "4bf80c84aff43dcb046b80a543089f76e99d702dde02408aed135ad63540f182"
-      },
-      "scanner_message": "Possible SQL injection vector through string-based query construction.",
-      "disposition": "reviewed bounded call site; retained without suppression",
-      "assessment": "SQL identifiers are produced only by _relation: a two-name model allowlist, fixed warehouse schema and canonical UUID.hex suffix. Both run_id and the new per-attempt build_id are parsed as UUIDs before interpolation. Tenant and data values remain bind parameters. Current source and each exact snippet are bound; this is not approval for arbitrary identifiers."
-    },
-    {
-      "signature": {
-        "test_id": "B608",
-        "path": "src/orderflow/pipeline.py",
-        "line": 241,
-        "snippet_sha256": "00eb0d6f8655169daefbca854d249c29d57959867e13cc6f9fca1cdc569c3eba"
-      },
-      "scanner_message": "Possible SQL injection vector through string-based query construction.",
-      "disposition": "reviewed bounded call site; retained without suppression",
-      "assessment": "SQL identifiers are produced only by _relation: a two-name model allowlist, fixed warehouse schema and canonical UUID.hex suffix. Both run_id and the new per-attempt build_id are parsed as UUIDs before interpolation. Tenant and data values remain bind parameters. Current source and each exact snippet are bound; this is not approval for arbitrary identifiers."
-    },
-    {
-      "signature": {
-        "test_id": "B608",
-        "path": "src/orderflow/pipeline.py",
         "line": 242,
-        "snippet_sha256": "0dc60b596e2694f8ea8e4663dc4e95ac77a52f68ea947c040f168e7fb5b0095f"
+        "snippet_sha256": "df486fc625a6dc2239188c33ae1ea39eed9bf540dcd300a93776e36f3f4033da"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "SQL identifiers are produced only by _relation: a two-name model allowlist, fixed warehouse schema and canonical UUID.hex suffix. Both run_id and the new per-attempt build_id are parsed as UUIDs before interpolation. Tenant and data values remain bind parameters. Current source and each exact snippet are bound; this is not approval for arbitrary identifiers."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/pipeline.py",
+        "line": 243,
+        "snippet_sha256": "5cdabf655c07c8b596530c39fb883d1a77762a790f2a7d44246d218cf4b84be4"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "SQL identifiers are produced only by _relation: a two-name model allowlist, fixed warehouse schema and canonical UUID.hex suffix. Both run_id and the new per-attempt build_id are parsed as UUIDs before interpolation. Tenant and data values remain bind parameters. Current source and each exact snippet are bound; this is not approval for arbitrary identifiers."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/pipeline.py",
+        "line": 244,
+        "snippet_sha256": "b5b00e77fe34d021b9477ce0a5d21b7ffad838c2fed8fc969c5efe60c0baf62a"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "SQL identifiers are produced only by _relation: a two-name model allowlist, fixed warehouse schema and canonical UUID.hex suffix. Both run_id and the new per-attempt build_id are parsed as UUIDs before interpolation. Tenant and data values remain bind parameters. Current source and each exact snippet are bound; this is not approval for arbitrary identifiers."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/pipeline.py",
+        "line": 245,
+        "snippet_sha256": "e7249aa75f45eadf414d4918019d7306b11455519115e4ab3bcc3a1618238201"
       },
       "scanner_message": "Possible SQL injection vector through string-based query construction.",
       "disposition": "reviewed bounded call site; retained without suppression",
@@ -150,7 +150,7 @@
     "scripts/recovery_check.py": "fe6362e2e23427f9ec5d07e7c8e6447e53129ac3c69c8cdc526717c8836fc4d8",
     "scripts/run_tests.py": "584b5c6fa5e99a98426f5436f4e4e36e52c6a8cd7c6f3b465bb629d74ba4ab1b",
     "scripts/security_audit.py": "8abd49d85790ea96e6717086c7c20f45976940688736d89d4e4205417754a218",
-    "src/orderflow/pipeline.py": "492545d7bb4252dfb8a75dc6a5d2311b6a74d1ec8ddb03e10459815e08328e50",
+    "src/orderflow/pipeline.py": "33a2f6fa25a167ad8e6c1ac401d3fa4a7a1222ef4d0af6d3e168315f337d5d0f",
     "src/orderflow/service.py": "23bbb60a425729d6a53132b513c0b2220256a031f2535ad1b9bc44a3484ad90a"
   },
   "source_hashes": {
@@ -160,10 +160,11 @@
     "src/orderflow/config.py": "93fafd0fc978a1877edda6410219aad69372dd7f2bdfa2c60cbc88aacda505c6",
     "src/orderflow/connectors.py": "d95ae2f78996361e5f3f24eefc336269118972b0a9564f32cfbc730b9a5e7a0e",
     "src/orderflow/db.py": "004196a2ba6ac1b5624d041abf4d3808f5201757d8cf4605cf101a4e92e553ab",
-    "src/orderflow/hosted_jobs.py": "034af2a8cb1a278c15a81c1f8bb29b2916a43a3eb96a1e16f1d9f82edb150f6e",
+    "src/orderflow/dbt_runtime.py": "0385c7d10c1251b4fe8781a9117d3958efbbb10c5d8a81fd75253baae4d8519e",
+    "src/orderflow/hosted_jobs.py": "92b427e264783ce8a79b938a0c0a8707d4239bdb8ec7c4037a7a69ea6011d525",
     "src/orderflow/neon_auth.py": "76cd89548676948661bdf8763b3b594a33a7360103fd46d5b7ebd5fd9c5a3374",
     "src/orderflow/objects.py": "8b26fff0ea262f1ab71264064322eaf51c4a2c2dfd674bf84050a3809b5fede0",
-    "src/orderflow/pipeline.py": "492545d7bb4252dfb8a75dc6a5d2311b6a74d1ec8ddb03e10459815e08328e50",
+    "src/orderflow/pipeline.py": "33a2f6fa25a167ad8e6c1ac401d3fa4a7a1222ef4d0af6d3e168315f337d5d0f",
     "src/orderflow/schemas.py": "f819534d70c611cf9ffe70867e2768da0456c7d7c4f6d7b55d53a5cd1dffede9",
     "src/orderflow/service.py": "23bbb60a425729d6a53132b513c0b2220256a031f2535ad1b9bc44a3484ad90a",
     "src/orderflow/worker.py": "78d74e0ee34981b515eae328e267cc338fc6415e2b3309ec12b05b69633569ea",
@@ -198,7 +199,7 @@
     "orchestration/dags/orderflow_daily.py": "b2ad0e94da328506aea850dc577c8c16360bde7699c19e5eb83e3f1d934a2275"
   },
   "raw_reports": {
-    "bandit.json": "5414c2215939c3895bce8493edb6ab6a3c63252c118688331d653e5c1f093e65",
+    "bandit.json": "5342f8c785677dc93446b98b9320ab6f35f95dfc50dfcb3a7dd4695a20c5d973",
     "ruff-undefined-names.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
   },
   "low_category_assessments": [
