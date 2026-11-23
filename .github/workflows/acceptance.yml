@@ -52,6 +52,33 @@ jobs:
           uv pip check --python .venv-airflow/bin/python
       - name: Provision fresh CI identities without Windows cluster bootstrap
         run: .venv/bin/python scripts/ci_setup.py
+      - name: Diagnose and select matching PostgreSQL backup clients
+        run: |
+          command -v pg_dump
+          pg_dump --version
+          pg_restore --version
+          .venv/bin/python - <<'PY'
+          import os, psycopg
+          from sqlalchemy.engine import make_url
+          url=make_url(os.environ['ODF_CI_ADMIN_URL'])
+          with psycopg.connect(host=url.host,port=url.port,user=url.username,password=url.password,dbname='postgres',connect_timeout=5) as conn:
+              version=conn.execute('SHOW server_version').fetchone()[0]
+          print('Owned PostgreSQL service version:',version)
+          if version.split('.')[0]!='17':raise RuntimeError('Expected the pinned PostgreSQL17 CI service')
+          PY
+          if pg_dump --version | grep -Eq '\) 17\.' && pg_restore --version | grep -Eq '\) 17\.'; then
+            echo "The host clients match PostgreSQL17."
+          else
+            client_dir="$GITHUB_WORKSPACE/.runtime/pg-clients"
+            mkdir -p "$client_dir"
+            for command in pg_dump pg_restore; do
+              printf '#!/usr/bin/env bash\nset -euo pipefail\nexec docker run --rm --network host --user "$(id -u):$(id -g)" -e PGPASSWORD --mount "type=bind,src=$GITHUB_WORKSPACE,dst=$GITHUB_WORKSPACE" -w "$GITHUB_WORKSPACE" postgres:17.12 %s "$@"\n' "$command" > "$client_dir/$command"
+              chmod 700 "$client_dir/$command"
+            done
+            "$client_dir/pg_dump" --version
+            "$client_dir/pg_restore" --version
+            echo "$client_dir" >> "$GITHUB_PATH"
+          fi
       - name: Real PostgreSQL suite and independent recovery
         run: |
           .venv/bin/python scripts/run_tests.py --label ci --junitxml artifacts/ci/pytest.xml -q
