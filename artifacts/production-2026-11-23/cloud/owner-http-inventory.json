@@ -1,0 +1,89 @@
+{
+  "checked_at": "2026-11-23T20:26:08.137392+00:00",
+  "project": "orderflow",
+  "scope": "Actual enrolled operator, actual Neon JWT and production HTTP validation/idempotency/Queue processing; one new inventory job maximum, synthetic existing immutable snapshot.",
+  "credentials_saved": false,
+  "session_material_saved": false,
+  "private_env_files_read": false,
+  "database_access": false,
+  "emails_sent": false,
+  "new_job_limit": 1,
+  "request_body_sha256": "452f281f17a234df4ce512f4e263df677953ebb12045d6eb2d278190686e0f0e",
+  "checks": [
+    {
+      "name": "real_provider_signin",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "real_provider_token",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "strict_neon_signature",
+      "passed": true
+    },
+    {
+      "name": "enrolled_alpha_operator",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "missing_idempotency_rejected",
+      "passed": true,
+      "status": 422
+    },
+    {
+      "name": "actual_job_accepted",
+      "passed": true,
+      "status": 202
+    },
+    {
+      "name": "same_key_body_same_job",
+      "passed": true,
+      "status": 202
+    },
+    {
+      "name": "changed_body_same_key_conflict",
+      "passed": true,
+      "status": 409
+    },
+    {
+      "name": "private_queue_completed",
+      "passed": true
+    },
+    {
+      "name": "quality_failure_preserved",
+      "passed": true
+    },
+    {
+      "name": "latest_inventory_readable",
+      "passed": true,
+      "status": 200
+    }
+  ],
+  "passed": true,
+  "job_id": "e7006986-e7ba-50df-8547-49857c7294ef",
+  "transitions": [
+    {
+      "phase": "start",
+      "status": "pending"
+    },
+    {
+      "phase": "start",
+      "status": "running"
+    },
+    {
+      "phase": "done",
+      "status": "succeeded"
+    }
+  ],
+  "result": {
+    "run_id": "f80b6855-ab64-5d33-96f9-f3770911fe2a",
+    "quality_passed": false,
+    "difference_total": -2,
+    "comparison_status": "fail"
+  },
+  "probe_provider_logout_status": 200
+}

@@ -1,0 +1,118 @@
+{
+  "generated_at": "2026-11-23T20:01:55.717062+00:00",
+  "source_database": "orderflow_backup_4c1a37641d5a",
+  "restore_database": "orderflow_restore_62201cbb80ab",
+  "source_database_written": false,
+  "passed": true,
+  "table_hashes": {
+    "connector_cursors": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "entity_current": {
+      "rows": 5,
+      "sha256": "eebd29279c37d0502ca1e9099a92333aeeeb76fbaed840dfcf58b5d3a934bd45"
+    },
+    "entity_revisions": {
+      "rows": 9,
+      "sha256": "ba12d91978b0366cabd3fb4b425ce0e66ecf9d985bd4da1f316928aa5f2ecdf5"
+    },
+    "hosted_jobs": {
+      "rows": 3,
+      "sha256": "4b41dad5f4d4696343e6109b713f82779551162d380c6699cc21ff112c329ef1"
+    },
+    "inbox_events": {
+      "rows": 11,
+      "sha256": "6f9645180331a6d10e7c4dc05ab46ccee4c65c2d4ace9974fabfe89029a28bf8"
+    },
+    "ingestion_runs": {
+      "rows": 1,
+      "sha256": "5dadf77f7ce010b8dc0cbd74f041ad27095d61030c36c09c7b0d3a45e993d314"
+    },
+    "inventory_snapshots": {
+      "rows": 1,
+      "sha256": "dd449a19f3d75806d843d3c3f202374aec6389d4f803fc5c70c39b1d36120ca4"
+    },
+    "memberships": {
+      "rows": 4,
+      "sha256": "3ac1f9c8924990671f2ded66242642836ebb9da814f2b6d0529af979c5baac14"
+    },
+    "operator_audit": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pipeline_expectations": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pipeline_expected_orders": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pipeline_snapshot_rows": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "processing_partitions": {
+      "rows": 5,
+      "sha256": "f83fbd38a6ea2c33cfe53a559a83273154d877c435b0a09290c6ca61093af774"
+    },
+    "processing_receipts": {
+      "rows": 11,
+      "sha256": "7c03a324450c6b478104b323e84d109e1feecbe5ab1f350cd9b24f2869078614"
+    },
+    "quality_results": {
+      "rows": 1,
+      "sha256": "59c6a8d010d4d4d64cd8b5f73528d078ba48d910862b24a59d0679475bd5620c"
+    },
+    "quarantines": {
+      "rows": 2,
+      "sha256": "74140d97092b5a9f5db87c66bd94327a81da5783bb268170a09091323229ec50"
+    },
+    "report_candidates": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "report_locks": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "report_publications": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "request_budgets": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "source_authorities": {
+      "rows": 3,
+      "sha256": "a6152e3bd7fdd22f1422bdf8fc5cc689017d55daee13e3999ccbf0660e41a8b4"
+    },
+    "source_credentials": {
+      "rows": 4,
+      "sha256": "307824197d266bf75797f29bc85ce4dde5254a3445e19e58619f3ceca217b04b"
+    },
+    "sources": {
+      "rows": 4,
+      "sha256": "6b09357c7455cdf64e6266fb1b210e0c8dd7cc531c7e8951d1df8f5fea7a330f"
+    },
+    "stored_objects": {
+      "rows": 4,
+      "sha256": "f0c987ab5651d1c91293118881685ecbf31becdf7cacc51ac6ccdcb87bf3fff9"
+    },
+    "tenants": {
+      "rows": 2,
+      "sha256": "5947294d39c7434c3a7896319394160bab19a25294a71941acf572711b592ebc"
+    }
+  },
+  "table_count": 25,
+  "duplicate_replays": 14,
+  "new_worker_effects": 0,
+  "dump_sha256": "601913b9f5aa0152ef8b8cc6baddb08642ed004d1df219b9c67bd5f6d41da043",
+  "exported_snapshot_used": true,
+  "restore_identity_verified": true,
+  "external_objects": "Database report JSON and stored manifest hashes verified. This test does not restore a remote object store.",
+  "owned_restore_removed": true,
+  "private_dump_removed": true
+}

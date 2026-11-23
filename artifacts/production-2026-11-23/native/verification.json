@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-23T20:24:53.655121+00:00",
+  "passed": true,
+  "release_version": "0.2.0",
+  "source_commit": "6b175d23b75a32109e91d0ecc1e1bc792e9e6a9d",
+  "source_scope": "orderflow-production-inputs-v3",
+  "source_sha256": "be0a7db8f479f034420cd50e1a9f074f574b1864a592275eda9756f33ec512df",
+  "bound_input_count": 138,
+  "native": {
+    "counts": {
+      "tests": 173,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "time_seconds": 261.186
+    },
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.12.14",
+    "result": {
+      "path": "artifacts/production-2026-11-23/native/full-suite.xml",
+      "sha256": "ff0eb02497b28261eb219f57fa0e1a561064a792770f9778b3e2c1f91db8bd08",
+      "bytes": 23265
+    }
+  },
+  "backup": {
+    "tables": 25,
+    "duplicate_replays": 14,
+    "new_worker_effects": 0,
+    "source_stable": true,
+    "exported_snapshot_used": true,
+    "restore_identity_verified": true,
+    "owned_source_removed": true,
+    "owned_restore_removed": true,
+    "private_dump_removed": true,
+    "serving_database_preserved": true,
+    "env_unchanged": true,
+    "user_process_records_unchanged": true,
+    "stored_object_rows_alpha": 4,
+    "hosted_job_rows": 3,
+    "actual_inventory_difference": -2,
+    "scope": "Native PostgreSQL17.12 owned current-schema source; not a Neon18 backup or hosted Queue-delivery claim."
+  },
+  "historical_race_restored": true,
+  "race_evidence": {
+    "path": "artifacts/production-2026-11-23/native/version-claim-race.json",
+    "sha256": "e4b3554e9daf11d4c43f24e106914ad142c21ab3eaebcd4b2492287a4e9b55f8"
+  },
+  "current_linux_ci": {
+    "status": "success",
+    "commit": "6b175d23b75a32109e91d0ecc1e1bc792e9e6a9d",
+    "run_id": 45256905006,
+    "url": "https://github.com/nirajmohabey/orderflow/actions/runs/45256905006",
+    "scope": "Full PostgreSQL/batch/browser and Docker jobs; independently observed by GitHub connector. Raw downloadable artifact must remain separately bound before packaging claims."
+  },
+  "evidence": {
+    "artifacts/production-2026-11-23/native/full-suite.xml": {
+      "path": "artifacts/production-2026-11-23/native/full-suite.xml",
+      "sha256": "ff0eb02497b28261eb219f57fa0e1a561064a792770f9778b3e2c1f91db8bd08",
+      "bytes": 23265
+    },
+    "artifacts/production-2026-11-23/native/full-suite.source-proof.json": {
+      "path": "artifacts/production-2026-11-23/native/full-suite.source-proof.json",
+      "sha256": "fc3377a63c8c0fec7acf01ff01355e07be9eafc11a96ec8049310d416e16ae36",
+      "bytes": 34909
+    },
+    "artifacts/production-2026-11-23/native/backup-restore.json": {
+      "path": "artifacts/production-2026-11-23/native/backup-restore.json",
+      "sha256": "2240197def7bdb87a60a2659bc9adf135f630136a9fd63f771bec825e9dd0308",
+      "bytes": 4107
+    },
+    "artifacts/production-2026-11-23/native/backup-restore.source-proof.json": {
+      "path": "artifacts/production-2026-11-23/native/backup-restore.source-proof.json",
+      "sha256": "8ac164c1e61fea98c52d1867bfcc5616620ce0b8510033928e3a6ae9aa935ad0",
+      "bytes": 34982
+    },
+    "artifacts/production-2026-11-23/native/backup-owned-isolation.json": {
+      "path": "artifacts/production-2026-11-23/native/backup-owned-isolation.json",
+      "sha256": "99847be7a48040faab3b1223cd0929371f6a692646697c0d080c51383033969d",
+      "bytes": 8649
+    },
+    "artifacts/production-2026-11-23/native/version-claim-race.json": {
+      "path": "artifacts/production-2026-11-23/native/version-claim-race.json",
+      "sha256": "e4b3554e9daf11d4c43f24e106914ad142c21ab3eaebcd4b2492287a4e9b55f8",
+      "bytes": 439
+    },
+    "artifacts/production-2026-11-23/native/postgresql-environment.json": {
+      "path": "artifacts/production-2026-11-23/native/postgresql-environment.json",
+      "sha256": "7b1636d51cb1dffd3c357d0ebcfee3a7a71838d20930efb544bd8e48fb8dd2b4",
+      "bytes": 277
+    }
+  }
+}

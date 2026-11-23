@@ -1,0 +1,41 @@
+{
+  "verified_at": "2026-11-23T19:27:24.407769+00:00",
+  "native": {
+    "counts": {
+      "tests": 162,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "time_seconds": 564.595
+    },
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.12.14",
+    "result": {
+      "path": "artifacts/production-2026-11-23/native/full-suite.xml",
+      "sha256": "9b55b75ff362fe2d8e41bdfd397ddd686a7fdf2262feeae867f69496092d12fe",
+      "bytes": 21539
+    }
+  },
+  "backup_verified": true,
+  "counts": {
+    "tests": 162,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "time_seconds": 564.595
+  },
+  "snapshot_sha256": "5e096dfd25212b254a668aeb59d52064ce32212d3a4dabd05381d7f92fd8a5e2",
+  "snapshot_files": 136,
+  "source_scope": "orderflow-production-inputs-v3",
+  "backup_same_snapshot": true,
+  "cleanup_preservation": {
+    "owned_source_removed": true,
+    "temporary_keys_and_dump_root_removed": true,
+    "serving_database_preserved": true,
+    "env_unchanged": true,
+    "user_process_records_unchanged": true,
+    "source_stable": true
+  },
+  "race_json_sha256": "005b9730c167aa0e6f08a01fdc016fc37772e2c097520db98a27431adf596b16",
+  "historical_race_restored_exact": true
+}

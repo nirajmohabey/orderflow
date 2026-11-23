@@ -4,7 +4,11 @@ OrderFlow is a tenant-scoped event-to-warehouse system with an operations workbe
 
 The React interface shows current orders and products, effective price history, an event inbox, source health, terminal quarantine, run checks, last-good reports, and independent inventory differences. The recorded local demonstration includes a real dbt failure that preserves the prior successful report.
 
-**v0.1.1 intensive review:** 135 native Windows/PostgreSQL tests, 89 independent fixture checks, 17 real crash-recovery checks, and a 23-table restore/14-event replay passed. The dashboard passed 33 distinct browser scenarios, 35 responsive checks and 47 axe states with zero automated violations. Fixes cover timestamp overflow, consistent bounded history snapshots, request-budget retention, expired-session/action races, narrow layouts and backup cleanup. [Inspect the source-bound patch review](docs/REVIEW-2026-11-23.md). Current Linux, container and hosted execution remain unverified; earlier 104-test Linux and OS-image scans are historical v0.1.0 evidence. The complete benchmark remains `not_verified`.
+**Hosted v0.2.0:** [Open the live workbench](https://orderflow-hazel.vercel.app). FastAPI, Neon PostgreSQL/verified authentication, durable database objects and private Vercel Queue consumers are running on free plans. Actual hosted checks cover durable source ingestion, a successful dbt publication, a controlled dbt failure retaining the last good report, inventory mismatch, real operator sign-in/logout and cross-tenant denial. An isolated recovery of the actual Neon 18 application schema matched all 25 table hashes. [Deployment and operating limits](docs/PRODUCTION.md).
+
+**Verification:** 173 native PostgreSQL-backed tests passed with zero failures, errors or skips. The frontend passed 46 current-source browser scenarios using intercepted provider/API responses, separately from a 28-check authenticated production journey with actual Neon responses and all seven tabs. Thirty OrderFlow account-screen accessibility/layout scans passed; the combined two-app count is 65. These are scoped automated checks, not full WCAG certification. [Native source proof](artifacts/production-2026-11-23/native/full-suite.source-proof.json) · [Cloud proof](artifacts/production-2026-11-23/cloud/summary.json).
+
+**Historical v0.1.1 review:** 135 native Windows/PostgreSQL tests, 89 independent fixture checks, 17 real crash-recovery checks, and a 23-table restore/14-event replay passed at that checkpoint. The old video and [source-bound review](docs/REVIEW-2026-11-23.md) retain that scope. Current Linux/container and hosted evidence is tracked separately. The v1 benchmark remains `not_verified`; a fresh v2 full matrix is a separate run, never a relabeling of v1.
 
 ## Architecture
 
@@ -19,7 +23,7 @@ flowchart LR
     W --> Q[Terminal quarantine]
     H --> S[Run-scoped snapshot]
     C --> S
-    S --> D[Finite Airflow interval and real dbt checks]
+    S --> D[Real dbt quality checks]
     D -->|checks pass| P[Monotonic last-good publication]
     D -->|checks fail| F[Failed attempt; prior result retained]
     X[Inventory CSV] --> V[Independent reference comparison]
@@ -53,7 +57,7 @@ Pop-Location
 powershell -ExecutionPolicy Bypass -File .\scripts\background.ps1 start
 ```
 
-Open <http://127.0.0.1:8010>. The local identity picker offers Alpha/Beta operator and viewer memberships. Fixture sign-in appears only when the server explicitly enables both local environment and demo mode. Other deployments require a supplied bearer token; an external identity provider is not implemented by this local sign-in.
+Open <http://127.0.0.1:8010>. The local identity picker offers Alpha/Beta operator and viewer memberships. Fixture sign-in appears only when the server explicitly enables both local environment and demo mode. The live deployment instead uses Neon Auth with a verified provider token and server-maintained membership; fixture tokens are disabled there.
 
 The bootstrap creates ignored credentials and separate runtime/administrative/transform roles. If PostgreSQL tools are outside `PATH`, set `PG_BIN` to their installation directory before running it. `populate_demo.py` replays reviewed synthetic identities without resetting records. Source keys stay in private runtime files and are never requested by the browser.
 
@@ -147,6 +151,7 @@ Evidence entry points:
 
 | Artifact | Scope |
 | --- | --- |
+| [artifacts/production-2026-11-23/](artifacts/production-2026-11-23/) | Versioned hosted, current native, source/security and recovery evidence; separate from the historical local release below |
 | [artifacts/checks/](artifacts/checks/) | Current pytest/JUnit, independent fixture oracle, recovery, bootstrap, and backup/restore reports |
 | [artifacts/pipeline/](artifacts/pipeline/) | Real dbt execution, publication preservation, inventory, and object provenance |
 | [artifacts/dashboard/browser-results.json](artifacts/dashboard/browser-results.json) | Built React app with isolated intercepted APIs; source hashes and accessibility states |
@@ -162,6 +167,6 @@ The recorded v1 benchmark remains historical evidence: its complete10k gate pass
 
 All retailer identities, source records, inventory references, and measured workloads are synthetic. Local and container verification establishes the recorded behavior, not customer adoption, unattended production readiness, or business lift. Automated accessibility scans cover recorded states and do not establish full WCAG conformance.
 
-The backend is not publicly hosted. Optional Neon provisioning is pending owner acceptance of provider terms. The portfolio case study is a separate presentation surface. Objects/manifests are local; injected-client S3 contract tests are not actual AWS execution. A hosted identity-provider deployment and a real merchant integration are outside the recorded local release.
+The backend is publicly hosted at [orderflow-hazel.vercel.app](https://orderflow-hazel.vercel.app), with Neon-managed identity and restricted database roles. Hosted objects/manifests are immutable PostgreSQL bytea records, separately from the local object adapter. Actual source authentication, Queue processing, dbt publication/failure retention and inventory reconciliation were exercised against that alias. The portfolio video remains an older local demonstration. Injected-client S3 contract tests are not actual AWS execution, and no real merchant or customer integration is claimed. Airflow is exercised in local/Linux CI; the hosted path uses finite Queue phases.
 
-The source repository remains private until owner-approved visibility is verified. Do not commit `.env`, `.env.docker`, `.runtime`, source keys, private backups, tokens, or raw credentials. Public evidence should contain bounded, redacted results rather than machine secrets or private runtime files.
+The [source repository is public](https://github.com/nirajmohabey/orderflow), with owner-approved GitHub-to-Vercel automatic deployment from `main`. Do not commit `.env`, `.env.docker`, `.runtime`, source keys, private backups, tokens, or raw credentials. Public evidence contains bounded, redacted results. Free quotas, cold starts, provider/email availability and daily repair scheduling remain operating limits; no uptime SLA or zero-vulnerability guarantee is claimed.

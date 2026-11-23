@@ -1,0 +1,674 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-23T18:37:25.245058+00:00",
+  "source": "https://api.osv.dev/v1/querybatch",
+  "source_stable": true,
+  "input_hashes": {
+    "pyproject.toml": "427b6d062757ded011a9fd952544c143f40e73bad2c0ff33072e8aa3df1d0cbf",
+    "uv.lock": "76dc4c6bde24ac4ec17e8eb773610bba1ec5da4af1363a5ad188aa9cdc4e192a",
+    "requirements.lock": "54c4186974c9127550907cc9c8179463a95c2624e506535c2841ac24217a90bb"
+  },
+  "installed_snapshot_sha256": "2af1a97a948dcf9dde1ec1261af09f6532d4eb0a152ec6af16d3dd312e00a794",
+  "production_lock_exact_versions": 88,
+  "native_installed_exact_versions": 92,
+  "unique_queried_exact_versions": 92,
+  "packages": [
+    {
+      "name": "agate",
+      "version": "1.9.1",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "annotated-doc",
+      "version": "0.0.7",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "anyio",
+      "version": "4.16.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "attrs",
+      "version": "26.1.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "babel",
+      "version": "2.18.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "certifi",
+      "version": "2026.11.20",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "cffi",
+      "version": "2.1.1",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.5.3",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "click",
+      "version": "8.5.1",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "colorama",
+      "version": "0.4.6",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "cryptography",
+      "version": "50.0.2",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "daff",
+      "version": "1.4.2",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "dbt-adapters",
+      "version": "1.24.6",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "dbt-common",
+      "version": "1.39.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "dbt-core",
+      "version": "1.12.7",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "dbt-core-experimental-parser",
+      "version": "2.0.11",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "dbt-extractor",
+      "version": "0.6.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "dbt-postgres",
+      "version": "1.11.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "dbt-protos",
+      "version": "1.0.615",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "deepdiff",
+      "version": "8.6.2",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "fastapi",
+      "version": "0.165.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "h2",
+      "version": "4.4.1",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "hpack",
+      "version": "4.2.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "httpcore",
+      "version": "1.0.9",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "httpcore2",
+      "version": "2.16.2",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "httpx2",
+      "version": "2.16.2",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "httpx2-jsfetch",
+      "version": "1.0",
+      "production_lock": true,
+      "native_installed": false
+    },
+    {
+      "name": "hyperframe",
+      "version": "6.1.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "importlib-metadata",
+      "version": "10.2.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.1",
+      "production_lock": false,
+      "native_installed": true
+    },
+    {
+      "name": "isodate",
+      "version": "0.7.2",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "jinja2",
+      "version": "3.1.6",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "jsonschema",
+      "version": "4.26.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "lazy-importer",
+      "version": "0.1.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "leather",
+      "version": "0.4.1",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "markupsafe",
+      "version": "3.0.4",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "mashumaro",
+      "version": "3.17",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "metricflow",
+      "version": "0.214.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "more-itertools",
+      "version": "10.8.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "msgpack",
+      "version": "1.2.4",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "networkx",
+      "version": "3.7",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "opentelemetry-api",
+      "version": "1.45.2",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "orderly-set",
+      "version": "5.5.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "parsedatetime",
+      "version": "2.6",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "pathspec",
+      "version": "1.0.4",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "pluggy",
+      "version": "1.7.0",
+      "production_lock": false,
+      "native_installed": true
+    },
+    {
+      "name": "protobuf",
+      "version": "6.33.6",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "psycopg",
+      "version": "3.3.9",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "psycopg-binary",
+      "version": "3.3.9",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "psycopg2-binary",
+      "version": "2.9.13",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "pycparser",
+      "version": "3.12",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "pydantic",
+      "version": "2.14.4",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "pydantic-core",
+      "version": "2.50.5",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "pygments",
+      "version": "2.21.0",
+      "production_lock": false,
+      "native_installed": true
+    },
+    {
+      "name": "pyjwt",
+      "version": "2.15.1",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "pytest",
+      "version": "9.2.0",
+      "production_lock": false,
+      "native_installed": true
+    },
+    {
+      "name": "python-dateutil",
+      "version": "2.9.0.post0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "python-dotenv",
+      "version": "1.2.4",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "python-multipart",
+      "version": "0.0.34",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "python-slugify",
+      "version": "9.2.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "pytimeparse",
+      "version": "1.1.10",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "pytz",
+      "version": "2026.6",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "pyyaml",
+      "version": "6.0.4",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "rapidfuzz",
+      "version": "3.14.6",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "referencing",
+      "version": "0.37.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "rpds-py",
+      "version": "2026.9.1",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "six",
+      "version": "1.17.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "snowplow-tracker",
+      "version": "1.1.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "sqlalchemy",
+      "version": "2.1.9",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "sqlglot",
+      "version": "30.33.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "sqlparse",
+      "version": "0.6.1",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "starlette",
+      "version": "1.10.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "tabulate",
+      "version": "0.10.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "text-unidecode",
+      "version": "1.3",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "truststore",
+      "version": "0.10.5",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "typing-extensions",
+      "version": "4.16.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.5",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "tzdata",
+      "version": "2026.6",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "urllib3",
+      "version": "2.8.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.54.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "vercel-headers",
+      "version": "0.8.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "vercel-internal-core",
+      "version": "0.3.2",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "vercel-oidc",
+      "version": "0.12.0",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "vercel-queue",
+      "version": "0.11.2",
+      "production_lock": true,
+      "native_installed": true
+    },
+    {
+      "name": "zipp",
+      "version": "4.1.2",
+      "production_lock": true,
+      "native_installed": true
+    }
+  ],
+  "raw_batch_results": [
+    {
+      "results": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ]
+    }
+  ],
+  "pagination_results": [],
+  "findings": [],
+  "limitations": [
+    "Public exact-package advisory matching at query time is not an exploitability or deployment-safety proof.",
+    "The native interpreter includes development packages; all production export pins are queried even when platform markers differ.",
+    "Vercel build image/OS packages and provider infrastructure are outside this Python package audit."
+  ]
+}

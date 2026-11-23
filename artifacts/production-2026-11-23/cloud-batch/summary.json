@@ -1,0 +1,314 @@
+{
+  "passed": true,
+  "deployment_id": "dpl_2UpM3pWPeue5jTLfGEiAH7SXBuyU",
+  "commit": "d082edbd5db498bc49b41ca0e17f781607831048",
+  "jobs": [
+    {
+      "name": "daily-good",
+      "job_id": "2c9a104f-e747-5203-8605-0dc54e49e6c9",
+      "status": "failed",
+      "phase": "done",
+      "generation": 1,
+      "last_error_code": "dbt_run_failed",
+      "result": {
+        "quality_passed": false
+      },
+      "project_sha256": "0a2a34b9d045433a673a1e20e977845cbb11d11f6d94a5e68f78dd776ed5a87e",
+      "manifest_sha256": null,
+      "checks": [
+        {
+          "check_name": "dbt_run_execution",
+          "status": "error",
+          "observed": "2",
+          "expected": "0"
+        }
+      ],
+      "object_count": 2
+    },
+    {
+      "name": "daily-good-after-fix",
+      "job_id": "e37d5400-955f-57c1-abb7-b1002efe3f93",
+      "status": "failed",
+      "phase": "done",
+      "generation": 1,
+      "last_error_code": "dbt_run_failed",
+      "result": {
+        "diagnostic": {
+          "key": "reports/11111111-1111-4111-8111-111111111111/e37d5400-955f-57c1-abb7-b1002efe3f93/dbt-run-93ce6adc-4565-4bf9-b081-41e948bc7a63-diagnostic.json",
+          "bytes": 3805,
+          "sha256": "36cd351e3a0ce317122a31bf315f48c69ec53faed78ed45dc38d645e32d62996"
+        },
+        "quality_passed": false
+      },
+      "project_sha256": "c90e572cff3e09b3e1c403859c91d9b289aa1bbd08498b5969dd394c87ed7ba8",
+      "manifest_sha256": null,
+      "checks": [
+        {
+          "check_name": "dbt_run_execution",
+          "status": "error",
+          "observed": "2",
+          "expected": "0"
+        }
+      ],
+      "object_count": 3
+    },
+    {
+      "name": "daily-good-after-runtime-fix",
+      "job_id": "65ac6eba-2645-5adf-9619-6853b29d3dd9",
+      "status": "succeeded",
+      "phase": "done",
+      "generation": 2,
+      "last_error_code": null,
+      "result": {
+        "stale": true,
+        "run_id": "65ac6eba-2645-5adf-9619-6853b29d3dd9",
+        "has_success": true
+      },
+      "project_sha256": "c90e572cff3e09b3e1c403859c91d9b289aa1bbd08498b5969dd394c87ed7ba8",
+      "manifest_sha256": "83cfdf5f955c30dff1556aed15407a67b69bf0027b7d6547b46b67eda8cf89db",
+      "checks": [
+        {
+          "check_name": "dbt_run_execution",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.history_highest_equal_time",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.unique_order_facts_entity_id.c633b6ef54",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.history_nonoverlap",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.not_null_order_facts_entity_id.4e787c9833",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.not_null_product_history_valid_from.fd8fe17a1e",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.fact_relationship",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.not_null_stg_revisions_entity_version.aee8aa8831",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.order_reconciliation",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.total_reconciliation",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.expectation_row_count",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "dbt_test_execution",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.not_null_stg_revisions_entity_id.8edb0b70bc",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.not_null_order_facts_total_minor.84ed147d60",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.revision_key_unique",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        }
+      ],
+      "object_count": 5
+    },
+    {
+      "name": "daily-wrong-oracle",
+      "job_id": "61046e95-5e04-50ef-96a4-49c46a704bfb",
+      "status": "failed",
+      "phase": "done",
+      "generation": 1,
+      "last_error_code": "dbt_test_failed",
+      "result": {
+        "diagnostic": {
+          "key": "reports/11111111-1111-4111-8111-111111111111/61046e95-5e04-50ef-96a4-49c46a704bfb/dbt-test-a906d30f-ed8d-4aec-92f5-ac8370e3b1e2-diagnostic.json",
+          "bytes": 4437,
+          "sha256": "8b6c3b77d90d18ab1bcd20b87d66fab8362f922619edef2b9cc8ee1cbee82ce7"
+        },
+        "quality_passed": false
+      },
+      "project_sha256": "c90e572cff3e09b3e1c403859c91d9b289aa1bbd08498b5969dd394c87ed7ba8",
+      "manifest_sha256": null,
+      "checks": [
+        {
+          "check_name": "dbt_run_execution",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.order_reconciliation",
+          "status": "fail",
+          "observed": "1",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.not_null_product_history_valid_from.fd8fe17a1e",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.history_nonoverlap",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.not_null_stg_revisions_entity_version.aee8aa8831",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.revision_key_unique",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.unique_order_facts_entity_id.c633b6ef54",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.total_reconciliation",
+          "status": "fail",
+          "observed": "1",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.fact_relationship",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.not_null_order_facts_total_minor.84ed147d60",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.not_null_order_facts_entity_id.4e787c9833",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.expectation_row_count",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "dbt_test_execution",
+          "status": "error",
+          "observed": "1",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.not_null_stg_revisions_entity_id.8edb0b70bc",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        },
+        {
+          "check_name": "test.orderflow_warehouse.history_highest_equal_time",
+          "status": "pass",
+          "observed": "0",
+          "expected": "0"
+        }
+      ],
+      "object_count": 5
+    },
+    {
+      "name": "inventory-mismatch",
+      "job_id": "f80b6855-ab64-5d33-96f9-f3770911fe2a",
+      "status": "succeeded",
+      "phase": "done",
+      "generation": 0,
+      "last_error_code": null,
+      "result": {
+        "run_id": "f80b6855-ab64-5d33-96f9-f3770911fe2a",
+        "quality_passed": false,
+        "difference_total": -2,
+        "comparison_status": "fail"
+      },
+      "project_sha256": null,
+      "manifest_sha256": null,
+      "checks": [
+        {
+          "check_name": "inventory_quantity_reconciliation",
+          "status": "fail",
+          "observed": "20",
+          "expected": "22"
+        }
+      ],
+      "object_count": 4
+    }
+  ],
+  "last_good": {
+    "run_id": "65ac6eba-2645-5adf-9619-6853b29d3dd9",
+    "tenant_id": "11111111-1111-4111-8111-111111111111",
+    "generation": 3,
+    "report_key": "daily",
+    "interval_end": "2026-11-07T00:00:00+00:00",
+    "published_at": "2026-11-23T19:53:11.990627+00:00",
+    "interval_start": "2026-11-06T00:00:00+00:00",
+    "manifest_sha256": "83cfdf5f955c30dff1556aed15407a67b69bf0027b7d6547b46b67eda8cf89db"
+  },
+  "last_good_after_failure_equal": true,
+  "last_good_after_inventory_equal": true,
+  "business_unchanged": true,
+  "objects_verified": 19
+}

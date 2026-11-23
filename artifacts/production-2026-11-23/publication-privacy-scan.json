@@ -1,0 +1,24 @@
+{
+  "checked_at": "2026-11-23T20:32:37.732747+00:00",
+  "publication_files_scanned": 78,
+  "documentation_files_scanned": 3,
+  "current_repository_files_scanned": 588,
+  "known_private_variants_checked": 223,
+  "known_private_variant_hits": 0,
+  "decoded_encoded_json_escaped_variants_checked": true,
+  "jwt_pattern_hits": 0,
+  "git_all_refs_text_patch_bytes_scanned": 20836536,
+  "git_text_history_private_variant_hits": 0,
+  "missing_documentation_links": [],
+  "public_documentation_urls": [
+    "https://docs.getdbt.com/docs/running-a-dbt-project/using-threads",
+    "https://docs.python.org/3.12/library/threading.html#lock-objects",
+    "https://github.com/nirajmohabey/orderflow",
+    "https://orderflow-hazel.vercel.app"
+  ],
+  "native_current_proof_passed": true,
+  "native_tests": 173,
+  "backup_current_proof_passed": true,
+  "historical_version_claim_race_restored": true,
+  "scope": "Known local/provider credentials and identity digests scanned in memory, including URL-decoded, URL-encoded, JSON-escaped, HTML and base64 variants. Current tracked files plus proposed docs/artifacts and all Git refs' text patches checked. Binary history is not expanded. Not a universal secret-leak or vulnerability guarantee."
+}

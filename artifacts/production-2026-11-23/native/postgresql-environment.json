@@ -1,0 +1,7 @@
+{
+  "scope": "Read-only native local cluster identification; not Neon cloud backup proof",
+  "version": "PostgreSQL 17.12 on x86_64-windows, compiled by msvc-19.44.35230, 64-bit",
+  "server_version": "17.12",
+  "server_address": "127.0.0.1/32",
+  "server_port": 55449
+}

@@ -1,5 +1,7 @@
 # Vercel and Neon runtime
 
+The stable public deployment is [orderflow-hazel.vercel.app](https://orderflow-hazel.vercel.app). Both provider resources use their free plans. GitHub source is public and pushes to `main` automatically deploy through the approved Vercel connection.
+
 The production implementation uses FastAPI on Vercel Functions, Neon PostgreSQL,
 Neon Managed Auth and native Python Vercel Queues. A successful build alone does
 not establish that authentication, queue delivery or report publication works on
@@ -87,6 +89,15 @@ bounded key sets and a bounded cached refresh/failure cooldown. Existing local
 HS256 and separately configured RS256 behavior remain available; production
 fixture login remains disabled.
 
+Provider cookie sessions and API bearer tokens have different lifecycles. In the
+actual logout check, the provider session disappeared and anonymous API access
+returned 401, while an already-issued signed JWT remained usable through its
+900-second lifetime while membership was active. The browser clears its RAM-only
+bearer on logout. Provider session revocation settings do not promise immediate
+invalidation of already-issued JWTs; deactivate the server-maintained membership
+to remove API access immediately. No cookie or bearer value is retained in the
+published lifecycle proof.
+
 ## Finite jobs and recovery
 
 HTTP acceptance writes inbox data and the coalesced drain job in one database
@@ -110,6 +121,16 @@ publication transaction checks the database lease token before updating the
 last-good pointer. A failed candidate retains the previous successful report.
 Inventory comparison uses the same durable store and fenced publication;
 execution success and comparison failure are reported separately.
+
+Vercel's Python runtime does not provide the process-shared semaphore used by
+dbt's default context. The finite hosted dbt child therefore uses a reviewed,
+version-guarded thread context and thread-pool binding. It preserves two model
+threads, real SQL and all tests; it does not patch global multiprocessing in the
+API, Airflow or normal CLI. The exact locked Python/dbt versions are checked
+before starting. Upgrades require review and the real successful/failed SQL
+regression with process semaphores deliberately unavailable. See
+[dbt threads](https://docs.getdbt.com/docs/running-a-dbt-project/using-threads)
+and [Python thread locks](https://docs.python.org/3.12/library/threading.html#lock-objects).
 
 The Queue consumer has concurrency two and bounded redelivery; each database
 phase has a 240-second lease and five-attempt limit. Function duration is set to
@@ -138,3 +159,37 @@ manifest hash, and exercise inventory mismatch. Confirm immutable objects surviv
 another function instance, the protected repair route denies unauthenticated
 requests, function bundles contain no local environments/reports/secrets, and no
 owner URL is configured. Preserve old local/Linux/benchmark evidence as history.
+
+## Executed hosted checks, 2026-11-23
+
+On the actual production alias, all 14 frozen input lines were accepted/replayed,
+with 11 distinct events across two tenants. Authentication, duplicate acceptance,
+identity conflict, invalid payload and cross-tenant source denial were checked.
+The private Queue materialized the expected receipts, revisions and quarantines.
+
+After fixing a deployment ignore rule and the dbt semaphore compatibility, a
+fresh good daily job completed stage/check/publish, with 13 actual dbt tests
+passing. A new internally consistent but incorrect oracle then failed actual
+dbt reconciliation tests. The successful publication's manifest pointer stayed
+exactly unchanged. Inventory processing completed while retaining a failed
+quality result: 20 observed units versus 22 independently referenced units,
+difference -2. Nineteen immutable objects across the five retained attempts were
+checksum-verified. The two earlier unexpected failures remain in the job ledger.
+These jobs used reviewed restricted-app internal preconditions followed by the
+deployed private Queue; they are separate from an HTTP operator job-submission
+test. Historical fixture dates correctly remain stale.
+
+A real browser journey used the enrolled verified operator account, actual Neon
+JWTs and all seven workbench tabs without network mocks. All 28 checks passed,
+including a known Beta source's 404 denial, empty browser storage, logout and
+anonymous API denial. Credentials, cookies and tokens were kept out of reports.
+
+An actual Neon PostgreSQL 18.7 exported snapshot was restored into a newly
+created ownership-marked database on the same project. All 25 application-table
+hashes matched, all 23 forced-RLS tables were restored, restricted unscoped reads
+returned no tenants, and scoped reads returned only their own tenant. All 19
+stored objects matched their hashes and the restored immutability trigger
+rejected mutation. Source connections were read-only; the temporary database
+and private dump were removed. Managed authentication, warehouse and evaluation
+schemas were excluded. This does not establish provider PITR, complete account
+recovery, cross-region failover or a recovery-time guarantee.

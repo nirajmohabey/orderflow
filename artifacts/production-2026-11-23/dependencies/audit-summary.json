@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-11-23T18:37:25.245058+00:00",
+  "source_stable": true,
+  "production_lock_exact_versions": 88,
+  "native_installed_exact_versions": 92,
+  "unique_queried_exact_versions": 92,
+  "production_packages_with_advisories": 0,
+  "native_packages_with_advisories": 0,
+  "advisory_ids": [],
+  "reports": {
+    "application-installed.json": "2af1a97a948dcf9dde1ec1261af09f6532d4eb0a152ec6af16d3dd312e00a794",
+    "osv-runtime-audit.json": "08e95273bf0c2681d0176eae41f497cfb52e2ac38cb6c9dd49aca6ee70dde651"
+  },
+  "input_hashes": {
+    "pyproject.toml": "427b6d062757ded011a9fd952544c143f40e73bad2c0ff33072e8aa3df1d0cbf",
+    "uv.lock": "76dc4c6bde24ac4ec17e8eb773610bba1ec5da4af1363a5ad188aa9cdc4e192a",
+    "requirements.lock": "54c4186974c9127550907cc9c8179463a95c2624e506535c2841ac24217a90bb"
+  },
+  "passed": true
+}

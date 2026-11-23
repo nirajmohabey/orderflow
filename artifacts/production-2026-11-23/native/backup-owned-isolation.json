@@ -1,0 +1,233 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-23T20:13:38.903304+00:00",
+  "passed": true,
+  "scope": "Native PostgreSQL17 owned fixture and real pg_dump/pg_restore. No Neon18 backup or hosted Queue-delivery claim.",
+  "configuration": "Unchanged backup_check.main with explicit owned fixture dotenv mapping and temporary fixture/key root; no serving .env/source-key writes.",
+  "driver_sha256": "0c962d8a71efc63a8611211013b868c092c41ba32c80838980e3f40a0fbc3edd",
+  "backup_script_sha256": "cd29ff110645768161e3facfbf4b5b42aad9a9fc7023837a2483f5626747248f",
+  "serving_before": {
+    "identity": [
+      "orderflow",
+      "127.0.0.1/32",
+      55449
+    ],
+    "table_hashes": {
+      "connector_cursors": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "entity_current": {
+        "rows": 5,
+        "sha256": "9afd4ee88dcefa807d85f0e1882f6913fc4d0239319fa05bdaaccf4c46fcab69"
+      },
+      "entity_revisions": {
+        "rows": 9,
+        "sha256": "93424b719d19ee126f2464dff50fd226e8162578c0d64ed59b435282d0daad35"
+      },
+      "inbox_events": {
+        "rows": 11,
+        "sha256": "74b676392432113390f1b4446471706d761762877a01349d3d6d7a4e31a76d83"
+      },
+      "ingestion_runs": {
+        "rows": 3,
+        "sha256": "7690900135c1072cd93fd148ab9ca22e096b0f5b1aa0b2a60c6e15b60d72e81e"
+      },
+      "inventory_snapshots": {
+        "rows": 1,
+        "sha256": "7f28b25139ad640c65b1faca406a96bd681a60c6feb3fa49bc490d3103af72fc"
+      },
+      "memberships": {
+        "rows": 4,
+        "sha256": "3ac1f9c8924990671f2ded66242642836ebb9da814f2b6d0529af979c5baac14"
+      },
+      "operator_audit": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "pipeline_expectations": {
+        "rows": 2,
+        "sha256": "1f4bccda1e256d8830c331c159504ffa4e70994ccf4a15d5b7d76b115fbb9bf1"
+      },
+      "pipeline_expected_orders": {
+        "rows": 4,
+        "sha256": "96125e33523b762fdb2c10acd148a2311fa5875faa22ac7db841f888495e5c1c"
+      },
+      "pipeline_snapshot_rows": {
+        "rows": 16,
+        "sha256": "29826d955f65dee9000ea0f44c2034df050dad03ba7bfbabd9b30f33cc086edf"
+      },
+      "processing_partitions": {
+        "rows": 5,
+        "sha256": "201ece391acdb9eaf5d80dc9c62c8609045167d9faa7dd917aa621928a499bf5"
+      },
+      "processing_receipts": {
+        "rows": 11,
+        "sha256": "101889f63f0c197589502b57b29eaa9fccbb0feb31bbc439a660830a5ffb3713"
+      },
+      "quality_results": {
+        "rows": 31,
+        "sha256": "4053d6dd820faccf5954b268bde7af9e4409567950b6c53c358243cdad19ae5d"
+      },
+      "quarantines": {
+        "rows": 2,
+        "sha256": "d5608284f321675710b15addc710544f6bcc3fc720175950b5d9282a04981385"
+      },
+      "report_candidates": {
+        "rows": 2,
+        "sha256": "f5c858314485c6392ba830b20cfcbbb1c7443f6f87ad519982661999d9b927a6"
+      },
+      "report_locks": {
+        "rows": 1,
+        "sha256": "22c627c8117f452dcd4141eda097336d1868030a007234fb4c511dbedb2df9b3"
+      },
+      "report_publications": {
+        "rows": 1,
+        "sha256": "63e2628a0887df69cf5fe458343cbef62474beac5b84679bf9b56c9dbfa29331"
+      },
+      "request_budgets": {
+        "rows": 32,
+        "sha256": "94cfabc4c65d08c16bb844fe4d2649afd83ea4b05a9222bad7dfa8e62cb6a446"
+      },
+      "source_authorities": {
+        "rows": 3,
+        "sha256": "a6152e3bd7fdd22f1422bdf8fc5cc689017d55daee13e3999ccbf0660e41a8b4"
+      },
+      "source_credentials": {
+        "rows": 4,
+        "sha256": "feb84e095d7bd1b57b132c22847cfcaa26eefbf1e66883d65a15cd892911b11b"
+      },
+      "sources": {
+        "rows": 4,
+        "sha256": "6b09357c7455cdf64e6266fb1b210e0c8dd7cc531c7e8951d1df8f5fea7a330f"
+      },
+      "tenants": {
+        "rows": 2,
+        "sha256": "642057457150286efb7f45989b35fc11674860c9b6dde3dbd0364c40774462d9"
+      }
+    }
+  },
+  "env_sha256_before": "f2b14c99f0f5bae60742d19f4c3d4d8aa717859c97ba67247a0d96573b86f01c",
+  "user_process_record_hashes_before": {
+    ".runtime/api.process.json": "793d4fdf1d2cd678ebec204c66207ee457314e2c6ecb84ccffedd400d7c15860",
+    ".runtime/worker.process.json": "a177a6f3a996119f7def7e9a0b73bf5ad1a1727ddddb0697f805868a22fe8462"
+  },
+  "owned_source": "orderflow_backup_219eea19487e",
+  "stored_object_rows_alpha": 4,
+  "inventory_job_succeeded": true,
+  "actual_inventory_difference": -2,
+  "cloud_queue_send_attempts": 0,
+  "serving_after": {
+    "identity": [
+      "orderflow",
+      "127.0.0.1/32",
+      55449
+    ],
+    "table_hashes": {
+      "connector_cursors": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "entity_current": {
+        "rows": 5,
+        "sha256": "9afd4ee88dcefa807d85f0e1882f6913fc4d0239319fa05bdaaccf4c46fcab69"
+      },
+      "entity_revisions": {
+        "rows": 9,
+        "sha256": "93424b719d19ee126f2464dff50fd226e8162578c0d64ed59b435282d0daad35"
+      },
+      "inbox_events": {
+        "rows": 11,
+        "sha256": "74b676392432113390f1b4446471706d761762877a01349d3d6d7a4e31a76d83"
+      },
+      "ingestion_runs": {
+        "rows": 3,
+        "sha256": "7690900135c1072cd93fd148ab9ca22e096b0f5b1aa0b2a60c6e15b60d72e81e"
+      },
+      "inventory_snapshots": {
+        "rows": 1,
+        "sha256": "7f28b25139ad640c65b1faca406a96bd681a60c6feb3fa49bc490d3103af72fc"
+      },
+      "memberships": {
+        "rows": 4,
+        "sha256": "3ac1f9c8924990671f2ded66242642836ebb9da814f2b6d0529af979c5baac14"
+      },
+      "operator_audit": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "pipeline_expectations": {
+        "rows": 2,
+        "sha256": "1f4bccda1e256d8830c331c159504ffa4e70994ccf4a15d5b7d76b115fbb9bf1"
+      },
+      "pipeline_expected_orders": {
+        "rows": 4,
+        "sha256": "96125e33523b762fdb2c10acd148a2311fa5875faa22ac7db841f888495e5c1c"
+      },
+      "pipeline_snapshot_rows": {
+        "rows": 16,
+        "sha256": "29826d955f65dee9000ea0f44c2034df050dad03ba7bfbabd9b30f33cc086edf"
+      },
+      "processing_partitions": {
+        "rows": 5,
+        "sha256": "201ece391acdb9eaf5d80dc9c62c8609045167d9faa7dd917aa621928a499bf5"
+      },
+      "processing_receipts": {
+        "rows": 11,
+        "sha256": "101889f63f0c197589502b57b29eaa9fccbb0feb31bbc439a660830a5ffb3713"
+      },
+      "quality_results": {
+        "rows": 31,
+        "sha256": "4053d6dd820faccf5954b268bde7af9e4409567950b6c53c358243cdad19ae5d"
+      },
+      "quarantines": {
+        "rows": 2,
+        "sha256": "d5608284f321675710b15addc710544f6bcc3fc720175950b5d9282a04981385"
+      },
+      "report_candidates": {
+        "rows": 2,
+        "sha256": "f5c858314485c6392ba830b20cfcbbb1c7443f6f87ad519982661999d9b927a6"
+      },
+      "report_locks": {
+        "rows": 1,
+        "sha256": "22c627c8117f452dcd4141eda097336d1868030a007234fb4c511dbedb2df9b3"
+      },
+      "report_publications": {
+        "rows": 1,
+        "sha256": "63e2628a0887df69cf5fe458343cbef62474beac5b84679bf9b56c9dbfa29331"
+      },
+      "request_budgets": {
+        "rows": 32,
+        "sha256": "94cfabc4c65d08c16bb844fe4d2649afd83ea4b05a9222bad7dfa8e62cb6a446"
+      },
+      "source_authorities": {
+        "rows": 3,
+        "sha256": "a6152e3bd7fdd22f1422bdf8fc5cc689017d55daee13e3999ccbf0660e41a8b4"
+      },
+      "source_credentials": {
+        "rows": 4,
+        "sha256": "feb84e095d7bd1b57b132c22847cfcaa26eefbf1e66883d65a15cd892911b11b"
+      },
+      "sources": {
+        "rows": 4,
+        "sha256": "6b09357c7455cdf64e6266fb1b210e0c8dd7cc531c7e8951d1df8f5fea7a330f"
+      },
+      "tenants": {
+        "rows": 2,
+        "sha256": "642057457150286efb7f45989b35fc11674860c9b6dde3dbd0364c40774462d9"
+      }
+    }
+  },
+  "serving_database_preserved": true,
+  "env_sha256_after": "f2b14c99f0f5bae60742d19f4c3d4d8aa717859c97ba67247a0d96573b86f01c",
+  "env_unchanged": true,
+  "user_process_record_hashes_after": {
+    ".runtime/api.process.json": "793d4fdf1d2cd678ebec204c66207ee457314e2c6ecb84ccffedd400d7c15860",
+    ".runtime/worker.process.json": "a177a6f3a996119f7def7e9a0b73bf5ad1a1727ddddb0697f805868a22fe8462"
+  },
+  "user_process_records_unchanged": true,
+  "owned_source_removed": true,
+  "temporary_keys_and_dump_root_removed": true,
+  "source_stable": true,
+  "error_type": null
+}

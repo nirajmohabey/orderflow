@@ -1,0 +1,17 @@
+{
+  "scope": "Fresh owned test DB; actual independent PostgreSQL connections, no serving reset",
+  "first_backend_pid": 993220,
+  "second_backend_pid": 993152,
+  "observed_blockers": [
+    993220
+  ],
+  "first_sequence": 1,
+  "second_sequence": 2,
+  "terminal_outcomes": [
+    "tenant_currency_mismatch",
+    "entity_version_conflict"
+  ],
+  "revision_count": 0,
+  "receipt_and_checkpoint_count": 2,
+  "passed": true
+}

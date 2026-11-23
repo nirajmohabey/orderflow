@@ -1,0 +1,12 @@
+{
+  "native_173_passed": true,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "source_changed": false,
+  "tested_snapshot_sha256": "8a5a08af04a213bd93bd92c9fc978e2dffc44676f577b1a3dfe3dbbbb068a239",
+  "backup_same_tested_snapshot": true,
+  "historical_race_restored_exact": true,
+  "preserved_directory": "artifacts/production-2026-11-23/native/history/20261123T200951551699Z-09ef-whole-source-pass",
+  "race_sha256": "dd09df3a1aab42c84dfb9acb953493440fe54dc7c50fe854076c7dbcfced7502"
+}

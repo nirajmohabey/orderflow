@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "baseline_public_packet": {
+    "manifest": "manifest.json",
+    "sha256": "3a2afa46062602e3640aa5f8190f6de8ae472565bd33fbd57b1564950da5263f",
+    "declared_files": 23,
+    "scope": "Original reviewed packet copied byte-for-byte; its manifest-covered files are unchanged."
+  },
+  "addenda": {
+    "owner-http-inventory.json": {
+      "sha256": "dc9e571a229212ef22ae43728af6226e7ebcbf29f84d870adb8f124c0b58e5a8",
+      "bytes": 2121,
+      "checks": 11,
+      "new_inventory_jobs": 1,
+      "result_run_id": "f80b6855-ab64-5d33-96f9-f3770911fe2a",
+      "comparison_status": "fail",
+      "difference_total": -2,
+      "scope": "Actual enrolled operator HTTP submission, idempotency validation, private Queue completion, and authenticated read of the pre-existing immutable synthetic snapshot. This adds one durable job after the original five-attempt batch checkpoint; it does not relabel the original five jobs as HTTP submissions."
+    }
+  },
+  "scope": "Standalone addendum; it does not modify or expand the original public packet manifest."
+}
