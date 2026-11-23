@@ -84,6 +84,7 @@ jobs:
           .venv/bin/python scripts/run_tests.py --label ci --junitxml artifacts/ci/pytest.xml -q
           .venv/bin/python scripts/run_tests.py --label ci --harness acceptance --proof artifacts/ci/acceptance.source-proof.json
           .venv/bin/python scripts/run_tests.py --label ci --harness recovery --proof artifacts/ci/recovery.source-proof.json
+          .venv/bin/python scripts/populate_demo.py
           .venv/bin/python scripts/run_tests.py --label ci --harness backup --proof artifacts/ci/backup.source-proof.json
       - name: Actual finite Airflow DAG, dbt and parser regression
         run: |
