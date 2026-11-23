@@ -2,7 +2,7 @@
 from dataclasses import asdict, dataclass
 import hashlib
 import os
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import re
 from typing import Protocol
 from uuid import uuid4
@@ -31,6 +31,16 @@ def validate_key(key: str) -> str:
     return key
 
 
+def _windows_comparison_path(path):
+    # Concurrent Windows resolution can return either the ordinary spelling or
+    # an extended-length spelling of the same resolved path. Normalize only
+    # these namespace prefixes for containment; never discard resolved links.
+    value=str(path)
+    if value[:8].lower()=="\\\\?\\unc\\":value="\\\\"+value[8:]
+    elif re.match(r"^\\\\\?\\[A-Za-z]:\\",value):value=value[4:]
+    return PureWindowsPath(value)
+
+
 class ObjectStore(Protocol):
     kind: str
     def put_immutable(self, key: str, data: bytes) -> StoredObject: ...
@@ -46,7 +56,9 @@ class LocalObjectStore:
 
     def _path(self, key):
         path = (self.root / validate_key(key)).resolve()
-        if not path.is_relative_to(self.root):
+        compared=_windows_comparison_path(path) if os.name=="nt" else path
+        root=_windows_comparison_path(self.root) if os.name=="nt" else self.root
+        if not compared.is_relative_to(root):
             raise ObjectError("Object key escapes its storage root")
         return path
 

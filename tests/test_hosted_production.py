@@ -3,6 +3,7 @@ import asyncio
 from datetime import datetime, timedelta, timezone
 import json
 from types import SimpleNamespace
+from pathlib import PureWindowsPath
 from uuid import uuid4
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
@@ -134,6 +135,16 @@ def test_postgres_objects_are_immutable_and_tenant_scoped(core):
     with get_engine().connect() as conn:assert conn.execute(text('SELECT count(*) FROM orderflow.stored_objects')).scalar_one()==0
     with pytest.raises(DBAPIError):
         with get_engine(core['admin']).begin() as conn:conn.execute(text("UPDATE orderflow.stored_objects SET content='changed'::bytea"))
+
+
+@pytest.mark.parametrize('root,inside,outside',[
+    ('C:\\owned\\objects','\\\\?\\C:\\owned\\objects\\nested\\input.csv','\\\\?\\C:\\other\\input.csv'),
+    ('\\\\server\\share\\objects','\\\\?\\UNC\\server\\share\\objects\\nested\\input.csv','\\\\?\\UNC\\server\\other\\input.csv'),
+])
+def test_windows_extended_length_paths_preserve_physical_containment(root,inside,outside):
+    from orderflow.objects import _windows_comparison_path
+    assert _windows_comparison_path(inside).is_relative_to(PureWindowsPath(root))
+    assert not _windows_comparison_path(outside).is_relative_to(PureWindowsPath(root))
 
 
 @pytest.fixture

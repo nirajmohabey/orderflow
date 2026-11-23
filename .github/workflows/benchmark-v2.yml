@@ -1,0 +1,85 @@
+name: Full core benchmark v2 (manual, free public runner)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: benchmark-v2-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  full-matrix:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    services:
+      postgres:
+        image: postgres:17.12
+        env:
+          POSTGRES_PASSWORD: ci-${{ github.run_id }}-${{ github.run_attempt }}
+          POSTGRES_DB: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d postgres"
+          --health-interval 5s --health-timeout 3s --health-retries 20
+    env:
+      ODF_CI_BOOTSTRAP: owned-ephemeral
+      ODF_CI_ADMIN_URL: postgresql+psycopg://postgres:ci-${{ github.run_id }}-${{ github.run_attempt }}@127.0.0.1:5432/postgres
+      ODF_QUEUE_ENABLED: "false"
+      ODF_SERVERLESS: "false"
+      ODF_OBJECT_STORAGE: local
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # verified v7.0.1
+        with: {persist-credentials: false}
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # verified v7.1.0
+        with: {python-version: "3.12.14"}
+      - name: Install the frozen application
+        run: |
+          python -m pip install uv==0.11.25
+          uv sync --frozen
+          uv pip check --python .venv/bin/python
+      - name: Initialize only the owned local CI service
+        run: |
+          test -z "${VERCEL:-}"
+          test -z "${NEON_AUTH_URL:-}"
+          .venv/bin/python scripts/ci_setup.py
+          echo "BENCH_LABEL=production-v2-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" >> "$GITHUB_ENV"
+      - name: Six new 10000-event trials and strict small gate
+        run: >-
+          .venv/bin/python analysis/benchmark_v2.py --scale 10000
+          --workers 1 4 --repetitions 3 --concurrency 24
+          --deadline-seconds 3600 --label "$BENCH_LABEL"
+      - name: Six new 100000-event trials on the same runner and source
+        run: >-
+          .venv/bin/python analysis/benchmark_v2.py --scale 100000
+          --workers 1 4 --repetitions 3 --concurrency 24
+          --deadline-seconds 3600 --label "$BENCH_LABEL"
+      - name: Retain a compact matrix status in the job summary
+        if: always()
+        run: |
+          .venv/bin/python - <<'PY'
+          import json, os
+          from pathlib import Path
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('Core loopback HTTP/PostgreSQL/partition-worker measurements; not hosted Vercel capacity.\n\n')
+              for scale in (10000, 100000):
+                  path=Path('artifacts/benchmarks')/(os.environ['BENCH_LABEL']+'-'+str(scale)+'-summary.json')
+                  if not path.exists():
+                      summary.write(str(scale)+': not executed or no retained summary.\n\n')
+                      continue
+                  report=json.loads(path.read_text())
+                  summary.write(str(scale)+': complete='+str(report['complete'])+', passed='+str(report['passed'])+', trials='+str(len(report['runs']))+'.\n\n')
+          PY
+      - name: Preserve only this run's raw evidence for one day
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # verified v7.0.2
+        with:
+          name: benchmark-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            artifacts/benchmarks/${{ env.BENCH_LABEL }}-10000-summary.json
+            artifacts/benchmarks/${{ env.BENCH_LABEL }}-100000-summary.json
+            artifacts/benchmarks/raw/${{ env.BENCH_LABEL }}-*/
+          retention-days: 1
+          include-hidden-files: false
