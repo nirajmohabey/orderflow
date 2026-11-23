@@ -180,7 +180,8 @@ export function AuthForm({
             onChange={(e) => setCode(e.target.value)}
           />
           <small>
-            Already registered? Return to sign in or reset your password. Enter a verification code here only if one was sent to your email.
+            Already registered? Return to sign in or reset your password. Enter
+            a verification code here only if one was sent to your email.
           </small>
         </>
       )}
@@ -267,7 +268,14 @@ export function AuthForm({
         </button>
       )}
       {mode === "verify" && (
-        <button type="button" className="text-button" disabled={disabled} onClick={() => switchMode("reset-request")}>Forgot password?</button>
+        <button
+          type="button"
+          className="text-button"
+          disabled={disabled}
+          onClick={() => switchMode("reset-request")}
+        >
+          Forgot password?
+        </button>
       )}
       {mode === "reset-code" && (
         <button

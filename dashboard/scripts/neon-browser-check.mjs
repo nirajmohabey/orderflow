@@ -181,10 +181,7 @@ try {
       await page
         .getByRole("button", { name: "Resend verification code" })
         .click();
-      await page
-        .getByRole("status")
-        .filter({ hasText: "new code" })
-        .waitFor();
+      await page.getByRole("status").filter({ hasText: "new code" }).waitFor();
       await page.locator("#verification-code").fill("123456");
       await page
         .getByRole("button", { name: "Verify email", exact: true })

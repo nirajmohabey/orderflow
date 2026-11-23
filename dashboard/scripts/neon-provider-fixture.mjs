@@ -95,7 +95,12 @@ export async function installProvider(page, options = {}) {
       return send({ token: opaque, user });
     }
     if (pathname === "/auth/email-otp/send-verification-otp") {
-      const body = JSON.parse(route.request().postData()); assert.deepEqual(body, {email: "browser-fixture@example.invalid", type: "email-verification"}); return send({success: true});
+      const body = JSON.parse(route.request().postData());
+      assert.deepEqual(body, {
+        email: "browser-fixture@example.invalid",
+        type: "email-verification",
+      });
+      return send({ success: true });
     }
     if (pathname === "/auth/send-verification-email")
       return send({ status: true });
