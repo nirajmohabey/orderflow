@@ -212,7 +212,9 @@ async def consume(message: Message[Wake]):
         await asyncio.to_thread(_execute,job)
     except (PipelineError,ConnectorError,ObjectError,ValueError) as error:
         if getattr(error,"code",None)=='job_lease_lost':raise RetryAfter(30) from None
-        await asyncio.to_thread(_finish,job,{"quality_passed":False},error=getattr(error,"code",type(error).__name__))
+        result={"quality_passed":False}
+        if getattr(error,'diagnostic',None):result['diagnostic']=error.diagnostic
+        await asyncio.to_thread(_finish,job,result,error=getattr(error,"code",type(error).__name__))
     except Exception:
         # Crash/connection failures retain the running lease. Redelivery may
         # reclaim it after expiry; a stale attempt cannot complete/publish.

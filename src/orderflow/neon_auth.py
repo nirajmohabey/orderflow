@@ -133,6 +133,38 @@ def _authentication_cookies(raw):
     return filtered.output(header="",sep=";").strip()
 
 
+def _proxy_cookie(raw,*,secure=True):
+    """Handle bounded modern attributes missing from Python3.12 SimpleCookie."""
+    if len(raw)>8192 or re.search(r"[\x00-\x1f\x7f]",raw):
+        raise NeonAuthError("Invalid upstream authentication cookie")
+    parts=raw.split(";");standard=[parts[0]];extensions={}
+    for part in parts[1:]:
+        name,separator,value=part.strip().partition("=")
+        lowered=name.lower()
+        if lowered in {"partitioned","priority"}:
+            if lowered in extensions:raise NeonAuthError("Duplicate upstream cookie extension")
+            if lowered=="partitioned":
+                if separator:raise NeonAuthError("Invalid partitioned cookie flag")
+                extensions[lowered]="Partitioned"
+            else:
+                if not separator or value.lower() not in {"low","medium","high"}:
+                    raise NeonAuthError("Invalid cookie priority")
+                extensions[lowered]="Priority="+value.capitalize()
+        else:standard.append(part)
+    cookie=SimpleCookie()
+    try:cookie.load(";".join(standard))
+    except CookieError:raise NeonAuthError("Invalid upstream authentication cookie") from None
+    if len(cookie)!=1 or next(iter(cookie))!=parts[0].partition("=")[0].strip():
+        raise NeonAuthError("Expected one upstream cookie identity")
+    item=next(iter(cookie.values()))
+    item["domain"]="";item["path"]="/" if item.key.startswith("__Host-") else "/auth"
+    item["secure"]=secure or bool(item["secure"]) or item.key.startswith(("__Host-","__Secure-"))
+    item["httponly"]=True;item["samesite"]="Lax"
+    result="; ".join([item.OutputString(),*extensions.values()])
+    if len(result)>8192:raise NeonAuthError("Oversized rewritten authentication cookie")
+    return result
+
+
 async def proxy(request,path,settings):
     from fastapi.responses import Response
     cfg,target=_proxy_target(path,request.url.query)
@@ -177,10 +209,5 @@ async def proxy(request,path,settings):
             cookies=upstream.headers.get_list("set-cookie")
             if len(cookies)>16: return Response(status_code=502)
             for raw in cookies:
-                if len(raw)>8192: return Response(status_code=502)
-                cookie=SimpleCookie();cookie.load(raw)
-                for name,morsel in cookie.items():
-                    morsel["domain"]="";morsel["path"]="/" if name.startswith("__Host-") else "/auth"
-                    if settings.app_env=="production":morsel["secure"]=True
-                    response.headers.append("Set-Cookie",morsel.OutputString())
+                response.headers.append("Set-Cookie",_proxy_cookie(raw,secure=settings.app_env=="production"))
             return response

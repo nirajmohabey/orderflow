@@ -7,7 +7,7 @@ dashboard/node_modules
 artifacts
 work
 analysis
-tests
+/tests/
 orchestration
 docs
 *.zip

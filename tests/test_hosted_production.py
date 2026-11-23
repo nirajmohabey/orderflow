@@ -3,7 +3,7 @@ import asyncio
 from datetime import datetime, timedelta, timezone
 import json
 from types import SimpleNamespace
-from pathlib import PureWindowsPath
+from pathlib import Path, PureWindowsPath
 from uuid import uuid4
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
@@ -123,6 +123,54 @@ def test_neon_proxy_keeps_auth_jwt_and_makes_cookie_first_party(neon,monkeypatch
         for path in ['email-otp/request-password-reset','email-otp/reset-password','email-otp/send-verification-otp','email-otp/verify-email']:
             assert client.post('/auth/'+path,json={'email':'synthetic@example.invalid'},headers={'Origin':'https://testserver'}).status_code==200
         assert client.post('/auth/admin/create-user',json={},headers={'Origin':'https://testserver'}).status_code==404
+
+
+@pytest.mark.parametrize('path',['sign-up/email','email-otp/verify-email','sign-in/email'])
+def test_modern_session_cookie_attributes_survive_proxy_and_next_request(neon,monkeypatch,path):
+    from fastapi.testclient import TestClient
+    from orderflow.api import app
+    monkeypatch.setenv('ODF_DATABASE_URL','postgresql+psycopg://unused@127.0.0.1/unused')
+    monkeypatch.setenv('ODF_AUTH_SECRET','synthetic-config-secret-'*3)
+    monkeypatch.setenv('ODF_APP_ENV','production');monkeypatch.setenv('ODF_DEMO_MODE','false')
+    monkeypatch.setenv('ODF_ALLOWED_HOSTS','testserver');monkeypatch.setenv('ODF_ALLOWED_ORIGINS','https://testserver')
+    original=httpx.AsyncClient;seen=[]
+    def upstream(request):
+        seen.append(request)
+        if request.url.path.endswith('/get-session'):
+            cookie=request.headers.get('cookie','')
+            assert '__Secure-neon-auth.session_token=synthetic.signature' in cookie
+            assert '__Host-neon-auth.session_data=synthetic-data' in cookie
+            assert 'Priority=' not in cookie and 'Partitioned' not in cookie
+            return httpx.Response(200,json={'session':{'id':'synthetic-session'}})
+        return httpx.Response(200,json={'ok':True},headers=[
+            ('set-cookie','__Secure-neon-auth.session_token=synthetic.signature; Domain=neon.tech; Path=/; Secure; HttpOnly; SameSite=None; Partitioned; Priority=High'),
+            ('set-cookie','__Host-neon-auth.session_data=synthetic-data; Path=/; Secure; HttpOnly; SameSite=None; Partitioned')])
+    monkeypatch.setattr(neon_auth.httpx,'AsyncClient',lambda **kw:original(transport=httpx.MockTransport(upstream),**kw))
+    with TestClient(app,base_url='https://testserver') as client:
+        response=client.post('/auth/'+path,json={'email':'synthetic@example.invalid'},headers={'Origin':'https://testserver'})
+        cookies=response.headers.get_list('set-cookie')
+        assert response.status_code==200 and len(cookies)==2
+        assert all('Domain=' not in value and 'HttpOnly' in value and 'Secure' in value and 'SameSite=Lax' in value and 'Partitioned' in value for value in cookies)
+        assert 'Path=/auth' in cookies[0] and 'Priority=High' in cookies[0]
+        assert 'Path=/;' in cookies[1] and 'Path=/auth' not in cookies[1]
+        session=client.get('/auth/get-session')
+        assert session.status_code==200 and session.json()['session']['id']=='synthetic-session'
+    assert len(seen)==2
+
+
+@pytest.mark.parametrize('value',[
+    'session=synthetic; Partitioned=true','session=synthetic; Priority=Urgent',
+    'session=synthetic; Partitioned; partitioned','session=synthetic; unexpected=another-cookie',
+])
+def test_modern_cookie_support_does_not_allow_ambiguous_attributes(value):
+    with pytest.raises(neon_auth.NeonAuthError):neon_auth._proxy_cookie(value)
+
+
+def test_modern_host_cookie_logout_preserves_expiry():
+    cookie=neon_auth._proxy_cookie('__Host-neon-auth.session_token=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Domain=neon.tech; Path=/old; Partitioned; Priority=Low')
+    assert 'Domain=' not in cookie and 'Path=/;' in cookie and 'Path=/auth' not in cookie
+    assert 'Max-Age=0' in cookie and 'expires=thu, 01 jan 1970 00:00:00 gmt' in cookie.lower()
+    assert 'Secure' in cookie and 'HttpOnly' in cookie and 'SameSite=Lax' in cookie and 'Partitioned' in cookie and 'Priority=Low' in cookie
 
 
 def test_postgres_objects_are_immutable_and_tenant_scoped(core):
@@ -278,6 +326,46 @@ def test_daily_job_queue_runs_real_dbt_and_keeps_last_good(pipeline_db,monkeypat
     retained=pipeline.read_latest_report(TENANT)
     assert retained['stale'] and retained['latest_attempt']['status']=='failed'
     assert retained['last_good']['manifest_sha256']==prior_hash
+
+
+def test_failed_dbt_diagnostic_is_bounded_and_redacts_environment_credentials(tmp_path):
+    path=tmp_path/'dbt.log'
+    password='synthetic-private-password';token='synthetic-private-token'
+    path.write_text('x'*40000+'\nRuntime Error: read-only /var/task/warehouse/.user.yml\n'+
+                    f'password={password} token={token} dsn=postgresql://user:{password}@db.invalid/test\n')
+    value=pipeline._dbt_failure_diagnostic(path,'run',2,{'ODF_DBT_PASSWORD':password,'VERCEL_OIDC_TOKEN':token})
+    assert len(value['log_tail'])<=32768 and 'Runtime Error: read-only' in value['log_tail']
+    assert password not in value['log_tail'] and token not in value['log_tail']
+    assert '[redacted]' in value['log_tail'] and all(value['project_files_present'].values())
+
+
+def test_private_failed_dbt_job_retains_redacted_log_after_temporary_cleanup(pipeline_db,monkeypatch):
+    core=pipeline_db;complete_fixture(core)
+    monkeypatch.setenv('ODF_QUEUE_ENABLED','true');monkeypatch.setenv('ODF_WORKER_TENANTS',TENANT+','+BETA)
+    monkeypatch.setenv('ODF_OBJECT_STORAGE','postgres');monkeypatch.setenv('ODF_SERVERLESS','true')
+    secret='synthetic-diagnostic-test-password'
+    monkeypatch.setenv('ODF_DIAGNOSTIC_TEST_PASSWORD',secret)
+    wakes=[]
+    async def send(topic,payload,**options):wakes.append(payload);return 'mock-queue-message'
+    monkeypatch.setattr(jobs,'send',send)
+    work=[]
+    def failed(command,*,stdout,**kwargs):
+        work.append(Path(stdout.name).parent)
+        stdout.write(('Runtime Error: synthetic deployment setup failed; password='+secret+'\n').encode())
+        return SimpleNamespace(returncode=2)
+    monkeypatch.setattr(pipeline.subprocess,'run',failed)
+    body={'source_id':ORDERS,'start':START,'end':END,'oracle':json.loads((pipeline.ROOT/'fixtures/batch_oracle.json').read_text())}
+    response=core['client'].post('/v1/jobs/daily',headers={**core['auth'],'Idempotency-Key':str(uuid4())},json=body)
+    assert response.status_code==202
+    deliver(wakes[0]);deliver(wakes[1])
+    status=core['client'].get(response.json()['status_url'],headers=core['auth']).json()
+    assert status['status']=='failed' and status['last_error_code']=='dbt_run_failed'
+    ref=status['result']['diagnostic']
+    raw=PostgresObjectStore(TENANT).get(ref['key'],expected_sha256=ref['sha256'])
+    value=json.loads(raw)
+    assert value['exit_code']==2 and 'synthetic deployment setup failed' in value['log_tail']
+    assert secret not in value['log_tail'] and '[redacted]' in value['log_tail']
+    assert work and all(not path.exists() for path in work)
 
 
 def test_proxy_rejects_browser_normalized_external_redirects():

@@ -4,8 +4,10 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import tempfile
+from urllib.parse import unquote, urlsplit
 from uuid import UUID, uuid4
 
 from sqlalchemy import text
@@ -23,8 +25,9 @@ PREVIEW_LIMIT = 100
 
 
 class PipelineError(RuntimeError):
-    def __init__(self, code):
+    def __init__(self, code, *, diagnostic=None):
         self.code = code
+        self.diagnostic = diagnostic
         super().__init__(code)
 
 
@@ -244,6 +247,32 @@ def _model_preview(tenant_id, run_id, build_id=None):
                       "preview_limit": 100, "preview_truncated": len(orders)>100 or len(history)>100})
 
 
+def _dbt_failure_diagnostic(path,phase,exit_code,environment):
+    """Keep a bounded, credential-redacted private diagnostic before /tmp cleanup."""
+    with Path(path).open('rb') as source:
+        source.seek(0,2);size=source.tell();source.seek(max(0,size-32768))
+        raw=source.read(32768)
+        if size>32768:raw=raw.split(b'\n',1)[1] if b'\n' in raw else b'[truncated log without a complete line]'
+        tail=raw.decode('utf-8',errors='replace')
+    secrets=set()
+    for name,value in environment.items():
+        if not isinstance(value,str) or not value:continue
+        if any(part in name.upper() for part in ('SECRET','PASSWORD','TOKEN','CREDENTIAL','API_KEY')):
+            secrets.add(value)
+        if '://' in value:
+            try:
+                password=unquote(urlsplit(value).password or '')
+                if password:secrets.add(password)
+            except ValueError:pass
+    for value in sorted(secrets,key=len,reverse=True):tail=tail.replace(value,'[redacted]')[-32768:]
+    tail=re.sub(r'(?i)(postgres(?:ql)?(?:\+psycopg)?://[^:\s/@]+:)[^@\s]+@',r'\1[redacted]@',tail)
+    tail=re.sub(r'\x1b\[[0-9;?]*[A-Za-z]','',tail)[-32768:]
+    files=['dbt_project.yml','profiles.yml',*[f'tests/{name}.sql' for name in sorted(REQUIRED_TESTS)]]
+    return {'schema_version':1,'phase':phase,'exit_code':exit_code,'log_bytes':size,'log_tail':tail,
+            'project_dir':str(ROOT/'warehouse'),'project_files_present':{name:(ROOT/'warehouse'/name).is_file() for name in files},
+            'project_sha256':_project_hash(),'scope':'Private bounded execution diagnostic; known environment credentials redacted. Not a quality pass.'}
+
+
 def check_daily(tenant_id, run_id, *, store=None, test_corrupt_total=False, fault=None, lease=None, build_id=None):
     store = store or object_store(tenant_id); run_id = str(UUID(str(run_id))); tenant_id = str(UUID(str(tenant_id)))
     candidate = _candidate(tenant_id, run_id)
@@ -279,8 +308,9 @@ def check_daily(tenant_id, run_id, *, store=None, test_corrupt_total=False, faul
             command = command_prefix + ["--log-path", str(work/"logs"), phase, "--project-dir", str(ROOT/"warehouse"),
                        "--profiles-dir", str(ROOT/"warehouse"), "--target-path", str(work), "--vars",
                        json.dumps({"tenant_id": tenant_id, "run_id": run_id, "build_id":build_id, "test_corrupt_total": bool(test_corrupt_total)})]
+            environment=_dbt_environment(tenant_id)
             with (work/(phase+".log")).open("wb") as output:
-                completed = subprocess.run(command, stdout=output, stderr=subprocess.STDOUT, env=_dbt_environment(tenant_id), timeout=90 if lease else 180)
+                completed = subprocess.run(command, stdout=output, stderr=subprocess.STDOUT, env=environment, timeout=90 if lease else 180)
             path = work/"run_results.json"
             results = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
             if results:
@@ -291,7 +321,10 @@ def check_daily(tenant_id, run_id, *, store=None, test_corrupt_total=False, faul
                 if phase=="test" and results:
                     for item in results.get("results", []):
                         _check(conn, tenant_id, run_id, item["unique_id"], "pass" if item["status"]=="pass" else "fail", item.get("failures") or 0, 0)
-            if completed.returncode or not results: raise PipelineError("dbt_"+phase+"_failed")
+            if completed.returncode or not results:
+                diagnostic=_dbt_failure_diagnostic(work/(phase+'.log'),phase,completed.returncode,environment)
+                reference=store.put_immutable(f'reports/{tenant_id}/{run_id}/dbt-{phase}-{build_id}-diagnostic.json',encoded(diagnostic))
+                raise PipelineError("dbt_"+phase+"_failed",diagnostic=reference.as_dict())
             if fault: fault("after_dbt_"+phase, run_id)
         names = {item["unique_id"].split(".")[2] for item in results["results"]}
         if not REQUIRED_TESTS <= names or any(item["status"] != "pass" for item in results["results"]): raise PipelineError("required_dbt_checks_missing")

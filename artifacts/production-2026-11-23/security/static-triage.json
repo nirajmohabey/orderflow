@@ -1,6 +1,6 @@
 {
-  "reviewed_at": "2026-11-23T19:10:17.050598+00:00",
-  "scan_generated_at": "2026-11-23T19:09:03Z",
+  "reviewed_at": "2026-11-23T19:31:23.676193+00:00",
+  "scan_generated_at": "2026-11-23T19:31:03Z",
   "tools": {
     "bandit": "1.9.4",
     "ruff": "0.17.6"
@@ -161,7 +161,7 @@
     "src/orderflow/connectors.py": "d95ae2f78996361e5f3f24eefc336269118972b0a9564f32cfbc730b9a5e7a0e",
     "src/orderflow/db.py": "004196a2ba6ac1b5624d041abf4d3808f5201757d8cf4605cf101a4e92e553ab",
     "src/orderflow/hosted_jobs.py": "034af2a8cb1a278c15a81c1f8bb29b2916a43a3eb96a1e16f1d9f82edb150f6e",
-    "src/orderflow/neon_auth.py": "eeb8bcfe009b0cee715e96daa4a64510d756b9a0c9ec51134182ed84edff3ee9",
+    "src/orderflow/neon_auth.py": "76cd89548676948661bdf8763b3b594a33a7360103fd46d5b7ebd5fd9c5a3374",
     "src/orderflow/objects.py": "8b26fff0ea262f1ab71264064322eaf51c4a2c2dfd674bf84050a3809b5fede0",
     "src/orderflow/pipeline.py": "492545d7bb4252dfb8a75dc6a5d2311b6a74d1ec8ddb03e10459815e08328e50",
     "src/orderflow/schemas.py": "f819534d70c611cf9ffe70867e2768da0456c7d7c4f6d7b55d53a5cd1dffede9",
@@ -198,7 +198,7 @@
     "orchestration/dags/orderflow_daily.py": "b2ad0e94da328506aea850dc577c8c16360bde7699c19e5eb83e3f1d934a2275"
   },
   "raw_reports": {
-    "bandit.json": "043911e83f5c19b46e45329710f091f9d74b586ddf2183288f820505c80fc9e0",
+    "bandit.json": "5414c2215939c3895bce8493edb6ab6a3c63252c118688331d653e5c1f093e65",
     "ruff-undefined-names.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
   },
   "low_category_assessments": [
