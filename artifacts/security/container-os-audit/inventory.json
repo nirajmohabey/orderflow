@@ -1,0 +1,103 @@
+{
+  "captured_at": "2026-11-23T11:19:40.320247+00:00",
+  "scope": "Owned Docker runtime images only, cached audit sandbox, no published ports",
+  "host_uid": 1000,
+  "docker_version": "29.1.3",
+  "images": [
+    {
+      "image_id": "sha256:95de7a9a93f4b2ed29a6dad833cc1e7576ac139959d7aa123b4ec87e315c53ea",
+      "tags": [
+        "orderflow-batch:latest"
+      ],
+      "repo_digests": [
+        "orderflow-batch@sha256:95de7a9a93f4b2ed29a6dad833cc1e7576ac139959d7aa123b4ec87e315c53ea"
+      ],
+      "created": "2026-11-23T11:19:04.253233615Z",
+      "architecture": "amd64",
+      "os": "linux",
+      "configured_user": "app",
+      "base_os_release": "PRETTY_NAME=\"Debian GNU/Linux 13 (trixie)\"\nNAME=\"Debian GNU/Linux\"\nVERSION_ID=\"13\"\nVERSION=\"13 (trixie)\"\nVERSION_CODENAME=trixie\nDEBIAN_VERSION_FULL=13.7\nID=debian\nHOME_URL=\"https://www.debian.org/\"\nSUPPORT_URL=\"https://www.debian.org/support\"\nBUG_REPORT_URL=\"https://bugs.debian.org/\"\n"
+    },
+    {
+      "image_id": "sha256:0cd2ca191e5acfbf6deeea6d26b5be7ded7d5f81947463eaa5ec8880cd7aaeaf",
+      "tags": [
+        "orderflow-api:latest"
+      ],
+      "repo_digests": [
+        "orderflow-api@sha256:0cd2ca191e5acfbf6deeea6d26b5be7ded7d5f81947463eaa5ec8880cd7aaeaf"
+      ],
+      "created": "2026-11-23T11:18:49.367675214Z",
+      "architecture": "amd64",
+      "os": "linux",
+      "configured_user": "app",
+      "base_os_release": "PRETTY_NAME=\"Debian GNU/Linux 13 (trixie)\"\nNAME=\"Debian GNU/Linux\"\nVERSION_ID=\"13\"\nVERSION=\"13 (trixie)\"\nVERSION_CODENAME=trixie\nDEBIAN_VERSION_FULL=13.7\nID=debian\nHOME_URL=\"https://www.debian.org/\"\nSUPPORT_URL=\"https://www.debian.org/support\"\nBUG_REPORT_URL=\"https://bugs.debian.org/\"\n"
+    },
+    {
+      "image_id": "sha256:04b03574989d3ae95233d77b64874e3dabb739f2247fb20eb34ba1ef176b9888",
+      "tags": [
+        "orderflow-init:latest"
+      ],
+      "repo_digests": [
+        "orderflow-init@sha256:04b03574989d3ae95233d77b64874e3dabb739f2247fb20eb34ba1ef176b9888"
+      ],
+      "created": "2026-11-23T11:18:49.367675214Z",
+      "architecture": "amd64",
+      "os": "linux",
+      "configured_user": "app",
+      "base_os_release": "PRETTY_NAME=\"Debian GNU/Linux 13 (trixie)\"\nNAME=\"Debian GNU/Linux\"\nVERSION_ID=\"13\"\nVERSION=\"13 (trixie)\"\nVERSION_CODENAME=trixie\nDEBIAN_VERSION_FULL=13.7\nID=debian\nHOME_URL=\"https://www.debian.org/\"\nSUPPORT_URL=\"https://www.debian.org/support\"\nBUG_REPORT_URL=\"https://bugs.debian.org/\"\n"
+    },
+    {
+      "image_id": "sha256:97b013d7cb7cda1c706373a0957e62861296db8ccb2c9def4ed44fd331387cba",
+      "tags": [
+        "orderflow-worker:latest"
+      ],
+      "repo_digests": [
+        "orderflow-worker@sha256:97b013d7cb7cda1c706373a0957e62861296db8ccb2c9def4ed44fd331387cba"
+      ],
+      "created": "2026-11-23T11:18:49.367675214Z",
+      "architecture": "amd64",
+      "os": "linux",
+      "configured_user": "app",
+      "base_os_release": "PRETTY_NAME=\"Debian GNU/Linux 13 (trixie)\"\nNAME=\"Debian GNU/Linux\"\nVERSION_ID=\"13\"\nVERSION=\"13 (trixie)\"\nVERSION_CODENAME=trixie\nDEBIAN_VERSION_FULL=13.7\nID=debian\nHOME_URL=\"https://www.debian.org/\"\nSUPPORT_URL=\"https://www.debian.org/support\"\nBUG_REPORT_URL=\"https://bugs.debian.org/\"\n"
+    },
+    {
+      "image_id": "sha256:24112b5c1429ca2414e58388f969e8aef1f6fc9e66336c7ea749c1607b0c42af",
+      "tags": [
+        "orderflow-postgres:17.12-security"
+      ],
+      "repo_digests": [
+        "orderflow-postgres@sha256:24112b5c1429ca2414e58388f969e8aef1f6fc9e66336c7ea749c1607b0c42af"
+      ],
+      "created": "2026-11-23T11:16:59.986157814Z",
+      "architecture": "amd64",
+      "os": "linux",
+      "configured_user": null,
+      "base_os_release": "NAME=\"Alpine Linux\"\nID=alpine\nVERSION_ID=3.24.4\nPRETTY_NAME=\"Alpine Linux v3.24\"\nHOME_URL=\"https://alpinelinux.org/\"\nBUG_REPORT_URL=\"https://gitlab.alpinelinux.org/alpine/aports/-/issues\"\n"
+    },
+    {
+      "image_id": "sha256:223efeb196329b55b3b9a13db144956411dbc18e727e59f681c3e0aede6475cf",
+      "tags": [
+        "postgres:17.12"
+      ],
+      "repo_digests": [
+        "postgres@sha256:223efeb196329b55b3b9a13db144956411dbc18e727e59f681c3e0aede6475cf"
+      ],
+      "created": "2026-11-18T21:29:02.679766859Z",
+      "architecture": "amd64",
+      "os": "linux",
+      "configured_user": null,
+      "base_os_release": "PRETTY_NAME=\"Debian GNU/Linux 13 (trixie)\"\nNAME=\"Debian GNU/Linux\"\nVERSION_ID=\"13\"\nVERSION=\"13 (trixie)\"\nVERSION_CODENAME=trixie\nDEBIAN_VERSION_FULL=13.7\nID=debian\nHOME_URL=\"https://www.debian.org/\"\nSUPPORT_URL=\"https://www.debian.org/support\"\nBUG_REPORT_URL=\"https://bugs.debian.org/\"\n"
+    }
+  ],
+  "all_tags": [
+    "orderflow-batch:latest",
+    "orderflow-api:latest",
+    "orderflow-init:latest",
+    "orderflow-worker:latest",
+    "orderflow-postgres:17.12-security",
+    "postgres:17.12-alpine",
+    "postgres:17.12",
+    "python:3.12.14-slim"
+  ],
+  "project_present": true
+}

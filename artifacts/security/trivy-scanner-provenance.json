@@ -1,0 +1,20 @@
+{
+  "version": "0.76.2",
+  "official_release": "https://github.com/aquasecurity/trivy/releases/tag/v0.76.2",
+  "checksum_list_sha256": "802e4ac1418ed967cd3c4b901f4f71ca00b7363ede67778665a22d9f13f58c83",
+  "archive_sha256": "bc0fc726e017b8927a62b2d3531d7a84ee01769daf5c99ed866dced54089fdbf",
+  "binary_sha256": "6a972c69606c7b3ea4c6bdcc6fc9332ea9ad38381624310c1e85cc77345909f3",
+  "scanner_identity": {
+    "docker_socket_readable": false,
+    "docker_socket_writable": false,
+    "uid": 65534
+  },
+  "database_repository": "ghcr.io/aquasecurity/trivy-db:2",
+  "database_metadata": {
+    "Version": 2,
+    "NextUpdate": "2026-11-24T07:04:04.63267311Z",
+    "UpdatedAt": "2026-11-23T07:04:04.632673631Z",
+    "DownloadedAt": "2026-11-23T11:10:15.676116728Z"
+  },
+  "database_sha256": "f4bd5852164d046530373ad0b66a42c447f9e9393adaa6e7b75fa432b863f889"
+}

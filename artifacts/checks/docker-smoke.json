@@ -1,0 +1,57 @@
+{
+  "scope": "Private microVM; no public ports. Compose API/worker and dbt batch smoke, not the entire containerized test suite.",
+  "passed": true,
+  "docker_version": "29.1.3",
+  "compose_exit_code": 0,
+  "api_checks": {
+    "readiness": 200,
+    "alpha_accepted": 10,
+    "alpha_latest_order_total_minor": 8000
+  },
+  "containers": [
+    {
+      "ExitCode": 0,
+      "Health": "starting",
+      "Image": "orderflow-api",
+      "Service": "api",
+      "State": "running"
+    },
+    {
+      "ExitCode": 0,
+      "Health": "healthy",
+      "Image": "postgres:17.12",
+      "Service": "db",
+      "State": "running"
+    },
+    {
+      "ExitCode": 0,
+      "Health": "",
+      "Image": "orderflow-worker",
+      "Service": "worker",
+      "State": "running"
+    }
+  ],
+  "api_environment_names": [
+    "ODF_OBJECT_ROOT",
+    "ODF_AUTH_SECRET",
+    "ODF_DEMO_MODE",
+    "ODF_ALLOWED_HOSTS",
+    "ODF_WORKER_TENANTS",
+    "ODF_ALLOWED_ORIGINS",
+    "ODF_JWT_AUDIENCE",
+    "ODF_DATABASE_URL",
+    "ODF_APP_ENV",
+    "ODF_JWT_ISSUER",
+    "PATH",
+    "LANG",
+    "GPG_KEY",
+    "PYTHON_VERSION",
+    "PYTHON_SHA256",
+    "PYTHONDONTWRITEBYTECODE",
+    "PYTHONUNBUFFERED",
+    "PYTHONPATH"
+  ],
+  "real_dbt_batch_exit_code": 0,
+  "published_report_has_success": true,
+  "cleanup_exit_code": 0
+}

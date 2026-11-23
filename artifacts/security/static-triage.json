@@ -1,0 +1,195 @@
+{
+  "reviewed_at": "2026-11-23T11:21:19.730575+00:00",
+  "scan_generated_at": "2026-11-23T11:20:59Z",
+  "tools": {
+    "bandit": "1.9.4",
+    "ruff": "0.17.6"
+  },
+  "scope": "Python runtime src, maintenance/verification scripts and Airflow DAG; all severities retained. Ruff additionally includes tests, limited to F821/F822/F823.",
+  "bandit_severities": {
+    "SEVERITY.HIGH": 0,
+    "SEVERITY.LOW": 45,
+    "SEVERITY.MEDIUM": 11,
+    "SEVERITY.UNDEFINED": 0
+  },
+  "bandit_categories": {
+    "B105": 1,
+    "B310": 1,
+    "B311": 1,
+    "B314": 1,
+    "B404": 13,
+    "B405": 1,
+    "B603": 23,
+    "B607": 6,
+    "B608": 9
+  },
+  "medium_findings": [
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "scripts/recovery_check.py",
+        "line": 45,
+        "snippet_sha256": "b3a25326dea1d6ab7842b1bebdb4d9bb7770feaf90a34ad70426bf6e9c803a76"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "Table names come only from fixed, application-owned tuples in an administrative recovery observer. No request/string input selects a SQL identifier; data arguments elsewhere are parameters. This does not authorize using the concatenation with untrusted table names."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "scripts/recovery_check.py",
+        "line": 72,
+        "snippet_sha256": "1397ec3c2374a52d58d1b669721b7afdbff71dc1cfdf5916e254abe082a89980"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "Table names come only from fixed, application-owned tuples in an administrative recovery observer. No request/string input selects a SQL identifier; data arguments elsewhere are parameters. This does not authorize using the concatenation with untrusted table names."
+    },
+    {
+      "signature": {
+        "test_id": "B314",
+        "path": "scripts/run_tests.py",
+        "line": 83,
+        "snippet_sha256": "d8a0a6e4050e4d629d02777f5dff7f5e1dc86548f95d33f84d30fcbc10c55ed8"
+      },
+      "scanner_message": "Using xml.etree.ElementTree.parse to parse untrusted XML data is known to be vulnerable to XML attacks. Replace xml.etree.ElementTree.parse with its defusedxml equivalent function or make sure defusedxml.defuse_stdlib() is called",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "The release runner parses pytest-generated JUnit artifacts under the project artifacts directory, not an HTTP upload or general untrusted XML input. The writer/output path and assertion-enabled execution are controlled by the reviewed runner. Keep those local evidence inputs trusted; ElementTree is not approved here for arbitrary third-party XML."
+    },
+    {
+      "signature": {
+        "test_id": "B310",
+        "path": "scripts/security_audit.py",
+        "line": 36,
+        "snippet_sha256": "0c0c9c0f60e82028ef1929d4d940234acb1cff3b389fecc0bc8c143c817a4b96"
+      },
+      "scanner_message": "Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "All callers use fixed HTTPS OSV endpoints, with advisory IDs URL-encoded and only public package names/versions submitted. Responses/timeouts/retries are bounded. This local audit helper is not a public/general-purpose URL-fetch API and is not approved for untrusted arbitrary URLs."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/pipeline.py",
+        "line": 217,
+        "snippet_sha256": "7dabe836acea0ddb1581e2d3705386049b7ff187d030ba43b9bb052c1b8468da"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "Only _relation selects the generated model identifier: the model name is an enum and the run identifier is parsed as UUID then rendered as hex inside fixed quoted schema/table names. The transformation role is limited to its warehouse schema and run-scoped reads. This assessment depends on that validator and the captured source bytes."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/pipeline.py",
+        "line": 218,
+        "snippet_sha256": "35d8b49069113376a6bef2c35408f0bd524b8f2041c0bc49758879cbd744d0b6"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "Only _relation selects the generated model identifier: the model name is an enum and the run identifier is parsed as UUID then rendered as hex inside fixed quoted schema/table names. The transformation role is limited to its warehouse schema and run-scoped reads. This assessment depends on that validator and the captured source bytes."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/pipeline.py",
+        "line": 219,
+        "snippet_sha256": "745ff5843c36b5bd2ed45c65a76cf4729a0809696667de541c8503375bd1c5e0"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "Only _relation selects the generated model identifier: the model name is an enum and the run identifier is parsed as UUID then rendered as hex inside fixed quoted schema/table names. The transformation role is limited to its warehouse schema and run-scoped reads. This assessment depends on that validator and the captured source bytes."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/pipeline.py",
+        "line": 220,
+        "snippet_sha256": "d922777b3054cb62db92b09a1e98c7da4aef3747f8f08d5aa2401f408b46c6fe"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "Only _relation selects the generated model identifier: the model name is an enum and the run identifier is parsed as UUID then rendered as hex inside fixed quoted schema/table names. The transformation role is limited to its warehouse schema and run-scoped reads. This assessment depends on that validator and the captured source bytes."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/service.py",
+        "line": 108,
+        "snippet_sha256": "eb20afae400a129266932bb532ce6dac8620367e7b08fc695b334abe2e6ba75b"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "EVENT_COLUMNS and the conditional keyset fragment are application-owned SQL constants. Tenant, IDs, filters, limits and cursor positions are bound values. Signed/scoped cursor validation and explicit tenant predicates/RLS remain separate checks. No caller-provided SQL structure is interpolated at these call sites."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/service.py",
+        "line": 260,
+        "snippet_sha256": "d25cec241a90157cb8dac01ff4155e885a12dd259e82c9603d63efc8bcebe256"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "EVENT_COLUMNS and the conditional keyset fragment are application-owned SQL constants. Tenant, IDs, filters, limits and cursor positions are bound values. Signed/scoped cursor validation and explicit tenant predicates/RLS remain separate checks. No caller-provided SQL structure is interpolated at these call sites."
+    },
+    {
+      "signature": {
+        "test_id": "B608",
+        "path": "src/orderflow/service.py",
+        "line": 281,
+        "snippet_sha256": "685593a36c7d4a39414b214f582d3c40f44169ff1c0400fa1cc9866018bee5d4"
+      },
+      "scanner_message": "Possible SQL injection vector through string-based query construction.",
+      "disposition": "reviewed bounded call site; retained without suppression",
+      "assessment": "EVENT_COLUMNS and the conditional keyset fragment are application-owned SQL constants. Tenant, IDs, filters, limits and cursor positions are bound values. Signed/scoped cursor validation and explicit tenant predicates/RLS remain separate checks. No caller-provided SQL structure is interpolated at these call sites."
+    }
+  ],
+  "reviewed_medium_source_sha256": {
+    "scripts/recovery_check.py": "dbd04b0a4f1a9b07ca8fddfaaeca33693cee6f8e04b47810d582596f4db14c74",
+    "scripts/run_tests.py": "f17c59860f0d077aab8f758df1aff02d8207766219f786599b889f20c69b7515",
+    "scripts/security_audit.py": "8abd49d85790ea96e6717086c7c20f45976940688736d89d4e4205417754a218",
+    "src/orderflow/pipeline.py": "32604abec6cfce76a8d4191990ae559b195c4f523e1bf3d31c65c1f16363b2de",
+    "src/orderflow/service.py": "d9198b91e41bf658d4e663f1232a84441955a7f4345505faaeb29f8bc59bf902"
+  },
+  "low_category_assessments": [
+    {
+      "test_ids": [
+        "B404",
+        "B603",
+        "B607"
+      ],
+      "count": 42,
+      "assessment": "Maintenance, benchmark, dbt/Airflow and CI subprocesses use argument arrays without shell=True and explicit owned process handles. Executable paths/PATH and the host remain trusted configuration; arbitrary executable/environment compromise is outside this claim."
+    },
+    {
+      "test_ids": [
+        "B311"
+      ],
+      "count": 1,
+      "assessment": "Seeded benchmark Random shuffles synthetic workloads; credentials use secrets, not Random."
+    },
+    {
+      "test_ids": [
+        "B105"
+      ],
+      "count": 1,
+      "assessment": "The captured token_type=bearer protocol label is not an embedded credential."
+    },
+    {
+      "test_ids": [
+        "B405"
+      ],
+      "count": 1,
+      "assessment": "ElementTree import belongs to the same trusted pytest-JUnit evidence boundary as medium B314; do not reuse this parser for arbitrary untrusted XML."
+    }
+  ],
+  "findings_suppressed": 0,
+  "scan_errors": [],
+  "limitations": [
+    "Static heuristic triage is not an independent penetration test or proof of security.",
+    "Medium call-site signatures and complete containing-file hashes bind these dispositions; changed files require reassessment.",
+    "OS packages, external account/provider configuration and GitHub Actions runtime dependencies are separate scopes."
+  ]
+}

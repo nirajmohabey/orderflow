@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-11-23T10:30:34.047904+00:00",
+  "official_source": {
+    "path": "orchestration/constraints-3.12.txt",
+    "sha256": "3cecb4fe4a11d69bd772aef18434825bbed9b344703302ca0a55d50e30a33eda"
+  },
+  "hardened_copy": {
+    "path": "orchestration/constraints-hardened-3.12.txt",
+    "sha256": "5001dcab2e85da66f9ac2139e7bcffc7b3b736e3b37c29f256544cc13837c9a2"
+  },
+  "changes": [
+    {
+      "package": "dnspython",
+      "before": "2.9.1",
+      "after": "2.9.2",
+      "advisory": "GHSA-vvf4-9x63-8xvv",
+      "upstream_advisory": "https://github.com/rthalley/dnspython/security/advisories/GHSA-vvf4-9x63-8xvv"
+    }
+  ],
+  "scope": "Only the selected installed DNS package is patched. Official all-extras constraints and their unused optional-package advisories remain preserved; no claim all optional extras were tested.",
+  "runtime_validation": {
+    "bound_at": "2026-11-23T10:53:19.567645+00:00",
+    "passed": true,
+    "evidence": [
+      {
+        "path": "artifacts/security/dns-bounds.json",
+        "sha256": "d3de949788e58925a2b9b61fdea3e098055afe13a8063d9888a5613024c22a61"
+      },
+      {
+        "path": "artifacts/security/airflow-installed.json",
+        "sha256": "63482454c5fd6e3beb75f6ec3ce082a898254010283a71ee01ee96f783006abf"
+      },
+      {
+        "path": "artifacts/checks/linux-final.json",
+        "sha256": "5fb1af6e40498662dea80615e4798a1aa4134e507456b4ce1f36eb1b546ca3eb"
+      },
+      {
+        "path": "artifacts/checks/linux-dag-proof.json",
+        "sha256": "257b0346b91190c2e4822afb3f21a54748c57e8297403d80655ae4ca1f97887b"
+      }
+    ],
+    "scope": "Actual patched dependency graph/pip check, harmless WKS boundary regression and actual finite Airflow/dbt success plus expected quality failure on the recorded Linux state. Later core-version-claim changes require their own current-source acceptance; this dependency proof is not relabeled as that later test run."
+  }
+}

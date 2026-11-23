@@ -1,0 +1,12 @@
+.env*
+.runtime
+.venv*
+.git
+artifacts
+tests
+dashboard/node_modules
+dashboard/dist
+warehouse/target
+warehouse/logs
+work
+*.log

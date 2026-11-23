@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-11-23T10:56:32.106815+00:00",
+  "scope": "Positive CI bootstrap helper validation on a newly owned native PostgreSQL17 loopback cluster and a copied fixture checkout; not a GitHub-hosted workflow run.",
+  "checks": [
+    {
+      "name": "fresh owned PostgreSQL initialization",
+      "passed": true
+    },
+    {
+      "name": "private loopback PostgreSQL startup",
+      "passed": true
+    },
+    {
+      "name": "actual CI setup creates reviewed roles/databases",
+      "passed": true
+    },
+    {
+      "name": "generated CI configuration supports API/RLS/ingestion and metadata DDL",
+      "passed": true
+    },
+    {
+      "name": "repeat CI setup refuses existing checkout/objects",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "owned_cluster_stopped": true
+}

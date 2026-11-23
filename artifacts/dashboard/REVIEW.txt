@@ -1,0 +1,13 @@
+OrderFlow dashboard review
+Recorded 2026-11-23T10:38:15.094Z
+
+Built React client, strict TypeScript build, format check, full npm audit: passed; 0 known advisories at the recorded audit.
+Intercepted-API browser suite: 18/18; 25 axe states, 0 automated violations; source stable true.
+Actual HTTP/PostgreSQL suite: 10/10; 22 axe states, 0 automated violations; source stable true; page errors 0; console errors 0.
+Actual publication state: {"report":{"has_success":true,"stale":true,"latest_attempt_status":"failed"},"inventory":{"has_snapshot":true,"status":"fail"}}.
+Actual domain journey is read-only and preserves serving counts/totals. Local fixture sign-ins are the only POSTs. Retry UI proofs are isolated intercepted-API tests; real retry authorization/transactions are backend acceptance scope.
+Latest actual video: video/page@89a768dd0c324374d69735f9173e3978.webm.
+
+Important fixes verified: exact unsafe integer parsing/money arithmetic; combined pending-work semantics; opaque dot/slash history IDs; keyboard-focusable horizontal tables; clipped screen-reader labels no longer cause mobile page overflow; stale reports do not imply a failed attempt merely from age; explicit no-success states; request deadlines; session/tenant response guards; role-bound retry and post-uncertain-response verification.
+
+Full source hashes and individual outcomes are in browser-results.json and live/live-results.json. Earlier failure screenshots may remain as development evidence; final JSON reports define current status. Automated scans do not establish full WCAG conformance. No hosted backend, cloud export, production IdP, real retailer effect, or public-source claim is implied.

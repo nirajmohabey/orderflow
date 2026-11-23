@@ -1,0 +1,15 @@
+.git
+.env*
+.venv*
+.runtime
+.vercel
+**/__pycache__
+**/node_modules
+dashboard/dist
+warehouse/target
+warehouse/logs
+artifacts/objects
+artifacts/benchmarks/raw
+work
+*.log
+

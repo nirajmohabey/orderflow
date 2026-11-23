@@ -1,0 +1,92 @@
+{
+  "scope": "Final source Compose API/worker + actual dbt + HTTP version-correction smoke in owned private sandbox; not a containerized full suite.",
+  "passed": true,
+  "source_files": {
+    "src/orderflow/__init__.py": "e957dc257d7a30059155725db2c02be65426439801fd57469e673804bbfe1c55",
+    "src/orderflow/api.py": "7894ce27f6d5d93443b4dea7b7b1a55714558f8a6454bec341afae370ac7689a",
+    "src/orderflow/auth.py": "e5b93db0135e912c4fce0d3ef6fe03376de73e246c475b7b102927de208f7cd2",
+    "src/orderflow/config.py": "a2bca207eb20c1e4947e8f2faf776b2aa20047cbc1a74d4f5e6c4fb44a1d4743",
+    "src/orderflow/connectors.py": "cbeaccc7300875722cd4be4788416f8de0b6fa6be1382584fe35c1f7a513b208",
+    "src/orderflow/db.py": "ac96be767e7034851f4c6e37f24a5945f8c5664a74ca76be89e155921fec7b4c",
+    "src/orderflow/objects.py": "d8bb425a7ff79318fb9d2050799022785ea6be12f5b1359ff11f6928e2e8ab06",
+    "src/orderflow/pipeline.py": "32604abec6cfce76a8d4191990ae559b195c4f523e1bf3d31c65c1f16363b2de",
+    "src/orderflow/schemas.py": "e45e1383af7d2b93a679cc9f12908b9a6954a9fa8de5c2f0d285257f3a4fac3a",
+    "src/orderflow/service.py": "d9198b91e41bf658d4e663f1232a84441955a7f4345505faaeb29f8bc59bf902",
+    "src/orderflow/worker.py": "78d74e0ee34981b515eae328e267cc338fc6415e2b3309ec12b05b69633569ea",
+    "migrations/001_core.sql": "6d005c4a7e98ba1c35c8e9416844ff8de037418e73560920db49ae423fde21a8",
+    "migrations/002_pipeline.sql": "de65c606b975cd6036923069f8fc15944623e0f1bc3be3e5c59f299862f0bb44",
+    "migrations/003_version_claim_lookup.sql": "cde8ef89e970311b412292ec1fb9f53b36b2c9f1c47d0dc14571e789c538a175",
+    "migrations/004_eligible_claim_window.sql": "dcb9d272260e22ebe36b80d0009df68a3ca147138f6ac3bf5999b0713e561941"
+  },
+  "api_checks": {
+    "readiness": 200,
+    "accepted": 10,
+    "order_total_minor": 8000
+  },
+  "api_environment_names": [
+    "ODF_APP_ENV",
+    "ODF_JWT_AUDIENCE",
+    "ODF_ALLOWED_ORIGINS",
+    "ODF_OBJECT_ROOT",
+    "ODF_AUTH_SECRET",
+    "ODF_DATABASE_URL",
+    "ODF_WORKER_TENANTS",
+    "ODF_DEMO_MODE",
+    "ODF_ALLOWED_HOSTS",
+    "ODF_JWT_ISSUER",
+    "PATH",
+    "LANG",
+    "GPG_KEY",
+    "PYTHON_VERSION",
+    "PYTHON_SHA256",
+    "PYTHONDONTWRITEBYTECODE",
+    "PYTHONUNBUFFERED",
+    "PYTHONPATH"
+  ],
+  "api_image_id": "sha256:0cd2ca191e5acfbf6deeea6d26b5be7ded7d5f81947463eaa5ec8880cd7aaeaf",
+  "worker_environment_names": [
+    "ODF_WORKER_TENANTS",
+    "ODF_OBJECT_ROOT",
+    "ODF_DEMO_MODE",
+    "ODF_JWT_ISSUER",
+    "ODF_ALLOWED_ORIGINS",
+    "ODF_APP_ENV",
+    "ODF_AUTH_SECRET",
+    "ODF_ALLOWED_HOSTS",
+    "ODF_DATABASE_URL",
+    "ODF_JWT_AUDIENCE",
+    "PATH",
+    "LANG",
+    "GPG_KEY",
+    "PYTHON_VERSION",
+    "PYTHON_SHA256",
+    "PYTHONDONTWRITEBYTECODE",
+    "PYTHONUNBUFFERED",
+    "PYTHONPATH"
+  ],
+  "worker_image_id": "sha256:97b013d7cb7cda1c706373a0957e62861296db8ccb2c9def4ed44fd331387cba",
+  "real_dbt_batch_exit_code": 0,
+  "published_report_has_success": true,
+  "http_version_correction": [
+    {
+      "entity_version": 4,
+      "currency": "EUR",
+      "outcome": "quarantined",
+      "reason_code": "tenant_currency_mismatch"
+    },
+    {
+      "entity_version": 4,
+      "currency": "USD",
+      "outcome": "quarantined",
+      "reason_code": "entity_version_conflict"
+    },
+    {
+      "entity_version": 5,
+      "currency": "USD",
+      "outcome": "applied_current",
+      "reason_code": null
+    }
+  ],
+  "postgres_version": "postgres (PostgreSQL) 17.12",
+  "cleanup_exit_code": 0
+}

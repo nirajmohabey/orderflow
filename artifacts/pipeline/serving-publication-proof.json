@@ -1,0 +1,305 @@
+{
+  "database_identities": [
+    [
+      "orderflow",
+      "127.0.0.1",
+      55449
+    ],
+    [
+      "orderflow",
+      "127.0.0.1",
+      55449
+    ]
+  ],
+  "configured_database_reset": false,
+  "last_good_preserved_after_real_dbt_failure": true,
+  "report": {
+    "has_success": true,
+    "stale": true,
+    "observed_at": "2026-11-23T10:22:22.353231Z",
+    "last_good": {
+      "storage": "local",
+      "summary": {
+        "currency": "USD",
+        "order_count": 2,
+        "product_count": 2,
+        "order_total_minor": 8000,
+        "raw_revision_count": 8
+      },
+      "manifest": {
+        "source": {
+          "run_id": "2995b2ef-9abb-4258-8066-3fb961739fef",
+          "objects": [
+            {
+              "key": "staging/11111111-1111-4111-8111-111111111111/2026-11-22/2995b2ef-9abb-4258-8066-3fb961739fef/revisions-00000-b9b1ce032887ba70891fc5a40204512b08873b523c4ab41d18fa04d44aa7274d.jsonl",
+              "rows": 8,
+              "bytes": 2688,
+              "sha256": "b9b1ce032887ba70891fc5a40204512b08873b523c4ab41d18fa04d44aa7274d"
+            }
+          ],
+          "storage": "local",
+          "row_count": 8,
+          "tenant_id": "11111111-1111-4111-8111-111111111111",
+          "interval_end": "2026-11-23T00:00:00Z",
+          "oracle_sha256": "7039db2bea659474dd72a7cd70409b07f65c616f66fdca362a0e8395f02ebe38",
+          "interval_start": "2026-11-22T00:00:00Z",
+          "schema_version": 1,
+          "snapshot_sha256": "b9b1ce032887ba70891fc5a40204512b08873b523c4ab41d18fa04d44aa7274d",
+          "report_owner_source_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+          "participating_authorities": [
+            {
+              "source_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+              "entity_type": "order"
+            },
+            {
+              "source_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+              "entity_type": "product"
+            }
+          ]
+        },
+        "dbt_artifacts": [
+          {
+            "key": "reports/11111111-1111-4111-8111-111111111111/2995b2ef-9abb-4258-8066-3fb961739fef/dbt-run-results.json",
+            "bytes": 8941,
+            "sha256": "6087ce88e8572e92d5bf8bb2395a6bde6d0fb11e3fb3855e1c88a4d29ba60fc3"
+          },
+          {
+            "key": "reports/11111111-1111-4111-8111-111111111111/2995b2ef-9abb-4258-8066-3fb961739fef/dbt-test-results.json",
+            "bytes": 14942,
+            "sha256": "63c32773c403a526ea1d721fe7985149535462420363b3ce0188cad42574ad4a"
+          }
+        ],
+        "project_sha256": "6eb3243bd6da664b2545af742a580d74f1d525f1ce2b668904fb914866bd4bf6",
+        "required_tests": [
+          "expectation_row_count",
+          "fact_relationship",
+          "history_highest_equal_time",
+          "history_nonoverlap",
+          "order_reconciliation",
+          "revision_key_unique",
+          "total_reconciliation"
+        ],
+        "dbt_tests_passed": 13,
+        "test_corrupt_total": false,
+        "source_manifest_object": {
+          "key": "staging/11111111-1111-4111-8111-111111111111/2026-11-22/2995b2ef-9abb-4258-8066-3fb961739fef/source_manifest.json",
+          "bytes": 943,
+          "sha256": "f55c8984ad3b8158ee048a1b461b8bf734d51ba35d028862351ae4db9249d14c"
+        }
+      },
+      "order_facts": [
+        {
+          "status": "paid",
+          "currency": "USD",
+          "entity_id": "O1",
+          "total_minor": 3000,
+          "entity_version": 2
+        },
+        {
+          "status": "paid",
+          "currency": "USD",
+          "entity_id": "O2",
+          "total_minor": 5000,
+          "entity_version": 1
+        }
+      ],
+      "preview_limit": 100,
+      "manifest_sha256": "180b784321275d3fa2718ecfc1e21379502d6d1696214ed53de1139aac702a0f",
+      "product_history": [
+        {
+          "currency": "USD",
+          "valid_to": "2026-11-02T12:00:00Z",
+          "entity_id": "P1",
+          "valid_from": "2026-11-01T12:00:00Z",
+          "entity_version": 1,
+          "unit_price_minor": 1000
+        },
+        {
+          "currency": "USD",
+          "valid_to": "2026-11-03T12:00:00Z",
+          "entity_id": "P1",
+          "valid_from": "2026-11-02T12:00:00Z",
+          "entity_version": 2,
+          "unit_price_minor": 1200
+        },
+        {
+          "currency": "USD",
+          "valid_to": null,
+          "entity_id": "P1",
+          "valid_from": "2026-11-03T12:00:00Z",
+          "entity_version": 3,
+          "unit_price_minor": 1500
+        },
+        {
+          "currency": "USD",
+          "valid_to": null,
+          "entity_id": "P2",
+          "valid_from": "2026-11-05T12:00:00Z",
+          "entity_version": 2,
+          "unit_price_minor": 2200
+        }
+      ],
+      "preview_truncated": false,
+      "artifact_availability": "local_only",
+      "run_id": "2995b2ef-9abb-4258-8066-3fb961739fef",
+      "source_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "interval_start": "2026-11-22T00:00:00Z",
+      "interval_end": "2026-11-23T00:00:00Z",
+      "published_at": "2026-11-23T10:22:13.792487Z"
+    },
+    "latest_attempt": {
+      "run_id": "e26a96f4-8a68-4976-ae0a-1ac9d30b78fb",
+      "status": "failed",
+      "interval_start": "2026-11-22T00:00:00Z",
+      "interval_end": "2026-11-23T00:00:00Z",
+      "started_at": "2026-11-23T10:22:13.801867Z",
+      "finished_at": "2026-11-23T10:22:22.349711Z",
+      "failure_code": "dbt_or_artifact_check_failed",
+      "checks": [
+        {
+          "name": "dbt_run_execution",
+          "status": "pass",
+          "observed": 0,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.expectation_row_count",
+          "status": "pass",
+          "observed": 0,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.fact_relationship",
+          "status": "pass",
+          "observed": 0,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.not_null_order_facts_total_minor.84ed147d60",
+          "status": "pass",
+          "observed": 0,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.total_reconciliation",
+          "status": "fail",
+          "observed": 1,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.order_reconciliation",
+          "status": "fail",
+          "observed": 2,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.not_null_product_history_valid_from.fd8fe17a1e",
+          "status": "pass",
+          "observed": 0,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.history_highest_equal_time",
+          "status": "pass",
+          "observed": 0,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.revision_key_unique",
+          "status": "pass",
+          "observed": 0,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.unique_order_facts_entity_id.c633b6ef54",
+          "status": "pass",
+          "observed": 0,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.not_null_stg_revisions_entity_id.8edb0b70bc",
+          "status": "pass",
+          "observed": 0,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.not_null_stg_revisions_entity_version.aee8aa8831",
+          "status": "pass",
+          "observed": 0,
+          "expected": 0
+        },
+        {
+          "name": "dbt_test_execution",
+          "status": "error",
+          "observed": 1,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.history_nonoverlap",
+          "status": "pass",
+          "observed": 0,
+          "expected": 0
+        },
+        {
+          "name": "test.orderflow_warehouse.not_null_order_facts_entity_id.4e787c9833",
+          "status": "pass",
+          "observed": 0,
+          "expected": 0
+        }
+      ]
+    }
+  },
+  "inventory": {
+    "run_id": "630a77de-e2d1-4c65-b78f-55b715a38095",
+    "source_id": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+    "snapshot_id": "INV-001",
+    "reference_id": "REF-001",
+    "as_of": "2026-11-03T12:00:00+00:00",
+    "status": "fail",
+    "observed_sha256": "a6a904b24bb43bb64b7768ee8973319dfacc6a8a2b7f6ef9597a290e6b710db0",
+    "reference_sha256": "e7301ac8f61e75185e200cabe7121fbaed7d15fcc57529496b561e2608a662c5",
+    "observed_total": 20,
+    "reference_total": 22,
+    "difference_total": -2,
+    "differences": [
+      {
+        "sku": "SKU-1",
+        "observed_quantity": 20,
+        "reference_quantity": 22,
+        "difference": -2,
+        "observed_present": true,
+        "reference_present": true
+      }
+    ],
+    "storage": "local",
+    "artifact_availability": "local_only",
+    "manifest": {
+      "schema_version": 1,
+      "tenant_id": "11111111-1111-4111-8111-111111111111",
+      "source_id": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+      "snapshot_id": "INV-001",
+      "objects": [
+        {
+          "key": "raw/11111111-1111-4111-8111-111111111111/cccccccc-cccc-4ccc-8ccc-cccccccccccc/INV-001/a6a904b24bb43bb64b7768ee8973319dfacc6a8a2b7f6ef9597a290e6b710db0/observed.csv",
+          "sha256": "a6a904b24bb43bb64b7768ee8973319dfacc6a8a2b7f6ef9597a290e6b710db0",
+          "bytes": 116
+        },
+        {
+          "key": "raw/11111111-1111-4111-8111-111111111111/cccccccc-cccc-4ccc-8ccc-cccccccccccc/INV-001/e7301ac8f61e75185e200cabe7121fbaed7d15fcc57529496b561e2608a662c5/reference.csv",
+          "sha256": "e7301ac8f61e75185e200cabe7121fbaed7d15fcc57529496b561e2608a662c5",
+          "bytes": 117
+        },
+        {
+          "key": "reports/11111111-1111-4111-8111-111111111111/cccccccc-cccc-4ccc-8ccc-cccccccccccc/INV-001/inventory_reconciliation.json",
+          "sha256": "409f111c96ff5ef111df7a0e8655272ef32d2e9e5cccf29a9b02c02642c142b0",
+          "bytes": 586
+        }
+      ],
+      "observed_rows": 1,
+      "reference_rows": 1
+    },
+    "manifest_sha256": "d83965c5743753ca66750025c8f63302a99afbf43d4d14d284d1f0411bc056e0"
+  },
+  "fixture_observed_sha256": "a6a904b24bb43bb64b7768ee8973319dfacc6a8a2b7f6ef9597a290e6b710db0",
+  "fixture_reference_sha256": "e7301ac8f61e75185e200cabe7121fbaed7d15fcc57529496b561e2608a662c5"
+}

@@ -1,0 +1,78 @@
+name: orderflow
+x-app-environment: &app-environment
+  ODF_APP_ENV: local
+  ODF_DEMO_MODE: "true"
+  ODF_DATABASE_URL: postgresql+psycopg://orderflow_app:${APP_ROLE_PASSWORD:?Generate .env.docker}@db:5432/orderflow
+  ODF_AUTH_SECRET: ${ODF_AUTH_SECRET:?Generate .env.docker}
+  ODF_JWT_ISSUER: http://localhost:8010/fixture
+  ODF_JWT_AUDIENCE: orderflow
+  ODF_WORKER_TENANTS: 11111111-1111-4111-8111-111111111111,22222222-2222-4222-8222-222222222222
+  ODF_ALLOWED_HOSTS: localhost,127.0.0.1
+  ODF_ALLOWED_ORIGINS: http://localhost:8010,http://127.0.0.1:8010
+  ODF_OBJECT_ROOT: /app/artifacts/objects
+services:
+  db:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile.postgres
+    image: orderflow-postgres:17.12-security
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Generate .env.docker}
+      POSTGRES_DB: orderflow
+    volumes: [database:/var/lib/postgresql/data]
+    networks: [internal]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U postgres -d orderflow"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  init:
+    build: .
+    user: root
+    command: [python,scripts/container_setup.py]
+    environment:
+      <<: *app-environment
+      ODF_ADMIN_DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD}@db:5432/orderflow
+      APP_ROLE_PASSWORD: ${APP_ROLE_PASSWORD}
+      TRANSFORM_ROLE_PASSWORD: ${TRANSFORM_ROLE_PASSWORD}
+    volumes: [administration:/run/orderflow,objects:/app/artifacts/objects]
+    networks: [internal]
+    depends_on:
+      db: {condition: service_healthy}
+  api:
+    build: .
+    environment: *app-environment
+    ports: ["127.0.0.1:8010:8000"]
+    networks: [internal]
+    depends_on:
+      init: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD,python,-c,"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready',timeout=5)"]
+      interval: 15s
+      timeout: 7s
+      retries: 5
+    restart: unless-stopped
+  worker:
+    build: .
+    command: [python,-m,orderflow.worker]
+    environment: *app-environment
+    networks: [internal]
+    depends_on:
+      init: {condition: service_completed_successfully}
+    restart: unless-stopped
+  batch:
+    profiles: [batch]
+    build: {context: .,dockerfile: Dockerfile.batch}
+    environment:
+      <<: *app-environment
+      ODF_DBT_DATABASE_URL: postgresql+psycopg://orderflow_transform:${TRANSFORM_ROLE_PASSWORD}@db:5432/orderflow
+    volumes: [objects:/app/artifacts/objects,administration:/run/orderflow:ro]
+    networks: [internal]
+    depends_on:
+      init: {condition: service_completed_successfully}
+volumes:
+  database:
+  administration:
+  objects:
+networks:
+  internal:

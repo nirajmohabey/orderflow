@@ -1,0 +1,266 @@
+{
+  "scope": "Actual native PostgreSQL/dbt execution on fictional fixtures; local objects, not hosted Airflow or S3.",
+  "project_sha256": "6eb3243bd6da664b2545af742a580d74f1d525f1ce2b668904fb914866bd4bf6",
+  "published_run_id": "2995b2ef-9abb-4258-8066-3fb961739fef",
+  "failed_run_id": "e26a96f4-8a68-4976-ae0a-1ac9d30b78fb",
+  "last_good_preserved": true,
+  "runs": {
+    "success": {
+      "run": {
+        "artifact_sha256": "6087ce88e8572e92d5bf8bb2395a6bde6d0fb11e3fb3855e1c88a4d29ba60fc3",
+        "dbt_version": "1.12.7",
+        "invocation_id": "d519fab3-f933-4107-9573-83e29b70334f",
+        "generated_at": "2026-11-23T10:22:09.462573Z",
+        "results": [
+          {
+            "unique_id": "model.orderflow_warehouse.expected_orders",
+            "status": "success",
+            "failures": null,
+            "execution_time": 0.1664905548095703
+          },
+          {
+            "unique_id": "model.orderflow_warehouse.expectations",
+            "status": "success",
+            "failures": null,
+            "execution_time": 0.1728219985961914
+          },
+          {
+            "unique_id": "model.orderflow_warehouse.stg_revisions",
+            "status": "success",
+            "failures": null,
+            "execution_time": 0.08211874961853027
+          },
+          {
+            "unique_id": "model.orderflow_warehouse.order_facts",
+            "status": "success",
+            "failures": null,
+            "execution_time": 0.08478593826293945
+          },
+          {
+            "unique_id": "model.orderflow_warehouse.product_history",
+            "status": "success",
+            "failures": null,
+            "execution_time": 0.09016036987304688
+          }
+        ]
+      },
+      "test": {
+        "artifact_sha256": "63c32773c403a526ea1d721fe7985149535462420363b3ce0188cad42574ad4a",
+        "dbt_version": "1.12.7",
+        "invocation_id": "35697333-83e5-434c-94dd-f6a4730e0421",
+        "generated_at": "2026-11-23T10:22:13.355635Z",
+        "results": [
+          {
+            "unique_id": "test.orderflow_warehouse.expectation_row_count",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.07129025459289551
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.fact_relationship",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.07573223114013672
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.history_highest_equal_time",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.05937504768371582
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.history_nonoverlap",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.05594754219055176
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.not_null_order_facts_entity_id.4e787c9833",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.0701601505279541
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.not_null_order_facts_total_minor.84ed147d60",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.06916022300720215
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.not_null_stg_revisions_entity_id.8edb0b70bc",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.06456494331359863
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.not_null_product_history_valid_from.fd8fe17a1e",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.06657767295837402
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.order_reconciliation",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.061243534088134766
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.not_null_stg_revisions_entity_version.aee8aa8831",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.06867861747741699
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.revision_key_unique",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.06556272506713867
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.total_reconciliation",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.06922292709350586
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.unique_order_facts_entity_id.c633b6ef54",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.07100033760070801
+          }
+        ]
+      }
+    },
+    "deliberately_corrupt_total": {
+      "run": {
+        "artifact_sha256": "57a029340c55c23f56ed29bbf25a0394307475dd8666d67b750b2b62780a8240",
+        "dbt_version": "1.12.7",
+        "invocation_id": "b50241a8-ba63-4d4e-8f3b-16d3807a71aa",
+        "generated_at": "2026-11-23T10:22:18.086885Z",
+        "results": [
+          {
+            "unique_id": "model.orderflow_warehouse.expected_orders",
+            "status": "success",
+            "failures": null,
+            "execution_time": 0.1426093578338623
+          },
+          {
+            "unique_id": "model.orderflow_warehouse.expectations",
+            "status": "success",
+            "failures": null,
+            "execution_time": 0.1461045742034912
+          },
+          {
+            "unique_id": "model.orderflow_warehouse.stg_revisions",
+            "status": "success",
+            "failures": null,
+            "execution_time": 0.1771554946899414
+          },
+          {
+            "unique_id": "model.orderflow_warehouse.order_facts",
+            "status": "success",
+            "failures": null,
+            "execution_time": 0.08561873435974121
+          },
+          {
+            "unique_id": "model.orderflow_warehouse.product_history",
+            "status": "success",
+            "failures": null,
+            "execution_time": 0.08461880683898926
+          }
+        ]
+      },
+      "test": {
+        "artifact_sha256": "996b132384aa9d86ba1b59283274c16c5a56dc3e37e494dc2098eb7eb561e3e8",
+        "dbt_version": "1.12.7",
+        "invocation_id": "6c891bc9-3c2a-4406-940f-29b7a465a988",
+        "generated_at": "2026-11-23T10:22:21.967219Z",
+        "results": [
+          {
+            "unique_id": "test.orderflow_warehouse.expectation_row_count",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.07131242752075195
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.fact_relationship",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.07231307029724121
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.history_highest_equal_time",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.05567812919616699
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.history_nonoverlap",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.05600428581237793
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.not_null_order_facts_total_minor.84ed147d60",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.0695352554321289
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.not_null_order_facts_entity_id.4e787c9833",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.07153129577636719
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.not_null_product_history_valid_from.fd8fe17a1e",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.05915236473083496
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.not_null_stg_revisions_entity_id.8edb0b70bc",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.0671532154083252
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.not_null_stg_revisions_entity_version.aee8aa8831",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.06918120384216309
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.order_reconciliation",
+            "status": "fail",
+            "failures": 2,
+            "execution_time": 0.0653085708618164
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.total_reconciliation",
+            "status": "fail",
+            "failures": 1,
+            "execution_time": 0.05082368850708008
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.revision_key_unique",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.06485152244567871
+          },
+          {
+            "unique_id": "test.orderflow_warehouse.unique_order_facts_entity_id.c633b6ef54",
+            "status": "pass",
+            "failures": 0,
+            "execution_time": 0.06495046615600586
+          }
+        ]
+      }
+    }
+  },
+  "success_tests_passed": true,
+  "corrupt_tests_failed": [
+    "test.orderflow_warehouse.order_reconciliation",
+    "test.orderflow_warehouse.total_reconciliation"
+  ]
+}

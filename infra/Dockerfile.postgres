@@ -1,0 +1,6 @@
+FROM postgres:17.12-alpine
+# Preserve PostgreSQL 17.12; Alpine's newer libxml2 avoids the unfixed Debian
+# 2.9 ABI advisory. Apply reviewed OpenSSL/libxml2 fixes within this OS release.
+RUN apk upgrade --no-cache libcrypto3 libssl3 libxml2 \
+    && mkdir -p /usr/local/share/orderflow \
+    && apk info -v > /usr/local/share/orderflow/os-packages.txt

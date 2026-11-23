@@ -1,0 +1,361 @@
+{
+  "started_at": "2026-11-23T10:38:40.629687+00:00",
+  "scope": "Actual private Linux Airflow+dbt+PostgreSQL and loopback HTTP; no hosted scheduler/S3 claim.",
+  "configured_application_database_reset": false,
+  "database_identities": [
+    [
+      "orderflow",
+      "127.0.0.1",
+      5432
+    ],
+    [
+      "orderflow",
+      "127.0.0.1",
+      5432
+    ],
+    [
+      "orderflow",
+      "127.0.0.1",
+      5432
+    ]
+  ],
+  "checks": [
+    {
+      "name": "literal latest orders preloaded",
+      "passed": true
+    },
+    {
+      "name": "actual API ready",
+      "passed": true
+    },
+    {
+      "name": "actual paginated catalog ready",
+      "passed": true
+    },
+    {
+      "name": "owned HTTP processes still running",
+      "passed": true
+    },
+    {
+      "name": "Airflow metadata migration",
+      "passed": true
+    },
+    {
+      "name": "actual finite mapped DAG success",
+      "passed": true
+    },
+    {
+      "name": "real dbt published expected8,000 cents",
+      "passed": true
+    },
+    {
+      "name": "failed actual dbt candidate visible",
+      "passed": true
+    },
+    {
+      "name": "last-good payload hash/time unchanged",
+      "passed": true
+    },
+    {
+      "name": "failure visible as stale",
+      "passed": true
+    },
+    {
+      "name": "replayed actual HTTP did not change current entities",
+      "passed": true
+    },
+    {
+      "name": "catalog durable cursor completed real pages",
+      "passed": true
+    },
+    {
+      "name": "HTTP ingestion source runs/checks recorded",
+      "passed": true
+    }
+  ],
+  "commands": {
+    "airflow-migrate": {
+      "returncode": 0,
+      "log_sha256": "362b97b0dcb72c887434d180a86b102ad70b5e4e9c22986ae3d429182b413eb3"
+    },
+    "dag-success": {
+      "returncode": 0,
+      "log_sha256": "3b0e1c244b63a347dbce5ba47b43511dea9b90d3ec166246d963ac079a865e22"
+    },
+    "dag-expected-quality-failure": {
+      "returncode": 1,
+      "log_sha256": "6282c17867005bd7b392a10d270efeecda8737240542c2ca6d00c5450643d6a1"
+    }
+  },
+  "passed": true,
+  "expected_failure_exit_code": 1,
+  "last_good": {
+    "storage": "local",
+    "summary": {
+      "currency": "USD",
+      "order_count": 2,
+      "product_count": 2,
+      "order_total_minor": 8000,
+      "raw_revision_count": 8
+    },
+    "manifest": {
+      "source": {
+        "run_id": "41af3fb6-20e7-4b9e-a663-0cf304ceb882",
+        "objects": [
+          {
+            "key": "staging/11111111-1111-4111-8111-111111111111/2026-11-22/41af3fb6-20e7-4b9e-a663-0cf304ceb882/revisions-00000-9c51e13b0b66a536d72830c803bbad79479c7121817e94b1b33231bda4eece63.jsonl",
+            "rows": 8,
+            "bytes": 2688,
+            "sha256": "9c51e13b0b66a536d72830c803bbad79479c7121817e94b1b33231bda4eece63"
+          }
+        ],
+        "storage": "local",
+        "row_count": 8,
+        "tenant_id": "11111111-1111-4111-8111-111111111111",
+        "interval_end": "2026-11-23T00:00:00Z",
+        "oracle_sha256": "7039db2bea659474dd72a7cd70409b07f65c616f66fdca362a0e8395f02ebe38",
+        "interval_start": "2026-11-22T00:00:00Z",
+        "schema_version": 1,
+        "snapshot_sha256": "9c51e13b0b66a536d72830c803bbad79479c7121817e94b1b33231bda4eece63",
+        "report_owner_source_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+        "participating_authorities": [
+          {
+            "source_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+            "entity_type": "order"
+          },
+          {
+            "source_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+            "entity_type": "product"
+          }
+        ]
+      },
+      "dbt_artifacts": [
+        {
+          "key": "reports/11111111-1111-4111-8111-111111111111/41af3fb6-20e7-4b9e-a663-0cf304ceb882/dbt-run-results.json",
+          "bytes": 8496,
+          "sha256": "bb14b1e33bc675fa7727a8234858b94ca6f39df39985f05f4c159486ca942623"
+        },
+        {
+          "key": "reports/11111111-1111-4111-8111-111111111111/41af3fb6-20e7-4b9e-a663-0cf304ceb882/dbt-test-results.json",
+          "bytes": 14500,
+          "sha256": "7eff208b6969bc68ef27b45768b6916a6565e6277560092c06799620add1333a"
+        }
+      ],
+      "project_sha256": "6eb3243bd6da664b2545af742a580d74f1d525f1ce2b668904fb914866bd4bf6",
+      "required_tests": [
+        "expectation_row_count",
+        "fact_relationship",
+        "history_highest_equal_time",
+        "history_nonoverlap",
+        "order_reconciliation",
+        "revision_key_unique",
+        "total_reconciliation"
+      ],
+      "dbt_tests_passed": 13,
+      "test_corrupt_total": false,
+      "source_manifest_object": {
+        "key": "staging/11111111-1111-4111-8111-111111111111/2026-11-22/41af3fb6-20e7-4b9e-a663-0cf304ceb882/source_manifest.json",
+        "bytes": 943,
+        "sha256": "ba9669ed8f1b09de7d79d4eb6ccb97a71af686e2440580f191c4a1207bfa0ae2"
+      }
+    },
+    "order_facts": [
+      {
+        "status": "paid",
+        "currency": "USD",
+        "entity_id": "O1",
+        "total_minor": 3000,
+        "entity_version": 2
+      },
+      {
+        "status": "paid",
+        "currency": "USD",
+        "entity_id": "O2",
+        "total_minor": 5000,
+        "entity_version": 1
+      }
+    ],
+    "preview_limit": 100,
+    "manifest_sha256": "2a34009bffdcba9db495627906d69e388dce5d766f8cff71ef98d087c28e24f1",
+    "product_history": [
+      {
+        "currency": "USD",
+        "valid_to": "2026-11-02T12:00:00Z",
+        "entity_id": "P1",
+        "valid_from": "2026-11-01T12:00:00Z",
+        "entity_version": 1,
+        "unit_price_minor": 1000
+      },
+      {
+        "currency": "USD",
+        "valid_to": "2026-11-03T12:00:00Z",
+        "entity_id": "P1",
+        "valid_from": "2026-11-02T12:00:00Z",
+        "entity_version": 2,
+        "unit_price_minor": 1200
+      },
+      {
+        "currency": "USD",
+        "valid_to": null,
+        "entity_id": "P1",
+        "valid_from": "2026-11-03T12:00:00Z",
+        "entity_version": 3,
+        "unit_price_minor": 1500
+      },
+      {
+        "currency": "USD",
+        "valid_to": null,
+        "entity_id": "P2",
+        "valid_from": "2026-11-05T12:00:00Z",
+        "entity_version": 2,
+        "unit_price_minor": 2200
+      }
+    ],
+    "preview_truncated": false,
+    "artifact_availability": "local_only",
+    "run_id": "41af3fb6-20e7-4b9e-a663-0cf304ceb882",
+    "source_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+    "interval_start": "2026-11-22T00:00:00Z",
+    "interval_end": "2026-11-23T00:00:00Z",
+    "published_at": "2026-11-23T10:39:00.362030Z"
+  },
+  "latest_failed_attempt": {
+    "run_id": "85e9f9f1-6fc4-4aa7-bc00-e786e14b17f5",
+    "status": "failed",
+    "interval_start": "2026-11-22T00:00:00Z",
+    "interval_end": "2026-11-23T00:00:00Z",
+    "started_at": "2026-11-23T10:39:10.609006Z",
+    "finished_at": "2026-11-23T10:39:17.836225Z",
+    "failure_code": "dbt_or_artifact_check_failed",
+    "checks": [
+      {
+        "name": "dbt_run_execution",
+        "status": "pass",
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.not_null_product_history_valid_from.fd8fe17a1e",
+        "status": "pass",
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.not_null_order_facts_entity_id.4e787c9833",
+        "status": "pass",
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.order_reconciliation",
+        "status": "fail",
+        "observed": 2,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.history_highest_equal_time",
+        "status": "pass",
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.expectation_row_count",
+        "status": "pass",
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.total_reconciliation",
+        "status": "fail",
+        "observed": 1,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.history_nonoverlap",
+        "status": "pass",
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "name": "dbt_test_execution",
+        "status": "error",
+        "observed": 1,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.revision_key_unique",
+        "status": "pass",
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.not_null_stg_revisions_entity_id.8edb0b70bc",
+        "status": "pass",
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.unique_order_facts_entity_id.c633b6ef54",
+        "status": "pass",
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.not_null_order_facts_total_minor.84ed147d60",
+        "status": "pass",
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.not_null_stg_revisions_entity_version.aee8aa8831",
+        "status": "pass",
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "name": "test.orderflow_warehouse.fact_relationship",
+        "status": "pass",
+        "observed": 0,
+        "expected": 0
+      }
+    ]
+  },
+  "cursor_state": [
+    {
+      "source_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "cursor_revision": 6,
+      "cursor_value": {
+        "completed": true,
+        "next_cursor": null,
+        "dataset_sha256": "62141b26b97bccdb7e1e88769d5b0e5cdf3d65b68f59d851a67721def69e417c"
+      }
+    }
+  ],
+  "source_acceptance_checks": [
+    {
+      "source_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "status": "succeeded",
+      "check_name": "durable_http_acceptance",
+      "check_status": "pass"
+    },
+    {
+      "source_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "status": "succeeded",
+      "check_name": "durable_http_acceptance",
+      "check_status": "pass"
+    },
+    {
+      "source_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "status": "succeeded",
+      "check_name": "durable_http_acceptance",
+      "check_status": "pass"
+    },
+    {
+      "source_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "status": "succeeded",
+      "check_name": "durable_http_acceptance",
+      "check_status": "pass"
+    }
+  ],
+  "finished_at": "2026-11-23T10:39:19.996640+00:00"
+}

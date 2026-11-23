@@ -1,0 +1,16 @@
+orderflow:
+  target: local
+  outputs:
+    local:
+      type: postgres
+      host: "{{ env_var('ODF_DBT_HOST') }}"
+      port: "{{ env_var('ODF_DBT_PORT') | int }}"
+      user: "{{ env_var('ODF_DBT_USER') }}"
+      password: "{{ env_var('ODF_DBT_PASSWORD') }}"
+      dbname: "{{ env_var('ODF_DBT_DBNAME') }}"
+      schema: orderflow_warehouse
+      threads: 2
+      connect_timeout: 5
+      retries: 0
+      sslmode: "{{ env_var('ODF_DBT_SSLMODE', 'prefer') }}"
+      application_name: orderflow-dbt

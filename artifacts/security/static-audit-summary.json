@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-11-23T11:20:59Z",
+  "bandit_severities": {
+    "SEVERITY.HIGH": 0,
+    "SEVERITY.LOW": 45,
+    "SEVERITY.MEDIUM": 11,
+    "SEVERITY.UNDEFINED": 0
+  },
+  "bandit_findings_suppressed": 0,
+  "unreviewed_medium_findings": [],
+  "ruff_undefined_names": 0,
+  "passed": true,
+  "policy": "Keep every Bandit severity in the raw report; fail on high findings, scan errors, undefined names or changed/unreviewed medium call-site signatures. Reviewed dispositions are bounded assessments, not a security guarantee."
+}

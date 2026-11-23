@@ -1,0 +1,100 @@
+{
+  "generated_at": "2026-11-23T10:40:35.824940+00:00",
+  "passed": true,
+  "python": "3.12.14 (main, Sep 29 2026, 15:01:18) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.56-x86_64-with-glibc2.43",
+  "postgresql": "PostgreSQL 18.6 (Ubuntu 18.6-0ubuntu0.26.04.1)",
+  "commands": [
+    {
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "/tmp/odf-airflow/bin/python",
+        "dnspython==2.9.2",
+        "--constraint",
+        "orchestration/constraints-hardened-3.12.txt"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "uv",
+        "pip",
+        "check",
+        "--python",
+        "/tmp/odf-airflow/bin/python"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/tmp/odf-airflow/bin/python",
+        "scripts/check_dns_bounds.py",
+        "--output",
+        "artifacts/security/dns-bounds.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/tmp/odf-airflow/bin/python",
+        "scripts/collect_dependencies.py",
+        "--output",
+        "artifacts/security/airflow-installed.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/tmp/odf-app/bin/python",
+        "/tmp/orderflow_linux_dag_proof.py",
+        "--root",
+        "/tmp/orderflow-app",
+        "--airflow",
+        "/tmp/odf-airflow/bin/airflow",
+        "--dbt",
+        "/tmp/odf-dbt/bin/dbt",
+        "--expected-database",
+        "orderflow",
+        "--output",
+        "/tmp/orderflow-linux-dag-proof.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/tmp/odf-app/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "--junitxml=artifacts/checks/linux-full-suite.xml"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/tmp/odf-app/bin/python",
+        "scripts/acceptance.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/tmp/odf-app/bin/python",
+        "scripts/recovery_check.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/tmp/odf-app/bin/python",
+        "scripts/backup_check.py"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "scope": "Private Linux microVM; generated fixture-only credentials. Real tests/DAG/dbt; no hosted backend claim."
+}

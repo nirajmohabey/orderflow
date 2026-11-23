@@ -1,0 +1,11 @@
+OrderFlow portfolio integration review
+Recorded 2026-11-23T10:38:15.105Z
+
+Production build and lint passed. Portable check script: 55/55; source stable true; browser errors 0; broken local responses 0.
+Independent accessibility scan: 4 states, 0 automated violations, including mobile and 200 percent text zoom. Existing ResolveLab integration regression: 39/39 passed after the final chat-topic correction.
+
+ResolveLab stays first and remains the flagship. OrderFlow feature follows it; OrderFlow is second in project/case-study data, with dedicated /projects/orderflow, sitemap, llms summary, recorded silent demo, same-build screenshots, real quality/reconciliation analysis, and named/contextual chat answers. Existing case-study/data-engineering chat misrouting was corrected through two narrow documented-topic routes.
+
+Central measurement source: work/portfolio/public/orderflow/evidence.json; typed interface content/orderflow.ts. Source URL remains null/private. Measurement groups are separate; benchmark is optional and omitted until independently verified values are provided. Root owns later final-count updates/publication. Rebuild and rerun scripts/check-orderflow.mjs after a JSON change.
+
+Source hashes and individual results: orderflow-results.json. No commit, push, hosting change, or social post was performed by this agent. The isolated local production preview is http://127.0.0.1:3118.

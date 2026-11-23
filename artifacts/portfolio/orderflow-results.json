@@ -1,0 +1,247 @@
+{
+  "recorded_at": "2026-11-23T10:37:22.981Z",
+  "base": "http://127.0.0.1:3118",
+  "checks": [
+    {
+      "name": "homepage HTTP 200",
+      "passed": true
+    },
+    {
+      "name": "ResolveLab remains before OrderFlow",
+      "passed": true
+    },
+    {
+      "name": "OrderFlow case-study link",
+      "passed": true
+    },
+    {
+      "name": "feature reads central evidence",
+      "passed": true
+    },
+    {
+      "name": "project cards preserve priority",
+      "passed": true
+    },
+    {
+      "name": "case accordion keyboard opens",
+      "passed": true
+    },
+    {
+      "name": "case accordion has control relationship",
+      "passed": true
+    },
+    {
+      "name": "case accordion keyboard closes",
+      "passed": true
+    },
+    {
+      "name": "homepage no overflow 375",
+      "passed": true
+    },
+    {
+      "name": "case-study HTTP 200 375",
+      "passed": true
+    },
+    {
+      "name": "case-study no overflow 375",
+      "passed": true
+    },
+    {
+      "name": "single semantic main and h1 375",
+      "passed": true
+    },
+    {
+      "name": "keyboard validation anchor 375",
+      "passed": true
+    },
+    {
+      "name": "homepage no overflow 768",
+      "passed": true
+    },
+    {
+      "name": "case-study HTTP 200 768",
+      "passed": true
+    },
+    {
+      "name": "case-study no overflow 768",
+      "passed": true
+    },
+    {
+      "name": "single semantic main and h1 768",
+      "passed": true
+    },
+    {
+      "name": "keyboard validation anchor 768",
+      "passed": true
+    },
+    {
+      "name": "homepage no overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "case-study HTTP 200 1440",
+      "passed": true
+    },
+    {
+      "name": "case-study no overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "single semantic main and h1 1440",
+      "passed": true
+    },
+    {
+      "name": "keyboard validation anchor 1440",
+      "passed": true
+    },
+    {
+      "name": "case-study metadata",
+      "passed": true
+    },
+    {
+      "name": "canonical path",
+      "passed": true
+    },
+    {
+      "name": "check scope: core",
+      "passed": true
+    },
+    {
+      "name": "check scope: fixture",
+      "passed": true
+    },
+    {
+      "name": "check scope: recovery",
+      "passed": true
+    },
+    {
+      "name": "check scope: destination",
+      "passed": true
+    },
+    {
+      "name": "check scope: live",
+      "passed": true
+    },
+    {
+      "name": "check scope: mock",
+      "passed": true
+    },
+    {
+      "name": "explicit local synthetic limits",
+      "passed": true
+    },
+    {
+      "name": "private source has no repository CTA",
+      "passed": true
+    },
+    {
+      "name": "silent controlled video",
+      "passed": true
+    },
+    {
+      "name": "recorded demo plays",
+      "passed": true
+    },
+    {
+      "name": "asset /orderflow/evidence.json",
+      "passed": true
+    },
+    {
+      "name": "asset /orderflow/overview.png",
+      "passed": true
+    },
+    {
+      "name": "asset /orderflow/demo.mp4",
+      "passed": true
+    },
+    {
+      "name": "asset /orderflow/history.png",
+      "passed": true
+    },
+    {
+      "name": "asset /orderflow/reports.png",
+      "passed": true
+    },
+    {
+      "name": "asset /orderflow/inventory.png",
+      "passed": true
+    },
+    {
+      "name": "sitemap includes OrderFlow",
+      "passed": true
+    },
+    {
+      "name": "llms includes OrderFlow URL",
+      "passed": true
+    },
+    {
+      "name": "grounded chat: What is OrderFlow?",
+      "passed": true
+    },
+    {
+      "name": "grounded chat: How does OrderFlow work?",
+      "passed": true
+    },
+    {
+      "name": "grounded chat: How was OrderFlow validated?",
+      "passed": true
+    },
+    {
+      "name": "grounded chat: What are OrderFlow limitations?",
+      "passed": true
+    },
+    {
+      "name": "grounded chat: How does OrderFlow handle inventory failures?",
+      "passed": true
+    },
+    {
+      "name": "OrderFlow contextual follow-up",
+      "passed": true
+    },
+    {
+      "name": "ResolveLab remains chat flagship",
+      "passed": true
+    },
+    {
+      "name": "OrderFlow appears in relevant portfolio topic: What case studies can I read?",
+      "passed": true
+    },
+    {
+      "name": "OrderFlow appears in relevant portfolio topic: Tell me about data engineering",
+      "passed": true
+    },
+    {
+      "name": "200 percent text has no page overflow",
+      "passed": true
+    },
+    {
+      "name": "no uncaught browser errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "no broken local responses",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "failedRequests": [],
+  "passed": 55,
+  "total": 55,
+  "source_hashes": {
+    "content/orderflow.ts": "32412c7572f87ecc6b0d8a50cb1bec9c9944b1cff58c5e128cd47f1b6081925f",
+    "components/orderflow-feature.tsx": "14aee1f4880fe3329c3850022c37085177cbf16e2fb4d95e519e9698076d2218",
+    "components/hero.tsx": "b0a930869ba224e47e57fcd52391f3bea9239cfef770e6d87b5abb249e39f56d",
+    "content/config.ts": "9b44784f056b4411a763b999e4a55f98a05c1ca48420fb4633c2477773182848",
+    "app/projects/orderflow/page.tsx": "ebe9050518a15629ffb023af23953b4c3cbb3884b1c29bce2aeeacc39d4d4a19",
+    "app/api/chat/route.ts": "8a32de6be45113cb5a7dd671aa8777d5a88b2c9afec63b42f885145ccc446a38",
+    "app/sitemap.ts": "1669078e37f7a0a47321f832294ace29c6879380ef1b695a0890320e96e61fdb",
+    "app/llms.txt/route.ts": "f94451b202b7361e9d77041a49d2559c401eb4517141cbb86f4e6657a71f33a3",
+    "data/projects/orderflow.md": "d2314f73ab8fd8c2818af760a0588353fd3fdbd6ffc4407cc59f6d69c0d2bccf",
+    "public/orderflow/evidence.json": "541f993c6aedd93660f202c8d7987a4f2a657ccc1e892951a226e6dab864718e",
+    "public/orderflow/demo.mp4": "e635d83f1d06fb54fcf01daa9ae03d51a2e49be21c5dc508739cf24611a64292",
+    "scripts/check-orderflow.mjs": "2bd1a96529ede7b30a63a67d0e4ec65efad5acbb97411704b210fb77e7b99436"
+  },
+  "source_stable": true
+}

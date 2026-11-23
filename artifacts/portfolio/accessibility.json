@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-11-23T10:37:28.072Z",
+  "base": "http://127.0.0.1:3118",
+  "scans": [
+    {
+      "name": "desktop OrderFlow feature",
+      "violations": []
+    },
+    {
+      "name": "desktop case study",
+      "violations": []
+    },
+    {
+      "name": "mobile case study",
+      "violations": []
+    },
+    {
+      "name": "200 percent text case study",
+      "violations": []
+    }
+  ],
+  "limitation": "Automated scans of these states do not establish full WCAG conformance."
+}

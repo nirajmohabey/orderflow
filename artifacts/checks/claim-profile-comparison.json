@@ -1,0 +1,60 @@
+{
+  "generated_at": "2026-11-23T11:10:44.416028+00:00",
+  "scope": "Single-query native PostgreSQL runtime/RLS plan investigation, not a complete-app or cloud throughput comparison.",
+  "inputs": [
+    {
+      "path": "artifacts/checks/claim-profile-before.json",
+      "sha256": "8aaf579cb69f1b7a854b111ad4fc9f6e21434df454c408c276c5a20eb96dddd8"
+    },
+    {
+      "path": "artifacts/checks/claim-profile-after.json",
+      "sha256": "8dd89189a57c644a9323c243010ce520f2a6be69fd81cbd1e1ab6571ea91f4fd"
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "few_pending",
+      "dormant_partitions": 20000,
+      "pending_events": 3,
+      "before": {
+        "execution_ms": 0.255,
+        "planning_ms": 1.224,
+        "shared_hit_blocks": 25,
+        "partition_index_lookup_loops": 3,
+        "eligible_index_rows": 3
+      },
+      "after": {
+        "execution_ms": 0.236,
+        "planning_ms": 1.386,
+        "shared_hit_blocks": 8,
+        "partition_index_lookup_loops": 1,
+        "eligible_index_rows": 1
+      }
+    },
+    {
+      "name": "large_backlog",
+      "dormant_partitions": 20000,
+      "pending_events": 2000,
+      "before": {
+        "execution_ms": 7.221,
+        "planning_ms": 0.845,
+        "shared_hit_blocks": 8155,
+        "partition_index_lookup_loops": 2000,
+        "eligible_index_rows": 2000
+      },
+      "after": {
+        "execution_ms": 0.154,
+        "planning_ms": 0.889,
+        "shared_hit_blocks": 9,
+        "partition_index_lookup_loops": 1,
+        "eligible_index_rows": 1
+      }
+    }
+  ],
+  "change": "Replace aggregate/sort over the complete active backlog with an ordered eligible partial-index prefix and lateral point partition lock. Up to128 enabled candidate events are considered; a first unlocked candidate permits early stop.",
+  "limitations": [
+    "One EXPLAIN ANALYZE sample per scenario on independently initialized equal-cardinality fresh databases; timings include measurement noise and are not a workload speedup claim.",
+    "When every candidate in the128-event prefix belongs to locked partitions, a worker returns no claim and backs off; later queue entries await prefix progress.",
+    "Source-enabled filtering occurs before the logical window, but skipping paused-source or dead MVCC index entries can require additional physical reads; vacuum and queue health remain operational concerns."
+  ]
+}

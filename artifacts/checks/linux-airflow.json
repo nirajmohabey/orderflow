@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-11-23T10:13:27.161339+00:00",
+  "command": [
+    "/tmp/odf-airflow/bin/airflow",
+    "dags",
+    "test",
+    "orderflow_daily",
+    "2026-11-06T00:00:00+00:00",
+    "-f",
+    "orchestration/dags/orderflow_daily.py",
+    "--conf",
+    "{\"interval_start\": \"2026-11-06T00:00:00Z\", \"interval_end\": \"2026-11-07T00:00:00Z\"}"
+  ],
+  "exit_code": 0,
+  "passed": true,
+  "initial_manual_attempt": {
+    "exit_code": 1,
+    "code": "fixed_daily_interval_required",
+    "cause": "Airflow3.4 dags test uses a zero-length manual data interval without explicit conf. Strict application interval guard correctly rejected it."
+  },
+  "scope": "Real Airflow3.4 finite mapped DAG + real dbt1.12.7/Postgres adapter1.11.0 against PostgreSQL18.6. Private VM only; no scheduler or backend hosting claim."
+}

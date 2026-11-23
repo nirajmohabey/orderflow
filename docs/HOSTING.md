@@ -1,0 +1,15 @@
+# Hosting and account boundaries
+
+The selected providers are Vercel and Neon. The separate `orderflow` Vercel project is linked to the account; no backend deployment or managed database is claimed. Neon still requires the owner to accept its marketplace terms. The public portfolio presents the recorded, tested local system.
+
+`app.py`, `build.py` and `vercel.json` prepare the existing FastAPI application and compiled React assets without changing ingestion semantics. Builds never migrate, seed a database or start the polling worker. This configuration follows the [official FastAPI entrypoint/build/static guidance](https://vercel.com/docs/frameworks/backend/fastapi); it is a prepared configuration, not a successful hosted acceptance result.
+
+Provision a separate database for each environment. Use a direct administrative endpoint only for reviewed migrations; the API receives only `orderflow_app` credentials. The transformation process receives its separate `orderflow_transform` login. Keep the administrative and transformation credentials out of the API's environment. Bound function concurrency and pools to the actual database connection limit. The local Compose smoke inspected API environment names and verified that administrative/transform credentials were absent.
+
+Production requires `ODF_APP_ENV=production`, `ODF_DEMO_MODE=false`, exact HTTPS origins/hosts, configured token issuer/audience, and registered server-side memberships. RS256 verification requires the provider's public key; this app does not infer a role from token claims. Real provider account/callback integration is not established by synthetic signed fixture tokens. Never deploy a public production endpoint with the local fixture session enabled.
+
+The polling worker is a separate process with an explicit tenant allowlist. A request function is not an always-running consumer. Vercel Daemons can be evaluated separately, but no daemon was deployed and no free always-on capacity is promised. A finite Airflow DAG is still required and has been executed on Linux; a continuously hosted scheduler/metadata service has not been provisioned. Do not substitute request retries or a cron route for those responsibilities.
+
+Report JSON and the last-good publication pointer live in PostgreSQL, so the API can display them without a shared batch filesystem. Verified local objects retain hashes/manifests. The S3 adapter has an injected-client contract test; no S3 account or real S3 operation was used. A cross-host object-download service, retention policy and scheduled remote backup/restore rehearsal remain deployment work.
+
+After account provisioning, pull secrets only into ignored environment files, inspect key names without displaying values, migrate through the reviewed administrative connection, configure real memberships, and test browser → API → runtime database → durable worker → checked publication against the actual protected deployment. Keep that hosted proof distinct from the already executed local, Linux and Docker evidence.

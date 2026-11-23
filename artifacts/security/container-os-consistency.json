@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "selected_images": 5,
+  "source_files_matching": 15,
+  "final_reports_hash_checked": 5,
+  "postgres_os_findings": 0,
+  "each_python_os_findings": 217,
+  "all_selected_fix_available": 0,
+  "sandbox_status": "stopped",
+  "scope": "Evidence consistency; original scanner reports unchanged"
+}

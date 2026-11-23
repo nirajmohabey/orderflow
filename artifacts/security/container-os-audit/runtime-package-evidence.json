@@ -1,0 +1,96 @@
+{
+  "runtime": {
+    "orderflow-api:latest": {
+      "image_id": "sha256:0cd2ca191e5acfbf6deeea6d26b5be7ded7d5f81947463eaa5ec8880cd7aaeaf",
+      "package_and_version_output": "adduser\t3.152\napt\t3.0.4\nbase-files\t13.8+deb13u7\nbase-passwd\t3.6.7\nbash\t5.2.37-2+b10\nbsdutils\t1:2.41.5-0+deb13u1\nca-certificates\t20250419+deb13u1\ncoreutils\t9.7-3\ndash\t0.5.12-12\ndebconf\t1.5.91\ndebian-archive-keyring\t2025.1\ndebianutils\t5.23.2\ndiffutils\t1:3.10-4\ndpkg\t1.22.22\nfindutils\t4.10.0-3\ngcc-14-base:amd64\t14.2.0-19\ngrep\t3.11-4\ngzip\t1.13-1+deb13u1\nhostname\t3.25\ninit-system-helpers\t1.69~deb13u1\nlibacl1:amd64\t2.3.2-2+b1\nlibapt-pkg7.0:amd64\t3.0.4\nlibattr1:amd64\t1:2.5.2-3\nlibaudit-common\t1:4.0.2-2+deb13u1\nlibaudit1:amd64\t1:4.0.2-2+deb13u1\nlibblkid1:amd64\t2.41.5-0+deb13u1\nlibbsd0:amd64\t0.12.2-2\nlibbz2-1.0:amd64\t1.0.8-6\nlibc-bin\t2.41-12+deb13u5\nlibc6:amd64\t2.41-12+deb13u5\nlibcap-ng0:amd64\t0.8.5-4+b1\nlibcap2:amd64\t1:2.75-10+deb13u1+b3\nlibcrypt1:amd64\t1:4.4.38-1\nlibdb5.3t64:amd64\t5.3.28+dfsg2-9\nlibdebconfclient0:amd64\t0.280\nlibffi8:amd64\t3.4.8-2\nlibgcc-s1:amd64\t14.2.0-19\nlibgdbm6t64:amd64\t1.24-2\nlibgmp10:amd64\t2:6.3.0+dfsg-3\nlibhogweed6t64:amd64\t3.10.1-1\nliblastlog2-2:amd64\t2.41.5-0+deb13u1\nliblz4-1:amd64\t1.10.0-4\nliblzma5:amd64\t5.8.1-1+deb13u2\nlibmd0:amd64\t1.1.0-2+b1\nlibmount1:amd64\t2.41.5-0+deb13u1\nlibncursesw6:amd64\t6.5+20250216-2\nlibnettle8t64:amd64\t3.10.1-1\nlibpam-modules:amd64\t1.7.0-5\nlibpam-modules-bin\t1.7.0-5\nlibpam-runtime\t1.7.0-5\nlibpam0g:amd64\t1.7.0-5\nlibpcre2-8-0:amd64\t10.46-1~deb13u3\nlibreadline8t64:amd64\t8.2-6\nlibseccomp2:amd64\t2.6.0-2\nlibselinux1:amd64\t3.8.1-1\nlibsemanage-common\t3.8.1-1\nlibsemanage2:amd64\t3.8.1-1\nlibsepol2:amd64\t3.8.1-1\nlibsmartcols1:amd64\t2.41.5-0+deb13u1\nlibsqlite3-0:amd64\t3.46.1-7+deb13u2\nlibssl3t64:amd64\t3.5.9-1~deb13u1\nlibstdc++6:amd64\t14.2.0-19\nlibsystemd0:amd64\t257.13-1~deb13u1\nlibtinfo6:amd64\t6.5+20250216-2\nlibudev1:amd64\t257.13-1~deb13u1\nlibuuid1:amd64\t2.41.5-0+deb13u1\nlibxxhash0:amd64\t0.8.3-2\nlibzstd1:amd64\t1.5.7+dfsg-1\nlogin\t1:4.16.0-2+really2.41.5-0+deb13u1\nlogin.defs\t1:4.17.4-2\nmawk\t1.3.4.20250131-1\nmount\t2.41.5-0+deb13u1\nncurses-base\t6.5+20250216-2\nncurses-bin\t6.5+20250216-2\nnetbase\t6.5\nopenssl\t3.5.9-1~deb13u1\nopenssl-provider-legacy\t3.5.9-1~deb13u1\npasswd\t1:4.17.4-2\nperl-base\t5.40.1-6+deb13u1\nreadline-common\t8.2-6\nsed\t4.9-2+deb13u1\nsqv\t1.3.0-3+b2\nsysvinit-utils\t3.14-4\ntar\t1.35+dfsg-3.1\ntzdata\t2026c-0+deb13u1\nutil-linux\t2.41.5-0+deb13u1\nzlib1g:amd64\t1:1.3.dfsg+really1.3.1-1+deb13u1\nPython 3.12.14\nOpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)\n",
+      "entrypoint": null,
+      "command": [
+        "python",
+        "-m",
+        "uvicorn",
+        "orderflow.api:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--no-access-log"
+      ],
+      "user": "app"
+    },
+    "orderflow-init:latest": {
+      "image_id": "sha256:04b03574989d3ae95233d77b64874e3dabb739f2247fb20eb34ba1ef176b9888",
+      "package_and_version_output": "adduser\t3.152\napt\t3.0.4\nbase-files\t13.8+deb13u7\nbase-passwd\t3.6.7\nbash\t5.2.37-2+b10\nbsdutils\t1:2.41.5-0+deb13u1\nca-certificates\t20250419+deb13u1\ncoreutils\t9.7-3\ndash\t0.5.12-12\ndebconf\t1.5.91\ndebian-archive-keyring\t2025.1\ndebianutils\t5.23.2\ndiffutils\t1:3.10-4\ndpkg\t1.22.22\nfindutils\t4.10.0-3\ngcc-14-base:amd64\t14.2.0-19\ngrep\t3.11-4\ngzip\t1.13-1+deb13u1\nhostname\t3.25\ninit-system-helpers\t1.69~deb13u1\nlibacl1:amd64\t2.3.2-2+b1\nlibapt-pkg7.0:amd64\t3.0.4\nlibattr1:amd64\t1:2.5.2-3\nlibaudit-common\t1:4.0.2-2+deb13u1\nlibaudit1:amd64\t1:4.0.2-2+deb13u1\nlibblkid1:amd64\t2.41.5-0+deb13u1\nlibbsd0:amd64\t0.12.2-2\nlibbz2-1.0:amd64\t1.0.8-6\nlibc-bin\t2.41-12+deb13u5\nlibc6:amd64\t2.41-12+deb13u5\nlibcap-ng0:amd64\t0.8.5-4+b1\nlibcap2:amd64\t1:2.75-10+deb13u1+b3\nlibcrypt1:amd64\t1:4.4.38-1\nlibdb5.3t64:amd64\t5.3.28+dfsg2-9\nlibdebconfclient0:amd64\t0.280\nlibffi8:amd64\t3.4.8-2\nlibgcc-s1:amd64\t14.2.0-19\nlibgdbm6t64:amd64\t1.24-2\nlibgmp10:amd64\t2:6.3.0+dfsg-3\nlibhogweed6t64:amd64\t3.10.1-1\nliblastlog2-2:amd64\t2.41.5-0+deb13u1\nliblz4-1:amd64\t1.10.0-4\nliblzma5:amd64\t5.8.1-1+deb13u2\nlibmd0:amd64\t1.1.0-2+b1\nlibmount1:amd64\t2.41.5-0+deb13u1\nlibncursesw6:amd64\t6.5+20250216-2\nlibnettle8t64:amd64\t3.10.1-1\nlibpam-modules:amd64\t1.7.0-5\nlibpam-modules-bin\t1.7.0-5\nlibpam-runtime\t1.7.0-5\nlibpam0g:amd64\t1.7.0-5\nlibpcre2-8-0:amd64\t10.46-1~deb13u3\nlibreadline8t64:amd64\t8.2-6\nlibseccomp2:amd64\t2.6.0-2\nlibselinux1:amd64\t3.8.1-1\nlibsemanage-common\t3.8.1-1\nlibsemanage2:amd64\t3.8.1-1\nlibsepol2:amd64\t3.8.1-1\nlibsmartcols1:amd64\t2.41.5-0+deb13u1\nlibsqlite3-0:amd64\t3.46.1-7+deb13u2\nlibssl3t64:amd64\t3.5.9-1~deb13u1\nlibstdc++6:amd64\t14.2.0-19\nlibsystemd0:amd64\t257.13-1~deb13u1\nlibtinfo6:amd64\t6.5+20250216-2\nlibudev1:amd64\t257.13-1~deb13u1\nlibuuid1:amd64\t2.41.5-0+deb13u1\nlibxxhash0:amd64\t0.8.3-2\nlibzstd1:amd64\t1.5.7+dfsg-1\nlogin\t1:4.16.0-2+really2.41.5-0+deb13u1\nlogin.defs\t1:4.17.4-2\nmawk\t1.3.4.20250131-1\nmount\t2.41.5-0+deb13u1\nncurses-base\t6.5+20250216-2\nncurses-bin\t6.5+20250216-2\nnetbase\t6.5\nopenssl\t3.5.9-1~deb13u1\nopenssl-provider-legacy\t3.5.9-1~deb13u1\npasswd\t1:4.17.4-2\nperl-base\t5.40.1-6+deb13u1\nreadline-common\t8.2-6\nsed\t4.9-2+deb13u1\nsqv\t1.3.0-3+b2\nsysvinit-utils\t3.14-4\ntar\t1.35+dfsg-3.1\ntzdata\t2026c-0+deb13u1\nutil-linux\t2.41.5-0+deb13u1\nzlib1g:amd64\t1:1.3.dfsg+really1.3.1-1+deb13u1\nPython 3.12.14\nOpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)\n",
+      "entrypoint": null,
+      "command": [
+        "python",
+        "-m",
+        "uvicorn",
+        "orderflow.api:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--no-access-log"
+      ],
+      "user": "app"
+    },
+    "orderflow-worker:latest": {
+      "image_id": "sha256:97b013d7cb7cda1c706373a0957e62861296db8ccb2c9def4ed44fd331387cba",
+      "package_and_version_output": "adduser\t3.152\napt\t3.0.4\nbase-files\t13.8+deb13u7\nbase-passwd\t3.6.7\nbash\t5.2.37-2+b10\nbsdutils\t1:2.41.5-0+deb13u1\nca-certificates\t20250419+deb13u1\ncoreutils\t9.7-3\ndash\t0.5.12-12\ndebconf\t1.5.91\ndebian-archive-keyring\t2025.1\ndebianutils\t5.23.2\ndiffutils\t1:3.10-4\ndpkg\t1.22.22\nfindutils\t4.10.0-3\ngcc-14-base:amd64\t14.2.0-19\ngrep\t3.11-4\ngzip\t1.13-1+deb13u1\nhostname\t3.25\ninit-system-helpers\t1.69~deb13u1\nlibacl1:amd64\t2.3.2-2+b1\nlibapt-pkg7.0:amd64\t3.0.4\nlibattr1:amd64\t1:2.5.2-3\nlibaudit-common\t1:4.0.2-2+deb13u1\nlibaudit1:amd64\t1:4.0.2-2+deb13u1\nlibblkid1:amd64\t2.41.5-0+deb13u1\nlibbsd0:amd64\t0.12.2-2\nlibbz2-1.0:amd64\t1.0.8-6\nlibc-bin\t2.41-12+deb13u5\nlibc6:amd64\t2.41-12+deb13u5\nlibcap-ng0:amd64\t0.8.5-4+b1\nlibcap2:amd64\t1:2.75-10+deb13u1+b3\nlibcrypt1:amd64\t1:4.4.38-1\nlibdb5.3t64:amd64\t5.3.28+dfsg2-9\nlibdebconfclient0:amd64\t0.280\nlibffi8:amd64\t3.4.8-2\nlibgcc-s1:amd64\t14.2.0-19\nlibgdbm6t64:amd64\t1.24-2\nlibgmp10:amd64\t2:6.3.0+dfsg-3\nlibhogweed6t64:amd64\t3.10.1-1\nliblastlog2-2:amd64\t2.41.5-0+deb13u1\nliblz4-1:amd64\t1.10.0-4\nliblzma5:amd64\t5.8.1-1+deb13u2\nlibmd0:amd64\t1.1.0-2+b1\nlibmount1:amd64\t2.41.5-0+deb13u1\nlibncursesw6:amd64\t6.5+20250216-2\nlibnettle8t64:amd64\t3.10.1-1\nlibpam-modules:amd64\t1.7.0-5\nlibpam-modules-bin\t1.7.0-5\nlibpam-runtime\t1.7.0-5\nlibpam0g:amd64\t1.7.0-5\nlibpcre2-8-0:amd64\t10.46-1~deb13u3\nlibreadline8t64:amd64\t8.2-6\nlibseccomp2:amd64\t2.6.0-2\nlibselinux1:amd64\t3.8.1-1\nlibsemanage-common\t3.8.1-1\nlibsemanage2:amd64\t3.8.1-1\nlibsepol2:amd64\t3.8.1-1\nlibsmartcols1:amd64\t2.41.5-0+deb13u1\nlibsqlite3-0:amd64\t3.46.1-7+deb13u2\nlibssl3t64:amd64\t3.5.9-1~deb13u1\nlibstdc++6:amd64\t14.2.0-19\nlibsystemd0:amd64\t257.13-1~deb13u1\nlibtinfo6:amd64\t6.5+20250216-2\nlibudev1:amd64\t257.13-1~deb13u1\nlibuuid1:amd64\t2.41.5-0+deb13u1\nlibxxhash0:amd64\t0.8.3-2\nlibzstd1:amd64\t1.5.7+dfsg-1\nlogin\t1:4.16.0-2+really2.41.5-0+deb13u1\nlogin.defs\t1:4.17.4-2\nmawk\t1.3.4.20250131-1\nmount\t2.41.5-0+deb13u1\nncurses-base\t6.5+20250216-2\nncurses-bin\t6.5+20250216-2\nnetbase\t6.5\nopenssl\t3.5.9-1~deb13u1\nopenssl-provider-legacy\t3.5.9-1~deb13u1\npasswd\t1:4.17.4-2\nperl-base\t5.40.1-6+deb13u1\nreadline-common\t8.2-6\nsed\t4.9-2+deb13u1\nsqv\t1.3.0-3+b2\nsysvinit-utils\t3.14-4\ntar\t1.35+dfsg-3.1\ntzdata\t2026c-0+deb13u1\nutil-linux\t2.41.5-0+deb13u1\nzlib1g:amd64\t1:1.3.dfsg+really1.3.1-1+deb13u1\nPython 3.12.14\nOpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)\n",
+      "entrypoint": null,
+      "command": [
+        "python",
+        "-m",
+        "uvicorn",
+        "orderflow.api:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--no-access-log"
+      ],
+      "user": "app"
+    },
+    "orderflow-batch:latest": {
+      "image_id": "sha256:95de7a9a93f4b2ed29a6dad833cc1e7576ac139959d7aa123b4ec87e315c53ea",
+      "package_and_version_output": "adduser\t3.152\napt\t3.0.4\nbase-files\t13.8+deb13u7\nbase-passwd\t3.6.7\nbash\t5.2.37-2+b10\nbsdutils\t1:2.41.5-0+deb13u1\nca-certificates\t20250419+deb13u1\ncoreutils\t9.7-3\ndash\t0.5.12-12\ndebconf\t1.5.91\ndebian-archive-keyring\t2025.1\ndebianutils\t5.23.2\ndiffutils\t1:3.10-4\ndpkg\t1.22.22\nfindutils\t4.10.0-3\ngcc-14-base:amd64\t14.2.0-19\ngrep\t3.11-4\ngzip\t1.13-1+deb13u1\nhostname\t3.25\ninit-system-helpers\t1.69~deb13u1\nlibacl1:amd64\t2.3.2-2+b1\nlibapt-pkg7.0:amd64\t3.0.4\nlibattr1:amd64\t1:2.5.2-3\nlibaudit-common\t1:4.0.2-2+deb13u1\nlibaudit1:amd64\t1:4.0.2-2+deb13u1\nlibblkid1:amd64\t2.41.5-0+deb13u1\nlibbsd0:amd64\t0.12.2-2\nlibbz2-1.0:amd64\t1.0.8-6\nlibc-bin\t2.41-12+deb13u5\nlibc6:amd64\t2.41-12+deb13u5\nlibcap-ng0:amd64\t0.8.5-4+b1\nlibcap2:amd64\t1:2.75-10+deb13u1+b3\nlibcrypt1:amd64\t1:4.4.38-1\nlibdb5.3t64:amd64\t5.3.28+dfsg2-9\nlibdebconfclient0:amd64\t0.280\nlibffi8:amd64\t3.4.8-2\nlibgcc-s1:amd64\t14.2.0-19\nlibgdbm6t64:amd64\t1.24-2\nlibgmp10:amd64\t2:6.3.0+dfsg-3\nlibhogweed6t64:amd64\t3.10.1-1\nliblastlog2-2:amd64\t2.41.5-0+deb13u1\nliblz4-1:amd64\t1.10.0-4\nliblzma5:amd64\t5.8.1-1+deb13u2\nlibmd0:amd64\t1.1.0-2+b1\nlibmount1:amd64\t2.41.5-0+deb13u1\nlibncursesw6:amd64\t6.5+20250216-2\nlibnettle8t64:amd64\t3.10.1-1\nlibpam-modules:amd64\t1.7.0-5\nlibpam-modules-bin\t1.7.0-5\nlibpam-runtime\t1.7.0-5\nlibpam0g:amd64\t1.7.0-5\nlibpcre2-8-0:amd64\t10.46-1~deb13u3\nlibreadline8t64:amd64\t8.2-6\nlibseccomp2:amd64\t2.6.0-2\nlibselinux1:amd64\t3.8.1-1\nlibsemanage-common\t3.8.1-1\nlibsemanage2:amd64\t3.8.1-1\nlibsepol2:amd64\t3.8.1-1\nlibsmartcols1:amd64\t2.41.5-0+deb13u1\nlibsqlite3-0:amd64\t3.46.1-7+deb13u2\nlibssl3t64:amd64\t3.5.9-1~deb13u1\nlibstdc++6:amd64\t14.2.0-19\nlibsystemd0:amd64\t257.13-1~deb13u1\nlibtinfo6:amd64\t6.5+20250216-2\nlibudev1:amd64\t257.13-1~deb13u1\nlibuuid1:amd64\t2.41.5-0+deb13u1\nlibxxhash0:amd64\t0.8.3-2\nlibzstd1:amd64\t1.5.7+dfsg-1\nlogin\t1:4.16.0-2+really2.41.5-0+deb13u1\nlogin.defs\t1:4.17.4-2\nmawk\t1.3.4.20250131-1\nmount\t2.41.5-0+deb13u1\nncurses-base\t6.5+20250216-2\nncurses-bin\t6.5+20250216-2\nnetbase\t6.5\nopenssl\t3.5.9-1~deb13u1\nopenssl-provider-legacy\t3.5.9-1~deb13u1\npasswd\t1:4.17.4-2\nperl-base\t5.40.1-6+deb13u1\nreadline-common\t8.2-6\nsed\t4.9-2+deb13u1\nsqv\t1.3.0-3+b2\nsysvinit-utils\t3.14-4\ntar\t1.35+dfsg-3.1\ntzdata\t2026c-0+deb13u1\nutil-linux\t2.41.5-0+deb13u1\nzlib1g:amd64\t1:1.3.dfsg+really1.3.1-1+deb13u1\nPython 3.12.14\nOpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)\n",
+      "entrypoint": [
+        "python",
+        "scripts/pipeline.py"
+      ],
+      "command": null,
+      "user": "app"
+    },
+    "orderflow-postgres:17.12-security": {
+      "image_id": "sha256:24112b5c1429ca2414e58388f969e8aef1f6fc9e66336c7ea749c1607b0c42af",
+      "package_and_version_output": ".postgresql-rundeps-20261118.213219\nalpine-baselayout-3.7.2-r1\nalpine-baselayout-data-3.7.2-r1\nalpine-keys-2.6-r0\nalpine-release-3.24.4-r0\napk-tools-3.0.9-r0\nbash-5.3.9-r1\nbusybox-1.37.0-r31\nbusybox-binsh-1.37.0-r31\nca-certificates-bundle-20261020-r0\ngdbm-1.26-r0\nicu-data-full-78.1-r0\nicu-libs-78.1-r0\nkeyutils-libs-1.6.3-r4\nkrb5-conf-1.0-r2\nkrb5-libs-1.22.3-r0\nlibapk-3.0.9-r0\nlibcom_err-1.47.4-r0\nlibcrypto3-3.5.9-r1\nlibedit-20260508.3.1-r1\nlibffi-3.5.2-r1\nlibgcc-15.2.0-r5\nlibldap-2.6.15-r0\nlibncursesw-6.6_p20260516-r0\nlibsasl-2.1.28-r9\nlibssl3-3.5.9-r1\nlibstdc++-15.2.0-r5\nlibuuid-2.42.3-r1\nlibverto-0.3.2-r2\nlibxml2-2.13.9-r3\nlibxslt-1.1.43-r4\nllvm21-libs-21.1.8-r1\nlz4-libs-1.10.0-r1\nmusl-1.2.6-r3\nmusl-utils-1.2.6-r3\nncurses-terminfo-base-6.6_p20260516-r0\nnss_wrapper-1.1.12-r1\nreadline-8.3.3-r1\nscanelf-1.3.9-r1\nssl_client-1.37.0-r31\ntzdata-2026f-r0\nxz-libs-5.8.4-r0\nzlib-1.4-r0\nzstd-1.5.7-r2\nzstd-libs-1.5.7-r2\nlibcrypto3-3.5.9-r1 x86_64 {openssl} (Apache-2.0) [installed]\nlibssl3-3.5.9-r1 x86_64 {openssl} (Apache-2.0) [installed]\nlibxml2-2.13.9-r3 x86_64 {libxml2} (MIT) [installed]\npostgres (PostgreSQL) 17.12\n",
+      "entrypoint": [
+        "docker-entrypoint.sh"
+      ],
+      "command": [
+        "postgres"
+      ],
+      "user": null
+    }
+  },
+  "bases": {
+    "python:3.12.14-slim": {
+      "id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+      "repo_digests": [
+        "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f"
+      ]
+    },
+    "postgres:17.12": {
+      "id": "sha256:223efeb196329b55b3b9a13db144956411dbc18e727e59f681c3e0aede6475cf",
+      "repo_digests": [
+        "postgres@sha256:223efeb196329b55b3b9a13db144956411dbc18e727e59f681c3e0aede6475cf"
+      ]
+    },
+    "postgres:17.12-alpine": {
+      "id": "sha256:f9cf3e1f0066f0eb0c48707d864f0ac5941e9ff454a072077d97a4d278d07d73",
+      "repo_digests": [
+        "postgres@sha256:f9cf3e1f0066f0eb0c48707d864f0ac5941e9ff454a072077d97a4d278d07d73"
+      ]
+    }
+  }
+}

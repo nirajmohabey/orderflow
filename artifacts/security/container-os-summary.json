@@ -1,0 +1,256 @@
+{
+  "captured_at": "2026-11-23T11:20:01.439080+00:00",
+  "scope": "Exact runtime OS packages; repeated package/advisory pairs; not proof of absence of vulnerabilities",
+  "before": [
+    {
+      "tags": [
+        "orderflow-batch:latest"
+      ],
+      "image_id": "sha256:9c77032ec02a13365411da2e7091437c0ae87cbb40cee08ffe5ca4367b147081",
+      "os": {
+        "Family": "debian",
+        "Name": "13.7"
+      },
+      "findings": 292,
+      "severity_counts": {
+        "HIGH": 57,
+        "LOW": 87,
+        "MEDIUM": 131,
+        "UNKNOWN": 17
+      },
+      "unique_advisory_ids": 131,
+      "fixed_versions_available": 75,
+      "report_sha256": "27e93d1c9939fc65ca1e9778975ffa77a4c702d08e85319650f7c10ece85b658"
+    },
+    {
+      "tags": [
+        "orderflow-worker:latest"
+      ],
+      "image_id": "sha256:a1c43d315966216ffcada63db7e0a354355fbde4bbda0705e58a292d0514e219",
+      "os": {
+        "Family": "debian",
+        "Name": "13.7"
+      },
+      "findings": 292,
+      "severity_counts": {
+        "HIGH": 57,
+        "LOW": 87,
+        "MEDIUM": 131,
+        "UNKNOWN": 17
+      },
+      "unique_advisory_ids": 131,
+      "fixed_versions_available": 75,
+      "report_sha256": "ae5ede270b55a57e5ca2fd0432164fcbc0da76ccf532ce7d710f50e255a47d5d"
+    },
+    {
+      "tags": [
+        "orderflow-init:latest"
+      ],
+      "image_id": "sha256:3256bae4ba5ae4eb61c9f33c66b11955946330fba8c8a32a7a0f521df6110f4b",
+      "os": {
+        "Family": "debian",
+        "Name": "13.7"
+      },
+      "findings": 292,
+      "severity_counts": {
+        "HIGH": 57,
+        "LOW": 87,
+        "MEDIUM": 131,
+        "UNKNOWN": 17
+      },
+      "unique_advisory_ids": 131,
+      "fixed_versions_available": 75,
+      "report_sha256": "a3cda91b64f416e3c960abc5f3c6fddcc1666e2bc17b4b57f80f664b416d3e68"
+    },
+    {
+      "tags": [
+        "orderflow-api:latest"
+      ],
+      "image_id": "sha256:11fcace355a08d20f43a8aa5839c66bd80c34b01d51ba5e24f13794167431fb3",
+      "os": {
+        "Family": "debian",
+        "Name": "13.7"
+      },
+      "findings": 292,
+      "severity_counts": {
+        "HIGH": 57,
+        "LOW": 87,
+        "MEDIUM": 131,
+        "UNKNOWN": 17
+      },
+      "unique_advisory_ids": 131,
+      "fixed_versions_available": 75,
+      "report_sha256": "9f2b395f9e306f881cbe3dbf016385663300e840e5faf35c63d26c265b7f9f83"
+    },
+    {
+      "tags": [
+        "postgres:17.12"
+      ],
+      "image_id": "sha256:223efeb196329b55b3b9a13db144956411dbc18e727e59f681c3e0aede6475cf",
+      "os": {
+        "Family": "debian",
+        "Name": "13.7"
+      },
+      "findings": 498,
+      "severity_counts": {
+        "LOW": 169,
+        "HIGH": 126,
+        "MEDIUM": 179,
+        "UNKNOWN": 23,
+        "CRITICAL": 1
+      },
+      "unique_advisory_ids": 180,
+      "fixed_versions_available": 130,
+      "report_sha256": "a136d8aabd1055427da8669602a55aae1393c06e9eca7168fdfe78e377ef3d91"
+    }
+  ],
+  "selected_final": [
+    {
+      "tags": [
+        "orderflow-batch:latest"
+      ],
+      "image_id": "sha256:95de7a9a93f4b2ed29a6dad833cc1e7576ac139959d7aa123b4ec87e315c53ea",
+      "os": {
+        "Family": "debian",
+        "Name": "13.7"
+      },
+      "findings": 217,
+      "severity_counts": {
+        "LOW": 79,
+        "HIGH": 50,
+        "MEDIUM": 74,
+        "UNKNOWN": 14
+      },
+      "unique_advisory_ids": 97,
+      "fixed_versions_available": 0,
+      "report_sha256": "f78bdb617e0c8b28100e77e44fb3bb54cbcc37b4546b101a5e2f2f902e9de7cf"
+    },
+    {
+      "tags": [
+        "orderflow-api:latest"
+      ],
+      "image_id": "sha256:0cd2ca191e5acfbf6deeea6d26b5be7ded7d5f81947463eaa5ec8880cd7aaeaf",
+      "os": {
+        "Family": "debian",
+        "Name": "13.7"
+      },
+      "findings": 217,
+      "severity_counts": {
+        "LOW": 79,
+        "HIGH": 50,
+        "MEDIUM": 74,
+        "UNKNOWN": 14
+      },
+      "unique_advisory_ids": 97,
+      "fixed_versions_available": 0,
+      "report_sha256": "b8660dc2fe24c827a3702fbf8d220881a4908970c373d7b984dcc7242187c96c"
+    },
+    {
+      "tags": [
+        "orderflow-init:latest"
+      ],
+      "image_id": "sha256:04b03574989d3ae95233d77b64874e3dabb739f2247fb20eb34ba1ef176b9888",
+      "os": {
+        "Family": "debian",
+        "Name": "13.7"
+      },
+      "findings": 217,
+      "severity_counts": {
+        "LOW": 79,
+        "HIGH": 50,
+        "MEDIUM": 74,
+        "UNKNOWN": 14
+      },
+      "unique_advisory_ids": 97,
+      "fixed_versions_available": 0,
+      "report_sha256": "88077c546289604bc5d2244fe40f4df4aadf1c0a7e0b6176948500c17d27f8c7"
+    },
+    {
+      "tags": [
+        "orderflow-worker:latest"
+      ],
+      "image_id": "sha256:97b013d7cb7cda1c706373a0957e62861296db8ccb2c9def4ed44fd331387cba",
+      "os": {
+        "Family": "debian",
+        "Name": "13.7"
+      },
+      "findings": 217,
+      "severity_counts": {
+        "LOW": 79,
+        "HIGH": 50,
+        "MEDIUM": 74,
+        "UNKNOWN": 14
+      },
+      "unique_advisory_ids": 97,
+      "fixed_versions_available": 0,
+      "report_sha256": "1ccb33caf330908f2332f815ae5d3384e45f673b24400141c7679059e6c9f998"
+    },
+    {
+      "tags": [
+        "orderflow-postgres:17.12-security"
+      ],
+      "image_id": "sha256:24112b5c1429ca2414e58388f969e8aef1f6fc9e66336c7ea749c1607b0c42af",
+      "os": {
+        "Family": "alpine",
+        "Name": "3.24.4"
+      },
+      "findings": 0,
+      "severity_counts": {},
+      "unique_advisory_ids": 0,
+      "fixed_versions_available": 0,
+      "report_sha256": "8d7649bf16eb32804d2737feb3254502a0242ac04d23c0afc490621a5031bb6a"
+    }
+  ],
+  "reference_only": [
+    {
+      "tags": [
+        "postgres:17.12"
+      ],
+      "image_id": "sha256:223efeb196329b55b3b9a13db144956411dbc18e727e59f681c3e0aede6475cf",
+      "os": {
+        "Family": "debian",
+        "Name": "13.7"
+      },
+      "findings": 498,
+      "severity_counts": {
+        "LOW": 169,
+        "HIGH": 126,
+        "MEDIUM": 179,
+        "UNKNOWN": 23,
+        "CRITICAL": 1
+      },
+      "unique_advisory_ids": 180,
+      "fixed_versions_available": 130,
+      "report_sha256": "25a1eb51ef078d531ac264f72f0756cbc333fa19c3bb07b6a6f41377492af5b1"
+    }
+  ],
+  "smoke_passed": true,
+  "source_files_match_current": true,
+  "sandbox": {
+    "name": "orderflow-docker-audit",
+    "project": "orderflow",
+    "scope": "niraj-mohabeys-projects",
+    "final_status": "stopped",
+    "final_snapshot": "snap_FE4QWkI9hzQpCxi0vb6xV8ygVkyU"
+  },
+  "scanner": {
+    "version": "0.76.2",
+    "official_release": "https://github.com/aquasecurity/trivy/releases/tag/v0.76.2",
+    "checksum_list_sha256": "802e4ac1418ed967cd3c4b901f4f71ca00b7363ede67778665a22d9f13f58c83",
+    "archive_sha256": "bc0fc726e017b8927a62b2d3531d7a84ee01769daf5c99ed866dced54089fdbf",
+    "binary_sha256": "6a972c69606c7b3ea4c6bdcc6fc9332ea9ad38381624310c1e85cc77345909f3",
+    "scanner_identity": {
+      "docker_socket_readable": false,
+      "docker_socket_writable": false,
+      "uid": 65534
+    },
+    "database_repository": "ghcr.io/aquasecurity/trivy-db:2",
+    "database_metadata": {
+      "Version": 2,
+      "NextUpdate": "2026-11-24T07:04:04.63267311Z",
+      "UpdatedAt": "2026-11-23T07:04:04.632673631Z",
+      "DownloadedAt": "2026-11-23T11:10:15.676116728Z"
+    },
+    "database_sha256": "f4bd5852164d046530373ad0b66a42c447f9e9393adaa6e7b75fa432b863f889"
+  }
+}
