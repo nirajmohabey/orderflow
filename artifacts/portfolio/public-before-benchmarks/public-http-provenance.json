@@ -1,0 +1,68 @@
+{
+  "recorded_at": "2026-11-23T11:42:03.570658+00:00",
+  "base": "https://portfolio-niraj-mohabeys-projects.vercel.app",
+  "portfolio_commit": "699a40cc03cb95252f1797f7d4218457256a57af",
+  "github_status": {
+    "context": "Vercel",
+    "state": "success",
+    "deployment": "GKAWDk5Roo2dVV6U3TsMVea5m61J",
+    "target_url": "https://vercel.com/niraj-mohabeys-projects/portfolio/GKAWDk5Roo2dVV6U3TsMVea5m61J"
+  },
+  "resources": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 176022,
+      "sha256": "25c6fff261cc7deff2b58dde1cffe0be63b0bfab63c23ef3dc28ad7bbf023353",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/projects/orderflow",
+      "status": 200,
+      "bytes": 89953,
+      "sha256": "2ce089f20d477a228569dc428b949f2bbbeb527e03c0139afb8aa89757359c61",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/projects/resolvelab",
+      "status": 200,
+      "bytes": 90110,
+      "sha256": "0609190b81eb241fb9d4e59f61df72e4f751b2a809a88dac8640e4e7e9bba730",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/orderflow/evidence.json",
+      "status": 200,
+      "bytes": 6377,
+      "sha256": "7bfff8dab848360b6e615a384a58d9e44384d7a2f14cdccbfa26beab7134ff87",
+      "content_type": "application/json; charset=utf-8",
+      "reviewed_git_blob_sha256": "7bfff8dab848360b6e615a384a58d9e44384d7a2f14cdccbfa26beab7134ff87",
+      "matches_reviewed_commit_bytes": true,
+      "matches_working_tree_bytes": false,
+      "matches_working_tree_json": true
+    },
+    {
+      "path": "/orderflow/demo.mp4",
+      "status": 200,
+      "bytes": 1313911,
+      "sha256": "d51cd08bb654cbc229d0681d146a936f00eba38056868680186cd2d8954b73e9",
+      "content_type": "video/mp4",
+      "reviewed_git_blob_sha256": "d51cd08bb654cbc229d0681d146a936f00eba38056868680186cd2d8954b73e9",
+      "matches_reviewed_commit_bytes": true,
+      "matches_working_tree_bytes": true
+    },
+    {
+      "path": "/NIRAJMOHABEY_AI.pdf",
+      "status": 200,
+      "bytes": 133118,
+      "sha256": "d9bf41d6429b661e1a10ae96a5716473e1bb2110828c65a60fdc490be1b5df9e",
+      "content_type": "application/pdf",
+      "reviewed_git_blob_sha256": "d9bf41d6429b661e1a10ae96a5716473e1bb2110828c65a60fdc490be1b5df9e",
+      "matches_reviewed_commit_bytes": true,
+      "matches_working_tree_bytes": true
+    }
+  ],
+  "passed": true,
+  "investigation": "Initial comparison against Windows working-tree evidence JSON bytes differed because Git stores LF while the local file uses CRLF. Public JSON matches exact reviewed Git blob and parsed working-tree JSON; media/resume match byte-for-byte. No application content drift found.",
+  "scope": "Actual public HTTP200 and exact source-controlled evidence/media/resume bytes; no hosted OrderFlow backend claim."
+}

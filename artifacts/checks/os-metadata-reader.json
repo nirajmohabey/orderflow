@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-11-23T11:30:22.956698+00:00",
+  "scope": "Real saved OS report reads plus eight in-memory evidence-corruption rejection checks; no scanner rerun, DB write or fixture mutation",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Actual five selected reports and separate reference bind",
+      "passed": true
+    },
+    {
+      "name": "Changed raw report hash",
+      "passed": true
+    },
+    {
+      "name": "Changed summarized findings",
+      "passed": true
+    },
+    {
+      "name": "Missing selected PostgreSQL report",
+      "passed": true
+    },
+    {
+      "name": "Different scanner database provenance",
+      "passed": true
+    },
+    {
+      "name": "Different package inventory image",
+      "passed": true
+    },
+    {
+      "name": "Changed Docker build input",
+      "passed": true
+    },
+    {
+      "name": "Unexpected reference image",
+      "passed": true
+    },
+    {
+      "name": "Changed smoke source bytes",
+      "passed": true
+    }
+  ],
+  "reader_sha256": "9bad8c62d730f0de8d356434a2e11c0a95b55bfe1cce110a5af6f3044cd86d05",
+  "harness_sha256": "a7f10a1537ce25b131468eec755e3b3854224ddf742d49cb2cdd0efc980cd7e7"
+}

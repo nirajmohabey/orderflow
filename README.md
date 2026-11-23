@@ -34,7 +34,7 @@ PostgreSQL row-level security and server-maintained memberships scope tenant acc
 
 ## Native Windows quickstart
 
-Prerequisites: Python 3.12, `uv`, Node.js supported by Vite 8, and PostgreSQL 17 command-line tools. The recorded environment uses a private PostgreSQL cluster on **127.0.0.1:55449**, with the API on **127.0.0.1:8010**. The bootstrap owns only its marked project cluster and preserves existing data/configuration.
+Prerequisites: Python **3.12.14**, `uv`, Node.js supported by Vite 8, and PostgreSQL 17 command-line tools. Install the pinned Python interpreter before syncing; an older `uv` release may not have it in its download catalog. If automatic discovery fails, pass its installed executable to `uv sync --frozen --python <path-to-python.exe>`. The recorded environment uses a private PostgreSQL cluster on **127.0.0.1:55449**, with the API on **127.0.0.1:8010**. The bootstrap owns only its marked project cluster and preserves existing data/configuration.
 
 Run from this project directory:
 
@@ -123,10 +123,10 @@ Tokens remain in browser memory. Tenant changes immediately remove prior workspa
 Use the current machine-readable reports rather than copying a whole-suite count into documentation. The native and Linux suites are still distinct records; an earlier count is not a claim about a later source revision.
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest -q --junitxml=artifacts/checks/full-suite.xml
-.\.venv\Scripts\python.exe scripts\acceptance.py
-.\.venv\Scripts\python.exe scripts\recovery_check.py
-.\.venv\Scripts\python.exe scripts\backup_check.py
+.\.venv\Scripts\python.exe scripts\run_tests.py --label windows --junitxml artifacts/checks/full-suite.xml -q
+.\.venv\Scripts\python.exe scripts\run_tests.py --label windows --harness acceptance
+.\.venv\Scripts\python.exe scripts\run_tests.py --label windows --harness recovery
+.\.venv\Scripts\python.exe scripts\run_tests.py --label windows --harness backup
 
 Push-Location dashboard
 npm run build
@@ -137,7 +137,7 @@ npm run test:live
 Pop-Location
 ```
 
-The independent fixture oracle, process-recovery harness, and backup verifier create only their own fresh databases and verify connected destinations. They do not reset the configured serving database. Pytest uses its configured isolated test destinations. The real browser journey is read-only for domain records; its POSTs are gated fixture sign-ins. Retry UI races are tested separately through intercepted APIs, while backend tests verify actual authorization and transactional effects.
+The test runner binds each result to unchanged source, SQL, dependency and fixture bytes; the release manifest requires the matching source-proof files. See [docs/CHECKS.md](docs/CHECKS.md) for Linux runs, release gates and packaging. The independent fixture oracle, process-recovery harness, and backup verifier create only their own fresh databases and verify connected destinations. They do not reset the configured serving database. Pytest uses its configured isolated test destinations. The real browser journey is read-only for domain records; its POSTs are gated fixture sign-ins. Retry UI races are tested separately through intercepted APIs, while backend tests verify actual authorization and transactional effects.
 
 The browser scripts use installed Google Chrome. Video recording additionally needs Playwright's private helper (`npx playwright install ffmpeg` from `dashboard`). See [dashboard/README.md](dashboard/README.md) for frontend details.
 
@@ -150,7 +150,7 @@ Evidence entry points:
 | [artifacts/dashboard/browser-results.json](artifacts/dashboard/browser-results.json) | Built React app with isolated intercepted APIs; source hashes and accessibility states |
 | [artifacts/dashboard/live/live-results.json](artifacts/dashboard/live/live-results.json) | Actual HTTP/PostgreSQL browser journeys, video path, observed publication state, and serving preservation |
 | [artifacts/security/](artifacts/security/) | Dependency graphs, advisory/source checks, and review evidence |
-| [artifacts/ci/](artifacts/ci/) | CI results when the corresponding remote workflow has actually run |
+| [artifacts/ci/](artifacts/ci/) | Local CI-helper proofs; remote workflow results only when actually executed |
 
 The CI workflow is [.github/workflows/acceptance.yml](.github/workflows/acceptance.yml). A committed workflow is configuration; inspect its run evidence before claiming a remote green run. Core/API, pipeline, independent-oracle, recovery, browser, and accessibility counts are different denominators and must not be summed into one quality score.
 

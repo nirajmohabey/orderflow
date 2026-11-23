@@ -1,9 +1,9 @@
 {
   "scope": "Fresh owned test DB; actual independent PostgreSQL connections, no serving reset",
-  "first_backend_pid": 710340,
-  "second_backend_pid": 710684,
+  "first_backend_pid": 721444,
+  "second_backend_pid": 719556,
   "observed_blockers": [
-    710340
+    721444
   ],
   "first_sequence": 1,
   "second_sequence": 2,

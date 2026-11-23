@@ -1,0 +1,75 @@
+{
+  "recorded_at": "2026-11-23T11:37:55.875185+00:00",
+  "source_video": "artifacts/dashboard/live/video/page@73636a4cd771f3c7d9969a0bf598c6d7.webm",
+  "source_sha256": "d409769c9d1975a311f847cb1b956f089b468e13cce632574487d70cb570d654",
+  "source_bytes": 4415208,
+  "encoded_video": "../OrderFlow_Demo.mp4",
+  "encoded_sha256": "d51cd08bb654cbc229d0681d146a936f00eba38056868680186cd2d8954b73e9",
+  "encoded_bytes": 1313911,
+  "encoder_sha256": "3256173f3f8bffd7df12227c68adf68025edb1832273a9530688a7bb1ed8edec",
+  "encoder_version": "9.0.2-essentials_build-www.gyan.dev",
+  "encoding": [
+    "-an",
+    "-c:v",
+    "libx264",
+    "-preset",
+    "medium",
+    "-crf",
+    "23",
+    "-pix_fmt",
+    "yuv420p",
+    "-movflags",
+    "+faststart"
+  ],
+  "metadata": {
+    "ffmpeg_version": "9.0.2-essentials_build-www.gyan.dev built with gcc 16.2.0 (Rev3, Built by MSYS2 project)",
+    "codec": "h264",
+    "pix_fmt": "yuv420p(progressive)",
+    "fps": 25.0,
+    "source_size": [
+      1440,
+      1000
+    ],
+    "size": [
+      1440,
+      1000
+    ],
+    "rotate": 0,
+    "duration": 14.52
+  },
+  "frontend_hashes": {
+    "src/App.tsx": "540fa56d55d41bff930ac1b15b6d2053a86d86d00880a02f1b7676999e694183",
+    "src/api.ts": "5f5f840aff1c0ba7e46eadb3285cbaf22544a9b2e8a5f29e04cffd1c95cec053",
+    "src/style.css": "d745bd1db8e355245b41086d299d4d3fe8a10cf6d8184b0c9e7ca6d5fe2f1bb7",
+    "src/types.ts": "da7372b42b359c53fd61d23faf5c9d2cb02cbacbc8dd3ff023377fe32b6f4a46",
+    "src/main.tsx": "575c9833bc5993d6a7b8db0587b8ecc202809448fd71842c5a4331bec6ee7977",
+    "package.json": "f47c969fe61d5a07c2ca5c12bd81faa9544c432832acbf21456da909dd3f4757",
+    "package-lock.json": "fcc611ae2a19bfaaa2ce4fb0bde4fdb2fc745e0c43b741141e714f6260ee18bf",
+    "index.html": "6a870c0a36737b284d9bb84bdad2d06eba84842d0a665a2733e5e621be40e263"
+  },
+  "source_raw_preserved": true,
+  "portfolio_copy_matches": true,
+  "screenshots": {
+    "/orderflow/overview.png": {
+      "source": "artifacts/dashboard/live/06-clean-overview-viewport.png",
+      "sha256": "2368d00404e7cc2717c11437cd022e2b9cf293f348e14e8755c99c007613bb45",
+      "bytes": 101330
+    },
+    "/orderflow/history.png": {
+      "source": "artifacts/dashboard/live/02-product-history.png",
+      "sha256": "7c8ac5078d2f598cca729397d02c2e66fc26980bb4d600bc22baf70b95a3cbba",
+      "bytes": 133883
+    },
+    "/orderflow/reports.png": {
+      "source": "artifacts/dashboard/live/04-reports.png",
+      "sha256": "6c8cce7dc1ab29c32dd4eb4f7748d795fa20606c307df21e06a34d15c7a52f5b",
+      "bytes": 242630
+    },
+    "/orderflow/inventory.png": {
+      "source": "artifacts/dashboard/live/05-inventory.png",
+      "sha256": "65d5535921ceb63d1b83c2b45175bb41c5888296cc9ac64f3a7d11a1cf974d62",
+      "bytes": 91056
+    }
+  },
+  "scope": "Silent actual HTTP/PostgreSQL browser recording, transcoded only; no fabricated UI scenes. Original WebM files preserved."
+}

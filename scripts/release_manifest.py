@@ -147,6 +147,53 @@ def optional_os(evidence, path):
     if not path or not (ROOT / path).is_file():
         return {"status": "not_run", "findings": None, "scope": "No verified OS scan supplied. Package-graph audit results are not an OS scan."}
     value = evidence.read(path)
+    if isinstance(value.get("images"), list) and value.get("passed_execution") is True:
+        folder = repo_path(path).parent
+        def sibling(name):
+            return (folder / name).relative_to(ROOT).as_posix()
+        provenance = evidence.read(sibling("scanner-provenance.json"))
+        require(provenance == value.get("scanner"), "OS scanner/database provenance differs")
+        require(provenance.get("scanner_identity") == {"docker_socket_readable": False, "docker_socket_writable": False, "uid": 65534}, "OS scanner isolation proof differs")
+        packages = evidence.read(sibling("runtime-package-evidence.json"))
+        expected = {"orderflow-api:latest", "orderflow-worker:latest", "orderflow-init:latest", "orderflow-batch:latest", "orderflow-postgres:17.12-security"}
+        require(set(packages.get("runtime", {})) == expected, "Selected runtime image inventory differs")
+        context = evidence.read("artifacts/security/docker-final-context.json")
+        for name in ("Dockerfile", "Dockerfile.batch", "infra/Dockerfile.postgres", "docker-compose.yml"):
+            evidence.bind(name, {"sha256": context.get("files", {}).get(name)})
+        smoke = evidence.read(sibling("docker-final-os-smoke.json"))
+        require(smoke.get("passed") is True and smoke.get("cleanup_exit_code") == 0, "Final container smoke/cleanup failed")
+        current_map(smoke.get("source_files"))
+        selected, reference = [], []
+        def finding_key(item):
+            return tuple(item.get(key) or "" for key in ("VulnerabilityID", "PkgName", "InstalledVersion", "FixedVersion", "Severity"))
+        for image in value["images"]:
+            info = image.get("image", {})
+            tags = set(info.get("tags", []))
+            chosen = tags & expected
+            require(len(chosen) <= 1, "One image ambiguously represents multiple selected roles")
+            name = image.get("report_file", "")
+            require(name and Path(name).name == name and "\\" not in name, "Unsafe OS raw-report filename")
+            raw_path = sibling("raw/" + name)
+            evidence.bind(raw_path, {"sha256": image.get("report_sha256")})
+            raw = evidence.read(raw_path)
+            require(isinstance(raw.get("Results"), list) and raw.get("Metadata", {}).get("OS") == image.get("detected_os"), "Raw OS report/platform differs")
+            findings = [finding for result in raw["Results"] for finding in result.get("Vulnerabilities", [])]
+            require(sorted(map(finding_key, findings)) == sorted(map(finding_key, image.get("findings", []))), "Raw and summarized OS findings differ")
+            counts = {severity: sum(item.get("Severity") == severity for item in findings) for severity in {item.get("Severity") for item in findings}}
+            fixes = sum(bool(item.get("FixedVersion")) for item in findings)
+            require(counts == image.get("severity_counts") and fixes == image.get("fixed_version_available"), "OS severity/fix totals differ")
+            item = {"tags": sorted(tags), "image_id": info.get("image_id"), "trivy_config_id": raw.get("Metadata", {}).get("ImageID"), "archive_sha256": image.get("archive_sha256"), "report": raw_path, "findings": len(findings), "severity_counts": counts, "fixed_versions_available": fixes}
+            if chosen:
+                tag = next(iter(chosen))
+                require(packages["runtime"][tag].get("image_id") == info.get("image_id"), "OS package inventory/image differs")
+                if tag in {"orderflow-api:latest", "orderflow-worker:latest"}:
+                    require(smoke.get(tag.split("-")[1].split(":")[0] + "_image_id") == info.get("image_id"), "Container smoke/scanned image differs")
+                selected.append(item)
+            else:
+                require(tags == {"postgres:17.12"}, "Unexpected unselected OS image")
+                reference.append({**item, "classification": "reference_only_not_selected_runtime"})
+        require(len(selected) == 5 and {tag for item in selected for tag in item["tags"]} == expected, "OS scan lacks the five distinct selected runtime images")
+        return {"status": "scanned", "findings": sum(item["findings"] for item in selected), "selected_images": selected, "reference_images": reference, "scanner": provenance, "captured_at": value.get("captured_at"), "scope": "OS package/advisory pairs in five exact selected runtime images; repeated Python-image findings are not unique vulnerabilities. Reference Debian PostgreSQL is retained separately; nonzero and unfixed findings remain visible."}
     if isinstance(value.get("Results"), list) and value.get("Metadata", {}).get("OS"):
         vulnerabilities = [finding for result in value["Results"] for finding in result.get("Vulnerabilities", [])]
         return {"status": "scanned", "findings": len(vulnerabilities), "image": value.get("Metadata", {}).get("ImageID"), "scope": "Raw supplied scanner report; a nonzero result is not hidden by package-graph counts."}

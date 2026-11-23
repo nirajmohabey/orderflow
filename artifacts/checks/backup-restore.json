@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-23T10:24:21.927450+00:00",
+  "generated_at": "2026-11-23T11:33:15.512332+00:00",
   "source_database": "orderflow",
-  "restore_database": "orderflow_restore_2bf317e323d2",
+  "restore_database": "orderflow_restore_744a2c9b8214",
   "source_database_written": false,
   "passed": true,
   "table_hashes": {
@@ -78,8 +78,8 @@
       "sha256": "63e2628a0887df69cf5fe458343cbef62474beac5b84679bf9b56c9dbfa29331"
     },
     "request_budgets": {
-      "rows": 20,
-      "sha256": "a2e8a0b38be4a807663cc6a4cfcc964d10881cc80abd5e0da18026e3b1228166"
+      "rows": 26,
+      "sha256": "b3148bf35132fe3779371ef2371023c9fb4951bd7ec5d3e7c4ca3f0c029dffb8"
     },
     "source_authorities": {
       "rows": 3,
@@ -101,7 +101,7 @@
   "table_count": 23,
   "duplicate_replays": 14,
   "new_worker_effects": 0,
-  "dump_sha256": "4fe2377fb821fb32c84e85c3e0f7c85c3b3847c8eca0601433042fd3452d56b9",
+  "dump_sha256": "e9bb29e64f7538a16346eda007512aa1fac85b68028ec9622781bb1a85e6a677",
   "external_objects": "Database report JSON and stored manifest hashes verified. This test does not restore a remote object store.",
   "owned_restore_removed": true
 }

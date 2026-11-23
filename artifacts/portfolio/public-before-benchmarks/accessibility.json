@@ -1,0 +1,23 @@
+{
+  "recordedAt": "2026-11-23T11:41:32.902Z",
+  "base": "https://portfolio-niraj-mohabeys-projects.vercel.app",
+  "scans": [
+    {
+      "name": "desktop OrderFlow feature",
+      "violations": []
+    },
+    {
+      "name": "desktop expanded evidence case study",
+      "violations": []
+    },
+    {
+      "name": "mobile expanded evidence case study",
+      "violations": []
+    },
+    {
+      "name": "200 percent text expanded evidence case study",
+      "violations": []
+    }
+  ],
+  "limitation": "Automated scans of these states do not establish full WCAG conformance."
+}

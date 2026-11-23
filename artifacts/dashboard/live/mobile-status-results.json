@@ -1,0 +1,177 @@
+{
+  "recorded_at": "2026-11-23T11:36:27.815Z",
+  "width": 375,
+  "badges": [
+    {
+      "text": "Paid",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Paid",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Failed",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Pass",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Pass",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Pass",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Pass",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Fail",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Fail",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Pass",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Pass",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Pass",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Pass",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Pass",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Pass",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Error",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Pass",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Pass",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Failed",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Succeeded",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    },
+    {
+      "text": "Failed",
+      "whiteSpace": "nowrap",
+      "wordBreak": "normal",
+      "overflowWrap": "normal",
+      "height": 26,
+      "oneLine": true
+    }
+  ],
+  "no_page_overflow": true,
+  "pageerrors": [],
+  "css_sha256": "d745bd1db8e355245b41086d299d4d3fe8a10cf6d8184b0c9e7ca6d5fe2f1bb7"
+}

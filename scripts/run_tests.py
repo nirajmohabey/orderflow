@@ -63,7 +63,7 @@ def snapshot(root=ROOT):
                 if path.is_file() and not any(part in SKIP for part in relative.parts):
                     if path.suffix in {".py", ".sql", ".json", ".jsonl", ".csv", ".yml", ".yaml", ".lock", ".in", ".txt", ".ps1"}:
                         selected.add(path)
-    for name in ("pyproject.toml", "uv.lock", "requirements.lock", ".python-version", "Dockerfile", "Dockerfile.batch", "docker-compose.yml", "dashboard/package.json", "dashboard/package-lock.json"):
+    for name in ("pyproject.toml", "uv.lock", "requirements.lock", ".python-version", "Dockerfile", "Dockerfile.batch", "infra/Dockerfile.postgres", "docker-compose.yml", "dashboard/package.json", "dashboard/package-lock.json"):
         path = root / name
         if path.is_file():
             selected.add(path)

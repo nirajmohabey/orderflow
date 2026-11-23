@@ -1,0 +1,44 @@
+{
+  "recordedAt": "2026-11-23T11:39:08.802148+00:00",
+  "skill": "C:/Users/nmoha/.codex/plugins/cache/openai-curated/vercel/5fd93af4/skills/react-best-practices/SKILL.md",
+  "scope": "Condensed manual review of edited OrderFlow portfolio TSX/content, supported by production build, lint and browser/accessibility evidence. No refactor or new runtime behavior.",
+  "files": {
+    "app/projects/orderflow/page.tsx": "75e68254e0a707c70ff18bc69267d965fc4fa015a928176b205d1465064344c5",
+    "components/orderflow-feature.tsx": "14aee1f4880fe3329c3850022c37085177cbf16e2fb4d95e519e9698076d2218",
+    "components/orderflow-validation.tsx": "55c57d7533949af7b4b7676beb9bebc2e09091809891e9bb772f24c335e13e16",
+    "content/orderflow.ts": "3795c6f7ef55ea7c3320c2412722a46e2ca09ceff8426e152fad6577133ab59d",
+    "public/orderflow/evidence.json": "b8a810e81f3924ca7b5de1a21799cbb02acfaa34ed8b3a57531fa3ec8f7bb6aa"
+  },
+  "checks": [
+    {
+      "area": "Server rendering and waterfalls",
+      "assessment": "Case study and evidence section render static local content on the server; no new fetch, async dependency chain, effects or render-time network call."
+    },
+    {
+      "area": "Client and bundle boundaries",
+      "assessment": "No new client directive, chart framework, listener or subscription was added. Existing homepage client boundary receives public static project content; local media uses Next Image with dimensions and controlled native video."
+    },
+    {
+      "area": "Hooks and derived state",
+      "assessment": "No hooks or mirrored state in the edited components. Bounded benchmark medians/ranges derive from actual three-trial groups during server rendering; percentiles stay separate."
+    },
+    {
+      "area": "Authorization and secrets",
+      "assessment": "No server action, authentication mutation or privileged fetch added. Public evidence is synthetic/sanitized; repository CTA requires verified public flag and URL; no credentials/private keys enter TSX props."
+    },
+    {
+      "area": "Accessibility and layout",
+      "assessment": "Semantic section headings, image alternatives, explicit dimensions, table captions/scoped headers, focusable bounded table region and descriptive links. Browser checks passed at375/768/1440 and200percent text; four recorded axe states have zero automated violations."
+    },
+    {
+      "area": "Type safety and measurement",
+      "assessment": "Build TypeScript and lint pass. Benchmark remains null until independently verified actual series is supplied; fixture-only render checks never wrote measurement data."
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    "Bounded source review, not a comprehensive security or performance audit.",
+    "No web-vitals, network-budget or assistive-technology performance/conformance claim.",
+    "Optional populated benchmark must run the existing conditional browser assertions after final actual data is supplied."
+  ]
+}

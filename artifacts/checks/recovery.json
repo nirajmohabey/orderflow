@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-23T11:07:24.759287+00:00",
+  "generated_at": "2026-11-23T11:33:07.504449+00:00",
   "scope": "Real child os._exit(73), PostgreSQL rollback/commit, concurrent worker transactions in a new owned database.",
   "observed": {
     "inbox_events": 104,
@@ -8,12 +8,12 @@
     "processing_receipts": 104
   },
   "worker_committed_counts": [
-    32,
-    22,
-    23,
-    23
+    34,
+    27,
+    15,
+    24
   ],
-  "database": "orderflow_recovery_65e4a84072a0",
+  "database": "orderflow_recovery_a2b731858b08",
   "passed": true,
   "checks": [
     {

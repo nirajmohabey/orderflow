@@ -1984,6 +1984,10 @@ thead th {
 .badge {
   font-size: 12px;
 }
+.table-wrap .badge {
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
 .session-tools .badge {
   font-size: 12px;
 }

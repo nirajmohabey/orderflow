@@ -1,0 +1,43 @@
+{
+  "recorded_at": "2026-11-23T11:42:22.317293+00:00",
+  "passed": true,
+  "public_base": "https://portfolio-niraj-mohabeys-projects.vercel.app",
+  "public_case_study": "https://portfolio-niraj-mohabeys-projects.vercel.app/projects/orderflow",
+  "portfolio_commit": "699a40cc03cb95252f1797f7d4218457256a57af",
+  "deployment": {
+    "context": "Vercel",
+    "state": "success",
+    "deployment": "GKAWDk5Roo2dVV6U3TsMVea5m61J",
+    "target_url": "https://vercel.com/niraj-mohabeys-projects/portfolio/GKAWDk5Roo2dVV6U3TsMVea5m61J"
+  },
+  "benchmark_published": false,
+  "checks": {
+    "orderflow": {
+      "passed": 64,
+      "total": 64,
+      "source_stable": true
+    },
+    "resolvelab": {
+      "passed": 39,
+      "total": 39
+    },
+    "accessibility": {
+      "states": 4,
+      "automated_violations": 0
+    }
+  },
+  "evidence_sha256": {
+    "accessibility.json": "74c757a5b18dcd51b8dce5a0f9c274829515fe4896d6c3432e94f221db45ce1b",
+    "case-study-1440.png": "2e65922165804fd19ade2e2a676d7c436a26c31103365d2a2b46001d6aa52eb6",
+    "case-study-375.png": "287708f2d05ffd0634934f98217a7bd623aee34b22675cb066e46a864ab7775e",
+    "feature-desktop.png": "9dff6d6dd36cac5ce678009f5dba8df4e29089c2f982e520b5013b2d53e9a1c1",
+    "feature-mobile.png": "862a56321e307f6fde93b72967da732091182e23525e8a2a7629cc7f72b9d0f9",
+    "orderflow-results.json": "ccb4a56fc32e9a561fd284c5cab05ed04ec39fe93e853849199324765b3c8c3c",
+    "public-http-provenance.json": "ee84cfc6c0356a51003338dbfb3c09945b235e73100efba260962a19f922598b",
+    "react-review-local-source.json": "7472d97468a913d4474716e991e1d44fb28c0033e1d13f3a67808e5a200c34df",
+    "resolvelab-results.json": "02f44f478a3b982c878db38f83dd0ef06ab7aaa46404aa1367b5f0a6137eee16",
+    "security-mobile.png": "a2f3e5ff5dce818a50be117219923d745387e64e4416ee9a972fffbbc2abdcb9",
+    "validation-desktop.png": "bbe0097d09607e068a706109027f6dedd4497fee67abfab880e9cb0879e77b01"
+  },
+  "scope": "Public portfolio/case-study, grounded project chat and static media/resume verification. OrderFlow backend remains local; remote production workload and full WCAG conformance are not claimed."
+}

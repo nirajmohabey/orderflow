@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-11-23T10:31:53.058Z",
+  "recorded_at": "2026-11-23T11:35:34.596Z",
   "origin": "http://127.0.0.1:8010",
   "mode": "actual HTTP API and PostgreSQL; read-only domain operations; fixture sessions only",
   "passed": 10,
@@ -57,7 +57,7 @@
       "status": "fail"
     }
   },
-  "video": "video/page@89a768dd0c324374d69735f9173e3978.webm",
+  "video": "video/page@73636a4cd771f3c7d9969a0bf598c6d7.webm",
   "accessibility": [
     {
       "state": "1440 overview",
@@ -153,7 +153,7 @@
   "source_hashes": {
     "src/App.tsx": "540fa56d55d41bff930ac1b15b6d2053a86d86d00880a02f1b7676999e694183",
     "src/api.ts": "5f5f840aff1c0ba7e46eadb3285cbaf22544a9b2e8a5f29e04cffd1c95cec053",
-    "src/style.css": "3cacce4cb5aa195cbd6e89a7dd82a4802407a023da9990ae7c741c2958f3dcbf",
+    "src/style.css": "d745bd1db8e355245b41086d299d4d3fe8a10cf6d8184b0c9e7ca6d5fe2f1bb7",
     "src/types.ts": "da7372b42b359c53fd61d23faf5c9d2cb02cbacbc8dd3ff023377fe32b6f4a46",
     "src/main.tsx": "575c9833bc5993d6a7b8db0587b8ecc202809448fd71842c5a4331bec6ee7977",
     "package.json": "f47c969fe61d5a07c2ca5c12bd81faa9544c432832acbf21456da909dd3f4757",
