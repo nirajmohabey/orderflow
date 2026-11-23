@@ -95,9 +95,9 @@ export async function neonAccountAction(
             otp: values.code!,
           })
         : action === "resend"
-          ? await provider.sendVerificationEmail({
+          ? await provider.emailOtp.sendVerificationOtp({
               email: values.email,
-              callbackURL: location.origin + "/",
+              type: "email-verification",
             })
           : action === "reset-request"
             ? await provider.emailOtp.requestPasswordReset({

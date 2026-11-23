@@ -69,8 +69,8 @@ export function AuthForm({
         setMode(unverified ? "verify" : "signin");
         notice(
           unverified
-            ? "Account created. Check your email for a verification code or link. Workspace access still requires approval from the owner."
-            : "Account created. Ask the workspace owner to grant access, then sign in.",
+            ? "If a new account needs verification, check your email for a code. Already registered? Return to sign in or reset your password. Workspace access requires owner approval."
+            : "If your account is ready, sign in. Otherwise check your email for verification instructions. Workspace access requires owner approval.",
         );
       } else if (kind === "verify") {
         setMode("signin");
@@ -79,7 +79,7 @@ export function AuthForm({
         );
       } else if (kind === "resend")
         notice(
-          "If verification is available for this account, check your email for a new code or link.",
+          "If verification is available for this account, check your email for a new code.",
         );
       else if (kind === "reset-request") {
         setMode("reset-code");
@@ -180,7 +180,7 @@ export function AuthForm({
             onChange={(e) => setCode(e.target.value)}
           />
           <small>
-            If your email contains a verification link, open it instead.
+            Already registered? Return to sign in or reset your password. Enter a verification code here only if one was sent to your email.
           </small>
         </>
       )}
@@ -263,8 +263,11 @@ export function AuthForm({
           disabled={disabled || !email}
           onClick={() => void action("resend")}
         >
-          Resend verification email
+          Resend verification code
         </button>
+      )}
+      {mode === "verify" && (
+        <button type="button" className="text-button" disabled={disabled} onClick={() => switchMode("reset-request")}>Forgot password?</button>
       )}
       {mode === "reset-code" && (
         <button

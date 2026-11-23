@@ -179,11 +179,11 @@ try {
         .click();
       await page.locator("#verification-code").waitFor();
       await page
-        .getByRole("button", { name: "Resend verification email" })
+        .getByRole("button", { name: "Resend verification code" })
         .click();
       await page
         .getByRole("status")
-        .filter({ hasText: "new code or link" })
+        .filter({ hasText: "new code" })
         .waitFor();
       await page.locator("#verification-code").fill("123456");
       await page
