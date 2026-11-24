@@ -1,0 +1,1524 @@
+{
+  "schema": "orderflow-core-benchmark-v1",
+  "label": "production-v2-45253712739-1",
+  "generated_at": "2026-11-23T19:54:45.214838+00:00",
+  "source": {
+    "files": {
+      "src/orderflow/__init__.py": "b2e4cfe6cbe0230170ece51c042e62e7fdeef2f6ae271c49d25fdb2a188a6677",
+      "src/orderflow/api.py": "a9f2be24bfa3f6699d646d4cf3465e4cf798f562429b6f8bcf3a833693f117f9",
+      "src/orderflow/auth.py": "8cae5a3478d227896e64a05e5f913e3aaccc5c06ced20e261a2de7201632710f",
+      "src/orderflow/config.py": "93fafd0fc978a1877edda6410219aad69372dd7f2bdfa2c60cbc88aacda505c6",
+      "src/orderflow/connectors.py": "d95ae2f78996361e5f3f24eefc336269118972b0a9564f32cfbc730b9a5e7a0e",
+      "src/orderflow/db.py": "004196a2ba6ac1b5624d041abf4d3808f5201757d8cf4605cf101a4e92e553ab",
+      "src/orderflow/dbt_runtime.py": "0385c7d10c1251b4fe8781a9117d3958efbbb10c5d8a81fd75253baae4d8519e",
+      "src/orderflow/hosted_jobs.py": "92b427e264783ce8a79b938a0c0a8707d4239bdb8ec7c4037a7a69ea6011d525",
+      "src/orderflow/neon_auth.py": "76cd89548676948661bdf8763b3b594a33a7360103fd46d5b7ebd5fd9c5a3374",
+      "src/orderflow/objects.py": "8b26fff0ea262f1ab71264064322eaf51c4a2c2dfd674bf84050a3809b5fede0",
+      "src/orderflow/pipeline.py": "33a2f6fa25a167ad8e6c1ac401d3fa4a7a1222ef4d0af6d3e168315f337d5d0f",
+      "src/orderflow/schemas.py": "f819534d70c611cf9ffe70867e2768da0456c7d7c4f6d7b55d53a5cd1dffede9",
+      "src/orderflow/service.py": "23bbb60a425729d6a53132b513c0b2220256a031f2535ad1b9bc44a3484ad90a",
+      "src/orderflow/worker.py": "78d74e0ee34981b515eae328e267cc338fc6415e2b3309ec12b05b69633569ea",
+      "migrations/001_core.sql": "6d005c4a7e98ba1c35c8e9416844ff8de037418e73560920db49ae423fde21a8",
+      "migrations/002_pipeline.sql": "de65c606b975cd6036923069f8fc15944623e0f1bc3be3e5c59f299862f0bb44",
+      "migrations/003_version_claim_lookup.sql": "cde8ef89e970311b412292ec1fb9f53b36b2c9f1c47d0dc14571e789c538a175",
+      "migrations/004_eligible_claim_window.sql": "dcb9d272260e22ebe36b80d0009df68a3ca147138f6ac3bf5999b0713e561941",
+      "migrations/005_hosted_jobs.sql": "37967dafc8f5e2a71011fc224334df63725bacf8d0d4c4ffc8b5ade6365cab93"
+    },
+    "sha256": "5902ada9204854377563f234ecca63501a4967cc291a7481df797eff578706b0"
+  },
+  "seed": 20261123,
+  "mix": {
+    "distinct_accepted": 10000,
+    "base_revisions": 9400,
+    "duplicate_revision_events": 500,
+    "business_quarantines": 100,
+    "http_replays": 1000,
+    "http_attempts": 11000
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 13 2026, 02:47:42) [GCC 13.3.0]",
+    "platform": "Linux-7.0.0-1014-aws-x86_64-with-glibc2.39",
+    "cpu_count": 4,
+    "processor": "x86_64"
+  },
+  "harness_sha256": {
+    "analysis/benchmark_v2.py": "7b09cc6ebdf3f24682d7e3306eb4cc95202180e72e06c3a84a80dcfec79bf377",
+    "scripts/verification_support.py": "acde5c17084acd82b38bdfee5c44d53553a862cbd7dacfa3cf61dcd3dd0a65cc",
+    "fixtures/seed_metadata.json": "e95309f7c30a1f308e760bc8b26d9e1b300d60d32bf3929afd4783288f30f0a7",
+    "pyproject.toml": "427b6d062757ded011a9fd952544c143f40e73bad2c0ff33072e8aa3df1d0cbf",
+    "uv.lock": "76dc4c6bde24ac4ec17e8eb773610bba1ec5da4af1363a5ad188aa9cdc4e192a",
+    "requirements.lock": "54c4186974c9127550907cc9c8179463a95c2624e506535c2841ac24217a90bb",
+    "dashboard/package.json": "489752ec0423e99beb211cc8a66029c2444e3d61ca14bb2ce45c8ce9484be58c",
+    "dashboard/package-lock.json": "72b5c7d6f21f21d072e58e6b8eeed1000e53bb658643234ae479386e0ddf7dca"
+  },
+  "small_gate": null,
+  "inputs": [
+    {
+      "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/input.jsonl.gz",
+      "sha256": "5bf1fd8c9cbab680909b36f872c9991e84dee3786cee6ebd320bd5cb6eb15a34",
+      "bytes": 236128
+    },
+    {
+      "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/truth-ledger.jsonl.gz",
+      "sha256": "7b0b0d1cd9c935d7d033809bf12beb729581478ba5915eb7bddc72eb70563135",
+      "bytes": 127825
+    }
+  ],
+  "scope": "Real loopback uvicorn HTTP acceptance, PostgreSQL durable inbox and independently launched partition workers; pipeline/dbt/hosted capacity excluded.",
+  "latency_definition": "Stored receipt committed_at is a transaction marker, not exact commit time. Terminal latency uses first independently observed committed visibility minus stored ingested_at on the PostgreSQL server clock; it is an upper-bound observation including polling/query overhead.",
+  "required_trials": [
+    {
+      "workers": 1,
+      "repetition": 1
+    },
+    {
+      "workers": 1,
+      "repetition": 2
+    },
+    {
+      "workers": 1,
+      "repetition": 3
+    },
+    {
+      "workers": 4,
+      "repetition": 1
+    },
+    {
+      "workers": 4,
+      "repetition": 2
+    },
+    {
+      "workers": 4,
+      "repetition": 3
+    }
+  ],
+  "runs": [
+    {
+      "workers": 1,
+      "repetition": 1,
+      "source": {
+        "files": {
+          "src/orderflow/__init__.py": "b2e4cfe6cbe0230170ece51c042e62e7fdeef2f6ae271c49d25fdb2a188a6677",
+          "src/orderflow/api.py": "a9f2be24bfa3f6699d646d4cf3465e4cf798f562429b6f8bcf3a833693f117f9",
+          "src/orderflow/auth.py": "8cae5a3478d227896e64a05e5f913e3aaccc5c06ced20e261a2de7201632710f",
+          "src/orderflow/config.py": "93fafd0fc978a1877edda6410219aad69372dd7f2bdfa2c60cbc88aacda505c6",
+          "src/orderflow/connectors.py": "d95ae2f78996361e5f3f24eefc336269118972b0a9564f32cfbc730b9a5e7a0e",
+          "src/orderflow/db.py": "004196a2ba6ac1b5624d041abf4d3808f5201757d8cf4605cf101a4e92e553ab",
+          "src/orderflow/dbt_runtime.py": "0385c7d10c1251b4fe8781a9117d3958efbbb10c5d8a81fd75253baae4d8519e",
+          "src/orderflow/hosted_jobs.py": "92b427e264783ce8a79b938a0c0a8707d4239bdb8ec7c4037a7a69ea6011d525",
+          "src/orderflow/neon_auth.py": "76cd89548676948661bdf8763b3b594a33a7360103fd46d5b7ebd5fd9c5a3374",
+          "src/orderflow/objects.py": "8b26fff0ea262f1ab71264064322eaf51c4a2c2dfd674bf84050a3809b5fede0",
+          "src/orderflow/pipeline.py": "33a2f6fa25a167ad8e6c1ac401d3fa4a7a1222ef4d0af6d3e168315f337d5d0f",
+          "src/orderflow/schemas.py": "f819534d70c611cf9ffe70867e2768da0456c7d7c4f6d7b55d53a5cd1dffede9",
+          "src/orderflow/service.py": "23bbb60a425729d6a53132b513c0b2220256a031f2535ad1b9bc44a3484ad90a",
+          "src/orderflow/worker.py": "78d74e0ee34981b515eae328e267cc338fc6415e2b3309ec12b05b69633569ea",
+          "migrations/001_core.sql": "6d005c4a7e98ba1c35c8e9416844ff8de037418e73560920db49ae423fde21a8",
+          "migrations/002_pipeline.sql": "de65c606b975cd6036923069f8fc15944623e0f1bc3be3e5c59f299862f0bb44",
+          "migrations/003_version_claim_lookup.sql": "cde8ef89e970311b412292ec1fb9f53b36b2c9f1c47d0dc14571e789c538a175",
+          "migrations/004_eligible_claim_window.sql": "dcb9d272260e22ebe36b80d0009df68a3ca147138f6ac3bf5999b0713e561941",
+          "migrations/005_hosted_jobs.sql": "37967dafc8f5e2a71011fc224334df63725bacf8d0d4c4ffc8b5ade6365cab93"
+        },
+        "sha256": "5902ada9204854377563f234ecca63501a4967cc291a7481df797eff578706b0"
+      },
+      "harness_sha256": {
+        "analysis/benchmark_v2.py": "7b09cc6ebdf3f24682d7e3306eb4cc95202180e72e06c3a84a80dcfec79bf377",
+        "scripts/verification_support.py": "acde5c17084acd82b38bdfee5c44d53553a862cbd7dacfa3cf61dcd3dd0a65cc",
+        "fixtures/seed_metadata.json": "e95309f7c30a1f308e760bc8b26d9e1b300d60d32bf3929afd4783288f30f0a7",
+        "pyproject.toml": "427b6d062757ded011a9fd952544c143f40e73bad2c0ff33072e8aa3df1d0cbf",
+        "uv.lock": "76dc4c6bde24ac4ec17e8eb773610bba1ec5da4af1363a5ad188aa9cdc4e192a",
+        "requirements.lock": "54c4186974c9127550907cc9c8179463a95c2624e506535c2841ac24217a90bb",
+        "dashboard/package.json": "489752ec0423e99beb211cc8a66029c2444e3d61ca14bb2ce45c8ce9484be58c",
+        "dashboard/package-lock.json": "72b5c7d6f21f21d072e58e6b8eeed1000e53bb658643234ae479386e0ddf7dca"
+      },
+      "passed": true,
+      "generated_at": "2026-11-23T19:54:45.217752+00:00",
+      "request_concurrency": 24,
+      "database": "orderflow_benchmark_a170fce0f6c4",
+      "postgresql": {
+        "version": "PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "max_connections": "100",
+        "shared_buffers": "128MB"
+      },
+      "measurement_configuration": {
+        "requests_per_minute": "1000000",
+        "read_only_warmup_seconds": 0.4,
+        "pool_size_per_process": 8,
+        "max_pool_overflow": 8
+      },
+      "http_attempts": 11000,
+      "http_errors": [],
+      "distinct_accepted_ids": 10000,
+      "acceptance_seconds": 65.164584,
+      "postflight_validation": {
+        "protocol_id": "postflight-token-refresh-v1",
+        "measurement_finished_before_refresh": true,
+        "started_seconds_after_measurement": 0.45172851600000286,
+        "refresh_statuses": {
+          "alpha-operator": 200,
+          "beta-operator": 200
+        },
+        "overview_statuses": {
+          "alpha-operator": 200,
+          "beta-operator": 200
+        },
+        "cross_tenant_status": 404
+      },
+      "elapsed_seconds": 73.878609,
+      "terminal_receipts_per_second": 135.35717789591467,
+      "successful_materializations_per_second": 127.23574722215979,
+      "acceptance_latency_ms": {
+        "n": 11000,
+        "p50": 139.888736,
+        "p95": 184.160659
+      },
+      "observed_terminal_visibility_latency_ms": {
+        "n": 10000,
+        "p50": 10659.243,
+        "p95": 18189.381,
+        "max": 18570.859
+      },
+      "visibility_latency_by_outcome_ms": {
+        "applied_current": {
+          "n": 4901,
+          "p50": 8095.446,
+          "p95": 17903.973
+        },
+        "duplicate_revision": {
+          "n": 500,
+          "p50": 14668.115,
+          "p95": 15616.246
+        },
+        "history_only": {
+          "n": 4499,
+          "p50": 13709.783,
+          "p95": 18354.492
+        },
+        "quarantined": {
+          "n": 100,
+          "p50": 14618.903,
+          "p95": 15560.258
+        }
+      },
+      "observer": {
+        "poll_wait_ms": 100,
+        "idle_catchup_after_ms": 1000.0,
+        "idle_catchup_scans": 0,
+        "max_query_cycle_ms": 525.1839990000065,
+        "read_scope": "Privileged independent observer; adds measurement overhead to both worker configurations."
+      },
+      "reconciliation": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "exact distinct inbox identity set",
+            "passed": true
+          },
+          {
+            "name": "all canonical hashes and terminal inbox states",
+            "passed": true
+          },
+          {
+            "name": "zero processing retries or lost attempts",
+            "passed": true
+          },
+          {
+            "name": "exact immutable revision key set",
+            "passed": true
+          },
+          {
+            "name": "all revision payloads times and original event lineage",
+            "passed": true
+          },
+          {
+            "name": "exact current entity keys",
+            "passed": true
+          },
+          {
+            "name": "all latest versions payloads and authoritative sources",
+            "passed": true
+          },
+          {
+            "name": "exact receipt identity set",
+            "passed": true
+          },
+          {
+            "name": "all receipt outcomes independently allowed",
+            "passed": true
+          },
+          {
+            "name": "exact partition checkpoint counts",
+            "passed": true
+          },
+          {
+            "name": "all checkpoint pointers have scoped terminal receipts",
+            "passed": true
+          },
+          {
+            "name": "exact business quarantine count",
+            "passed": true
+          },
+          {
+            "name": "SQL-derived history equals independent Python intervals",
+            "passed": true
+          },
+          {
+            "name": "exact latest-order totals by tenant",
+            "passed": true
+          },
+          {
+            "name": "observer saw every committed identity",
+            "passed": true
+          },
+          {
+            "name": "no negative visibility latency or missed-observer records",
+            "passed": true
+          },
+          {
+            "name": "alpha-operator exact API count and latest total",
+            "passed": true
+          },
+          {
+            "name": "beta-operator exact API count and latest total",
+            "passed": true
+          },
+          {
+            "name": "existing other-tenant event API returns404",
+            "passed": true
+          }
+        ],
+        "observed_counts": {
+          "inbox": 10000,
+          "revisions": 9400,
+          "current": 2350,
+          "receipts": 10000,
+          "quarantines": 100,
+          "partitions": 2450
+        },
+        "latest_order_totals_minor": {
+          "11111111-1111-4111-8111-111111111111": 20186500,
+          "22222222-2222-4222-8222-222222222222": 0
+        }
+      },
+      "owned_database_removed": true,
+      "raw_artifacts": [
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-1-rep-1/api.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-1-rep-1/http-attempts.jsonl.gz",
+          "sha256": "9ad8b2c20ed1844891895e3e991c3a6db74d099fe1e88bb7afe7ea1d31f74866",
+          "bytes": 384864
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-1-rep-1/terminal-visibility.jsonl.gz",
+          "sha256": "e834a024ad7c8c4259d9e55a8c9aa2fe70d61ee78d5abac8c6856cbad13557db",
+          "bytes": 487778
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-1-rep-1/worker-1.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      ]
+    },
+    {
+      "workers": 1,
+      "repetition": 2,
+      "source": {
+        "files": {
+          "src/orderflow/__init__.py": "b2e4cfe6cbe0230170ece51c042e62e7fdeef2f6ae271c49d25fdb2a188a6677",
+          "src/orderflow/api.py": "a9f2be24bfa3f6699d646d4cf3465e4cf798f562429b6f8bcf3a833693f117f9",
+          "src/orderflow/auth.py": "8cae5a3478d227896e64a05e5f913e3aaccc5c06ced20e261a2de7201632710f",
+          "src/orderflow/config.py": "93fafd0fc978a1877edda6410219aad69372dd7f2bdfa2c60cbc88aacda505c6",
+          "src/orderflow/connectors.py": "d95ae2f78996361e5f3f24eefc336269118972b0a9564f32cfbc730b9a5e7a0e",
+          "src/orderflow/db.py": "004196a2ba6ac1b5624d041abf4d3808f5201757d8cf4605cf101a4e92e553ab",
+          "src/orderflow/dbt_runtime.py": "0385c7d10c1251b4fe8781a9117d3958efbbb10c5d8a81fd75253baae4d8519e",
+          "src/orderflow/hosted_jobs.py": "92b427e264783ce8a79b938a0c0a8707d4239bdb8ec7c4037a7a69ea6011d525",
+          "src/orderflow/neon_auth.py": "76cd89548676948661bdf8763b3b594a33a7360103fd46d5b7ebd5fd9c5a3374",
+          "src/orderflow/objects.py": "8b26fff0ea262f1ab71264064322eaf51c4a2c2dfd674bf84050a3809b5fede0",
+          "src/orderflow/pipeline.py": "33a2f6fa25a167ad8e6c1ac401d3fa4a7a1222ef4d0af6d3e168315f337d5d0f",
+          "src/orderflow/schemas.py": "f819534d70c611cf9ffe70867e2768da0456c7d7c4f6d7b55d53a5cd1dffede9",
+          "src/orderflow/service.py": "23bbb60a425729d6a53132b513c0b2220256a031f2535ad1b9bc44a3484ad90a",
+          "src/orderflow/worker.py": "78d74e0ee34981b515eae328e267cc338fc6415e2b3309ec12b05b69633569ea",
+          "migrations/001_core.sql": "6d005c4a7e98ba1c35c8e9416844ff8de037418e73560920db49ae423fde21a8",
+          "migrations/002_pipeline.sql": "de65c606b975cd6036923069f8fc15944623e0f1bc3be3e5c59f299862f0bb44",
+          "migrations/003_version_claim_lookup.sql": "cde8ef89e970311b412292ec1fb9f53b36b2c9f1c47d0dc14571e789c538a175",
+          "migrations/004_eligible_claim_window.sql": "dcb9d272260e22ebe36b80d0009df68a3ca147138f6ac3bf5999b0713e561941",
+          "migrations/005_hosted_jobs.sql": "37967dafc8f5e2a71011fc224334df63725bacf8d0d4c4ffc8b5ade6365cab93"
+        },
+        "sha256": "5902ada9204854377563f234ecca63501a4967cc291a7481df797eff578706b0"
+      },
+      "harness_sha256": {
+        "analysis/benchmark_v2.py": "7b09cc6ebdf3f24682d7e3306eb4cc95202180e72e06c3a84a80dcfec79bf377",
+        "scripts/verification_support.py": "acde5c17084acd82b38bdfee5c44d53553a862cbd7dacfa3cf61dcd3dd0a65cc",
+        "fixtures/seed_metadata.json": "e95309f7c30a1f308e760bc8b26d9e1b300d60d32bf3929afd4783288f30f0a7",
+        "pyproject.toml": "427b6d062757ded011a9fd952544c143f40e73bad2c0ff33072e8aa3df1d0cbf",
+        "uv.lock": "76dc4c6bde24ac4ec17e8eb773610bba1ec5da4af1363a5ad188aa9cdc4e192a",
+        "requirements.lock": "54c4186974c9127550907cc9c8179463a95c2624e506535c2841ac24217a90bb",
+        "dashboard/package.json": "489752ec0423e99beb211cc8a66029c2444e3d61ca14bb2ce45c8ce9484be58c",
+        "dashboard/package-lock.json": "72b5c7d6f21f21d072e58e6b8eeed1000e53bb658643234ae479386e0ddf7dca"
+      },
+      "passed": true,
+      "generated_at": "2026-11-23T19:56:01.547205+00:00",
+      "request_concurrency": 24,
+      "database": "orderflow_benchmark_3871d8d5e5d4",
+      "postgresql": {
+        "version": "PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "max_connections": "100",
+        "shared_buffers": "128MB"
+      },
+      "measurement_configuration": {
+        "requests_per_minute": "1000000",
+        "read_only_warmup_seconds": 0.4,
+        "pool_size_per_process": 8,
+        "max_pool_overflow": 8
+      },
+      "http_attempts": 11000,
+      "http_errors": [],
+      "distinct_accepted_ids": 10000,
+      "acceptance_seconds": 64.936212,
+      "postflight_validation": {
+        "protocol_id": "postflight-token-refresh-v1",
+        "measurement_finished_before_refresh": true,
+        "started_seconds_after_measurement": 0.49051417199999037,
+        "refresh_statuses": {
+          "alpha-operator": 200,
+          "beta-operator": 200
+        },
+        "overview_statuses": {
+          "alpha-operator": 200,
+          "beta-operator": 200
+        },
+        "cross_tenant_status": 404
+      },
+      "elapsed_seconds": 70.422264,
+      "terminal_receipts_per_second": 142.00054728990418,
+      "successful_materializations_per_second": 133.4805144525099,
+      "acceptance_latency_ms": {
+        "n": 11000,
+        "p50": 139.134812,
+        "p95": 184.508443
+      },
+      "observed_terminal_visibility_latency_ms": {
+        "n": 10000,
+        "p50": 5544.843,
+        "p95": 12973.954,
+        "max": 13464.364
+      },
+      "visibility_latency_by_outcome_ms": {
+        "applied_current": {
+          "n": 4899,
+          "p50": 3022.937,
+          "p95": 12640.408
+        },
+        "duplicate_revision": {
+          "n": 500,
+          "p50": 11413.859,
+          "p95": 12252.225
+        },
+        "history_only": {
+          "n": 4501,
+          "p50": 7903.546,
+          "p95": 13193.593
+        },
+        "quarantined": {
+          "n": 100,
+          "p50": 11352.025,
+          "p95": 12225.129
+        }
+      },
+      "observer": {
+        "poll_wait_ms": 100,
+        "idle_catchup_after_ms": 1000.0,
+        "idle_catchup_scans": 0,
+        "max_query_cycle_ms": 85.31939499999908,
+        "read_scope": "Privileged independent observer; adds measurement overhead to both worker configurations."
+      },
+      "reconciliation": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "exact distinct inbox identity set",
+            "passed": true
+          },
+          {
+            "name": "all canonical hashes and terminal inbox states",
+            "passed": true
+          },
+          {
+            "name": "zero processing retries or lost attempts",
+            "passed": true
+          },
+          {
+            "name": "exact immutable revision key set",
+            "passed": true
+          },
+          {
+            "name": "all revision payloads times and original event lineage",
+            "passed": true
+          },
+          {
+            "name": "exact current entity keys",
+            "passed": true
+          },
+          {
+            "name": "all latest versions payloads and authoritative sources",
+            "passed": true
+          },
+          {
+            "name": "exact receipt identity set",
+            "passed": true
+          },
+          {
+            "name": "all receipt outcomes independently allowed",
+            "passed": true
+          },
+          {
+            "name": "exact partition checkpoint counts",
+            "passed": true
+          },
+          {
+            "name": "all checkpoint pointers have scoped terminal receipts",
+            "passed": true
+          },
+          {
+            "name": "exact business quarantine count",
+            "passed": true
+          },
+          {
+            "name": "SQL-derived history equals independent Python intervals",
+            "passed": true
+          },
+          {
+            "name": "exact latest-order totals by tenant",
+            "passed": true
+          },
+          {
+            "name": "observer saw every committed identity",
+            "passed": true
+          },
+          {
+            "name": "no negative visibility latency or missed-observer records",
+            "passed": true
+          },
+          {
+            "name": "alpha-operator exact API count and latest total",
+            "passed": true
+          },
+          {
+            "name": "beta-operator exact API count and latest total",
+            "passed": true
+          },
+          {
+            "name": "existing other-tenant event API returns404",
+            "passed": true
+          }
+        ],
+        "observed_counts": {
+          "inbox": 10000,
+          "revisions": 9400,
+          "current": 2350,
+          "receipts": 10000,
+          "quarantines": 100,
+          "partitions": 2450
+        },
+        "latest_order_totals_minor": {
+          "11111111-1111-4111-8111-111111111111": 20186500,
+          "22222222-2222-4222-8222-222222222222": 0
+        }
+      },
+      "owned_database_removed": true,
+      "raw_artifacts": [
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-1-rep-2/api.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-1-rep-2/http-attempts.jsonl.gz",
+          "sha256": "2602c8196512f21e23978355a0c48156e86af433310f56704dc468cd1049366e",
+          "bytes": 384920
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-1-rep-2/terminal-visibility.jsonl.gz",
+          "sha256": "4c96e61f0fa1397347a9f49b0b3eb56a753e98ce9fa72827de5293b0a9f41830",
+          "bytes": 486868
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-1-rep-2/worker-1.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      ]
+    },
+    {
+      "workers": 1,
+      "repetition": 3,
+      "source": {
+        "files": {
+          "src/orderflow/__init__.py": "b2e4cfe6cbe0230170ece51c042e62e7fdeef2f6ae271c49d25fdb2a188a6677",
+          "src/orderflow/api.py": "a9f2be24bfa3f6699d646d4cf3465e4cf798f562429b6f8bcf3a833693f117f9",
+          "src/orderflow/auth.py": "8cae5a3478d227896e64a05e5f913e3aaccc5c06ced20e261a2de7201632710f",
+          "src/orderflow/config.py": "93fafd0fc978a1877edda6410219aad69372dd7f2bdfa2c60cbc88aacda505c6",
+          "src/orderflow/connectors.py": "d95ae2f78996361e5f3f24eefc336269118972b0a9564f32cfbc730b9a5e7a0e",
+          "src/orderflow/db.py": "004196a2ba6ac1b5624d041abf4d3808f5201757d8cf4605cf101a4e92e553ab",
+          "src/orderflow/dbt_runtime.py": "0385c7d10c1251b4fe8781a9117d3958efbbb10c5d8a81fd75253baae4d8519e",
+          "src/orderflow/hosted_jobs.py": "92b427e264783ce8a79b938a0c0a8707d4239bdb8ec7c4037a7a69ea6011d525",
+          "src/orderflow/neon_auth.py": "76cd89548676948661bdf8763b3b594a33a7360103fd46d5b7ebd5fd9c5a3374",
+          "src/orderflow/objects.py": "8b26fff0ea262f1ab71264064322eaf51c4a2c2dfd674bf84050a3809b5fede0",
+          "src/orderflow/pipeline.py": "33a2f6fa25a167ad8e6c1ac401d3fa4a7a1222ef4d0af6d3e168315f337d5d0f",
+          "src/orderflow/schemas.py": "f819534d70c611cf9ffe70867e2768da0456c7d7c4f6d7b55d53a5cd1dffede9",
+          "src/orderflow/service.py": "23bbb60a425729d6a53132b513c0b2220256a031f2535ad1b9bc44a3484ad90a",
+          "src/orderflow/worker.py": "78d74e0ee34981b515eae328e267cc338fc6415e2b3309ec12b05b69633569ea",
+          "migrations/001_core.sql": "6d005c4a7e98ba1c35c8e9416844ff8de037418e73560920db49ae423fde21a8",
+          "migrations/002_pipeline.sql": "de65c606b975cd6036923069f8fc15944623e0f1bc3be3e5c59f299862f0bb44",
+          "migrations/003_version_claim_lookup.sql": "cde8ef89e970311b412292ec1fb9f53b36b2c9f1c47d0dc14571e789c538a175",
+          "migrations/004_eligible_claim_window.sql": "dcb9d272260e22ebe36b80d0009df68a3ca147138f6ac3bf5999b0713e561941",
+          "migrations/005_hosted_jobs.sql": "37967dafc8f5e2a71011fc224334df63725bacf8d0d4c4ffc8b5ade6365cab93"
+        },
+        "sha256": "5902ada9204854377563f234ecca63501a4967cc291a7481df797eff578706b0"
+      },
+      "harness_sha256": {
+        "analysis/benchmark_v2.py": "7b09cc6ebdf3f24682d7e3306eb4cc95202180e72e06c3a84a80dcfec79bf377",
+        "scripts/verification_support.py": "acde5c17084acd82b38bdfee5c44d53553a862cbd7dacfa3cf61dcd3dd0a65cc",
+        "fixtures/seed_metadata.json": "e95309f7c30a1f308e760bc8b26d9e1b300d60d32bf3929afd4783288f30f0a7",
+        "pyproject.toml": "427b6d062757ded011a9fd952544c143f40e73bad2c0ff33072e8aa3df1d0cbf",
+        "uv.lock": "76dc4c6bde24ac4ec17e8eb773610bba1ec5da4af1363a5ad188aa9cdc4e192a",
+        "requirements.lock": "54c4186974c9127550907cc9c8179463a95c2624e506535c2841ac24217a90bb",
+        "dashboard/package.json": "489752ec0423e99beb211cc8a66029c2444e3d61ca14bb2ce45c8ce9484be58c",
+        "dashboard/package-lock.json": "72b5c7d6f21f21d072e58e6b8eeed1000e53bb658643234ae479386e0ddf7dca"
+      },
+      "passed": true,
+      "generated_at": "2026-11-23T19:57:14.006434+00:00",
+      "request_concurrency": 24,
+      "database": "orderflow_benchmark_419f50e15d1d",
+      "postgresql": {
+        "version": "PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "max_connections": "100",
+        "shared_buffers": "128MB"
+      },
+      "measurement_configuration": {
+        "requests_per_minute": "1000000",
+        "read_only_warmup_seconds": 0.4,
+        "pool_size_per_process": 8,
+        "max_pool_overflow": 8
+      },
+      "http_attempts": 11000,
+      "http_errors": [],
+      "distinct_accepted_ids": 10000,
+      "acceptance_seconds": 64.669864,
+      "postflight_validation": {
+        "protocol_id": "postflight-token-refresh-v1",
+        "measurement_finished_before_refresh": true,
+        "started_seconds_after_measurement": 0.4473171620000471,
+        "refresh_statuses": {
+          "alpha-operator": 200,
+          "beta-operator": 200
+        },
+        "overview_statuses": {
+          "alpha-operator": 200,
+          "beta-operator": 200
+        },
+        "cross_tenant_status": 404
+      },
+      "elapsed_seconds": 75.571441,
+      "terminal_receipts_per_second": 132.32512067645897,
+      "successful_materializations_per_second": 124.38561343587142,
+      "acceptance_latency_ms": {
+        "n": 11000,
+        "p50": 138.781069,
+        "p95": 181.908132
+      },
+      "observed_terminal_visibility_latency_ms": {
+        "n": 10000,
+        "p50": 8052.153,
+        "p95": 20338.4,
+        "max": 20847.335
+      },
+      "visibility_latency_by_outcome_ms": {
+        "applied_current": {
+          "n": 4902,
+          "p50": 3750.743,
+          "p95": 19913.912
+        },
+        "duplicate_revision": {
+          "n": 500,
+          "p50": 16651.141,
+          "p95": 17491.541
+        },
+        "history_only": {
+          "n": 4498,
+          "p50": 13084.923,
+          "p95": 20490.68
+        },
+        "quarantined": {
+          "n": 100,
+          "p50": 16586.933,
+          "p95": 17437.914
+        }
+      },
+      "observer": {
+        "poll_wait_ms": 100,
+        "idle_catchup_after_ms": 1000.0,
+        "idle_catchup_scans": 0,
+        "max_query_cycle_ms": 74.38687500001606,
+        "read_scope": "Privileged independent observer; adds measurement overhead to both worker configurations."
+      },
+      "reconciliation": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "exact distinct inbox identity set",
+            "passed": true
+          },
+          {
+            "name": "all canonical hashes and terminal inbox states",
+            "passed": true
+          },
+          {
+            "name": "zero processing retries or lost attempts",
+            "passed": true
+          },
+          {
+            "name": "exact immutable revision key set",
+            "passed": true
+          },
+          {
+            "name": "all revision payloads times and original event lineage",
+            "passed": true
+          },
+          {
+            "name": "exact current entity keys",
+            "passed": true
+          },
+          {
+            "name": "all latest versions payloads and authoritative sources",
+            "passed": true
+          },
+          {
+            "name": "exact receipt identity set",
+            "passed": true
+          },
+          {
+            "name": "all receipt outcomes independently allowed",
+            "passed": true
+          },
+          {
+            "name": "exact partition checkpoint counts",
+            "passed": true
+          },
+          {
+            "name": "all checkpoint pointers have scoped terminal receipts",
+            "passed": true
+          },
+          {
+            "name": "exact business quarantine count",
+            "passed": true
+          },
+          {
+            "name": "SQL-derived history equals independent Python intervals",
+            "passed": true
+          },
+          {
+            "name": "exact latest-order totals by tenant",
+            "passed": true
+          },
+          {
+            "name": "observer saw every committed identity",
+            "passed": true
+          },
+          {
+            "name": "no negative visibility latency or missed-observer records",
+            "passed": true
+          },
+          {
+            "name": "alpha-operator exact API count and latest total",
+            "passed": true
+          },
+          {
+            "name": "beta-operator exact API count and latest total",
+            "passed": true
+          },
+          {
+            "name": "existing other-tenant event API returns404",
+            "passed": true
+          }
+        ],
+        "observed_counts": {
+          "inbox": 10000,
+          "revisions": 9400,
+          "current": 2350,
+          "receipts": 10000,
+          "quarantines": 100,
+          "partitions": 2450
+        },
+        "latest_order_totals_minor": {
+          "11111111-1111-4111-8111-111111111111": 20186500,
+          "22222222-2222-4222-8222-222222222222": 0
+        }
+      },
+      "owned_database_removed": true,
+      "raw_artifacts": [
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-1-rep-3/api.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-1-rep-3/http-attempts.jsonl.gz",
+          "sha256": "b88fa36fdd717ad16d7ab853d7b7d5522a5e4a6c5eac0815bd567eda3a48ce36",
+          "bytes": 384913
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-1-rep-3/terminal-visibility.jsonl.gz",
+          "sha256": "0218f65e6c65adfc9133539b5f35fa6618679eaa731b137efeb679243653d212",
+          "bytes": 487580
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-1-rep-3/worker-1.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      ]
+    },
+    {
+      "workers": 4,
+      "repetition": 1,
+      "source": {
+        "files": {
+          "src/orderflow/__init__.py": "b2e4cfe6cbe0230170ece51c042e62e7fdeef2f6ae271c49d25fdb2a188a6677",
+          "src/orderflow/api.py": "a9f2be24bfa3f6699d646d4cf3465e4cf798f562429b6f8bcf3a833693f117f9",
+          "src/orderflow/auth.py": "8cae5a3478d227896e64a05e5f913e3aaccc5c06ced20e261a2de7201632710f",
+          "src/orderflow/config.py": "93fafd0fc978a1877edda6410219aad69372dd7f2bdfa2c60cbc88aacda505c6",
+          "src/orderflow/connectors.py": "d95ae2f78996361e5f3f24eefc336269118972b0a9564f32cfbc730b9a5e7a0e",
+          "src/orderflow/db.py": "004196a2ba6ac1b5624d041abf4d3808f5201757d8cf4605cf101a4e92e553ab",
+          "src/orderflow/dbt_runtime.py": "0385c7d10c1251b4fe8781a9117d3958efbbb10c5d8a81fd75253baae4d8519e",
+          "src/orderflow/hosted_jobs.py": "92b427e264783ce8a79b938a0c0a8707d4239bdb8ec7c4037a7a69ea6011d525",
+          "src/orderflow/neon_auth.py": "76cd89548676948661bdf8763b3b594a33a7360103fd46d5b7ebd5fd9c5a3374",
+          "src/orderflow/objects.py": "8b26fff0ea262f1ab71264064322eaf51c4a2c2dfd674bf84050a3809b5fede0",
+          "src/orderflow/pipeline.py": "33a2f6fa25a167ad8e6c1ac401d3fa4a7a1222ef4d0af6d3e168315f337d5d0f",
+          "src/orderflow/schemas.py": "f819534d70c611cf9ffe70867e2768da0456c7d7c4f6d7b55d53a5cd1dffede9",
+          "src/orderflow/service.py": "23bbb60a425729d6a53132b513c0b2220256a031f2535ad1b9bc44a3484ad90a",
+          "src/orderflow/worker.py": "78d74e0ee34981b515eae328e267cc338fc6415e2b3309ec12b05b69633569ea",
+          "migrations/001_core.sql": "6d005c4a7e98ba1c35c8e9416844ff8de037418e73560920db49ae423fde21a8",
+          "migrations/002_pipeline.sql": "de65c606b975cd6036923069f8fc15944623e0f1bc3be3e5c59f299862f0bb44",
+          "migrations/003_version_claim_lookup.sql": "cde8ef89e970311b412292ec1fb9f53b36b2c9f1c47d0dc14571e789c538a175",
+          "migrations/004_eligible_claim_window.sql": "dcb9d272260e22ebe36b80d0009df68a3ca147138f6ac3bf5999b0713e561941",
+          "migrations/005_hosted_jobs.sql": "37967dafc8f5e2a71011fc224334df63725bacf8d0d4c4ffc8b5ade6365cab93"
+        },
+        "sha256": "5902ada9204854377563f234ecca63501a4967cc291a7481df797eff578706b0"
+      },
+      "harness_sha256": {
+        "analysis/benchmark_v2.py": "7b09cc6ebdf3f24682d7e3306eb4cc95202180e72e06c3a84a80dcfec79bf377",
+        "scripts/verification_support.py": "acde5c17084acd82b38bdfee5c44d53553a862cbd7dacfa3cf61dcd3dd0a65cc",
+        "fixtures/seed_metadata.json": "e95309f7c30a1f308e760bc8b26d9e1b300d60d32bf3929afd4783288f30f0a7",
+        "pyproject.toml": "427b6d062757ded011a9fd952544c143f40e73bad2c0ff33072e8aa3df1d0cbf",
+        "uv.lock": "76dc4c6bde24ac4ec17e8eb773610bba1ec5da4af1363a5ad188aa9cdc4e192a",
+        "requirements.lock": "54c4186974c9127550907cc9c8179463a95c2624e506535c2841ac24217a90bb",
+        "dashboard/package.json": "489752ec0423e99beb211cc8a66029c2444e3d61ca14bb2ce45c8ce9484be58c",
+        "dashboard/package-lock.json": "72b5c7d6f21f21d072e58e6b8eeed1000e53bb658643234ae479386e0ddf7dca"
+      },
+      "passed": true,
+      "generated_at": "2026-11-23T19:58:31.521710+00:00",
+      "request_concurrency": 24,
+      "database": "orderflow_benchmark_ce545a1aa20c",
+      "postgresql": {
+        "version": "PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "max_connections": "100",
+        "shared_buffers": "128MB"
+      },
+      "measurement_configuration": {
+        "requests_per_minute": "1000000",
+        "read_only_warmup_seconds": 0.4,
+        "pool_size_per_process": 8,
+        "max_pool_overflow": 8
+      },
+      "http_attempts": 11000,
+      "http_errors": [],
+      "distinct_accepted_ids": 10000,
+      "acceptance_seconds": 69.778878,
+      "postflight_validation": {
+        "protocol_id": "postflight-token-refresh-v1",
+        "measurement_finished_before_refresh": true,
+        "started_seconds_after_measurement": 0.6772744779999584,
+        "refresh_statuses": {
+          "alpha-operator": 200,
+          "beta-operator": 200
+        },
+        "overview_statuses": {
+          "alpha-operator": 200,
+          "beta-operator": 200
+        },
+        "cross_tenant_status": 404
+      },
+      "elapsed_seconds": 69.778878,
+      "terminal_receipts_per_second": 143.3098413443572,
+      "successful_materializations_per_second": 134.71125086369577,
+      "acceptance_latency_ms": {
+        "n": 11000,
+        "p50": 150.972124,
+        "p95": 210.742811
+      },
+      "observed_terminal_visibility_latency_ms": {
+        "n": 10000,
+        "p50": 220.846,
+        "p95": 383.316,
+        "max": 620.549
+      },
+      "visibility_latency_by_outcome_ms": {
+        "applied_current": {
+          "n": 4901,
+          "p50": 223.623,
+          "p95": 396.543
+        },
+        "duplicate_revision": {
+          "n": 500,
+          "p50": 196.621,
+          "p95": 348.58
+        },
+        "history_only": {
+          "n": 4499,
+          "p50": 221.197,
+          "p95": 376.189
+        },
+        "quarantined": {
+          "n": 100,
+          "p50": 195.434,
+          "p95": 350.595
+        }
+      },
+      "observer": {
+        "poll_wait_ms": 100,
+        "idle_catchup_after_ms": 1000.0,
+        "idle_catchup_scans": 0,
+        "max_query_cycle_ms": 184.6032340000079,
+        "read_scope": "Privileged independent observer; adds measurement overhead to both worker configurations."
+      },
+      "reconciliation": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "exact distinct inbox identity set",
+            "passed": true
+          },
+          {
+            "name": "all canonical hashes and terminal inbox states",
+            "passed": true
+          },
+          {
+            "name": "zero processing retries or lost attempts",
+            "passed": true
+          },
+          {
+            "name": "exact immutable revision key set",
+            "passed": true
+          },
+          {
+            "name": "all revision payloads times and original event lineage",
+            "passed": true
+          },
+          {
+            "name": "exact current entity keys",
+            "passed": true
+          },
+          {
+            "name": "all latest versions payloads and authoritative sources",
+            "passed": true
+          },
+          {
+            "name": "exact receipt identity set",
+            "passed": true
+          },
+          {
+            "name": "all receipt outcomes independently allowed",
+            "passed": true
+          },
+          {
+            "name": "exact partition checkpoint counts",
+            "passed": true
+          },
+          {
+            "name": "all checkpoint pointers have scoped terminal receipts",
+            "passed": true
+          },
+          {
+            "name": "exact business quarantine count",
+            "passed": true
+          },
+          {
+            "name": "SQL-derived history equals independent Python intervals",
+            "passed": true
+          },
+          {
+            "name": "exact latest-order totals by tenant",
+            "passed": true
+          },
+          {
+            "name": "observer saw every committed identity",
+            "passed": true
+          },
+          {
+            "name": "no negative visibility latency or missed-observer records",
+            "passed": true
+          },
+          {
+            "name": "alpha-operator exact API count and latest total",
+            "passed": true
+          },
+          {
+            "name": "beta-operator exact API count and latest total",
+            "passed": true
+          },
+          {
+            "name": "existing other-tenant event API returns404",
+            "passed": true
+          }
+        ],
+        "observed_counts": {
+          "inbox": 10000,
+          "revisions": 9400,
+          "current": 2350,
+          "receipts": 10000,
+          "quarantines": 100,
+          "partitions": 2450
+        },
+        "latest_order_totals_minor": {
+          "11111111-1111-4111-8111-111111111111": 20186500,
+          "22222222-2222-4222-8222-222222222222": 0
+        }
+      },
+      "owned_database_removed": true,
+      "raw_artifacts": [
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-1/api.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-1/http-attempts.jsonl.gz",
+          "sha256": "7ba9907e71de033094cabcd725be642c792216c1af77d955ab88f408f1e163b8",
+          "bytes": 386285
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-1/terminal-visibility.jsonl.gz",
+          "sha256": "a3b92b66b6162dcf48aea657257797c15deb86820731e5e41851ae912a494adb",
+          "bytes": 483096
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-1/worker-1.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-1/worker-2.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-1/worker-3.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-1/worker-4.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      ]
+    },
+    {
+      "workers": 4,
+      "repetition": 2,
+      "source": {
+        "files": {
+          "src/orderflow/__init__.py": "b2e4cfe6cbe0230170ece51c042e62e7fdeef2f6ae271c49d25fdb2a188a6677",
+          "src/orderflow/api.py": "a9f2be24bfa3f6699d646d4cf3465e4cf798f562429b6f8bcf3a833693f117f9",
+          "src/orderflow/auth.py": "8cae5a3478d227896e64a05e5f913e3aaccc5c06ced20e261a2de7201632710f",
+          "src/orderflow/config.py": "93fafd0fc978a1877edda6410219aad69372dd7f2bdfa2c60cbc88aacda505c6",
+          "src/orderflow/connectors.py": "d95ae2f78996361e5f3f24eefc336269118972b0a9564f32cfbc730b9a5e7a0e",
+          "src/orderflow/db.py": "004196a2ba6ac1b5624d041abf4d3808f5201757d8cf4605cf101a4e92e553ab",
+          "src/orderflow/dbt_runtime.py": "0385c7d10c1251b4fe8781a9117d3958efbbb10c5d8a81fd75253baae4d8519e",
+          "src/orderflow/hosted_jobs.py": "92b427e264783ce8a79b938a0c0a8707d4239bdb8ec7c4037a7a69ea6011d525",
+          "src/orderflow/neon_auth.py": "76cd89548676948661bdf8763b3b594a33a7360103fd46d5b7ebd5fd9c5a3374",
+          "src/orderflow/objects.py": "8b26fff0ea262f1ab71264064322eaf51c4a2c2dfd674bf84050a3809b5fede0",
+          "src/orderflow/pipeline.py": "33a2f6fa25a167ad8e6c1ac401d3fa4a7a1222ef4d0af6d3e168315f337d5d0f",
+          "src/orderflow/schemas.py": "f819534d70c611cf9ffe70867e2768da0456c7d7c4f6d7b55d53a5cd1dffede9",
+          "src/orderflow/service.py": "23bbb60a425729d6a53132b513c0b2220256a031f2535ad1b9bc44a3484ad90a",
+          "src/orderflow/worker.py": "78d74e0ee34981b515eae328e267cc338fc6415e2b3309ec12b05b69633569ea",
+          "migrations/001_core.sql": "6d005c4a7e98ba1c35c8e9416844ff8de037418e73560920db49ae423fde21a8",
+          "migrations/002_pipeline.sql": "de65c606b975cd6036923069f8fc15944623e0f1bc3be3e5c59f299862f0bb44",
+          "migrations/003_version_claim_lookup.sql": "cde8ef89e970311b412292ec1fb9f53b36b2c9f1c47d0dc14571e789c538a175",
+          "migrations/004_eligible_claim_window.sql": "dcb9d272260e22ebe36b80d0009df68a3ca147138f6ac3bf5999b0713e561941",
+          "migrations/005_hosted_jobs.sql": "37967dafc8f5e2a71011fc224334df63725bacf8d0d4c4ffc8b5ade6365cab93"
+        },
+        "sha256": "5902ada9204854377563f234ecca63501a4967cc291a7481df797eff578706b0"
+      },
+      "harness_sha256": {
+        "analysis/benchmark_v2.py": "7b09cc6ebdf3f24682d7e3306eb4cc95202180e72e06c3a84a80dcfec79bf377",
+        "scripts/verification_support.py": "acde5c17084acd82b38bdfee5c44d53553a862cbd7dacfa3cf61dcd3dd0a65cc",
+        "fixtures/seed_metadata.json": "e95309f7c30a1f308e760bc8b26d9e1b300d60d32bf3929afd4783288f30f0a7",
+        "pyproject.toml": "427b6d062757ded011a9fd952544c143f40e73bad2c0ff33072e8aa3df1d0cbf",
+        "uv.lock": "76dc4c6bde24ac4ec17e8eb773610bba1ec5da4af1363a5ad188aa9cdc4e192a",
+        "requirements.lock": "54c4186974c9127550907cc9c8179463a95c2624e506535c2841ac24217a90bb",
+        "dashboard/package.json": "489752ec0423e99beb211cc8a66029c2444e3d61ca14bb2ce45c8ce9484be58c",
+        "dashboard/package-lock.json": "72b5c7d6f21f21d072e58e6b8eeed1000e53bb658643234ae479386e0ddf7dca"
+      },
+      "passed": true,
+      "generated_at": "2026-11-23T19:59:43.525445+00:00",
+      "request_concurrency": 24,
+      "database": "orderflow_benchmark_1755954b138a",
+      "postgresql": {
+        "version": "PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "max_connections": "100",
+        "shared_buffers": "128MB"
+      },
+      "measurement_configuration": {
+        "requests_per_minute": "1000000",
+        "read_only_warmup_seconds": 0.4,
+        "pool_size_per_process": 8,
+        "max_pool_overflow": 8
+      },
+      "http_attempts": 11000,
+      "http_errors": [],
+      "distinct_accepted_ids": 10000,
+      "acceptance_seconds": 70.038097,
+      "postflight_validation": {
+        "protocol_id": "postflight-token-refresh-v1",
+        "measurement_finished_before_refresh": true,
+        "started_seconds_after_measurement": 0.8319614279999996,
+        "refresh_statuses": {
+          "alpha-operator": 200,
+          "beta-operator": 200
+        },
+        "overview_statuses": {
+          "alpha-operator": 200,
+          "beta-operator": 200
+        },
+        "cross_tenant_status": 404
+      },
+      "elapsed_seconds": 70.038097,
+      "terminal_receipts_per_second": 142.77943606081544,
+      "successful_materializations_per_second": 134.2126698971665,
+      "acceptance_latency_ms": {
+        "n": 11000,
+        "p50": 150.805828,
+        "p95": 211.726346
+      },
+      "observed_terminal_visibility_latency_ms": {
+        "n": 10000,
+        "p50": 217.704,
+        "p95": 380.361,
+        "max": 662.194
+      },
+      "visibility_latency_by_outcome_ms": {
+        "applied_current": {
+          "n": 4900,
+          "p50": 221.274,
+          "p95": 389.447
+        },
+        "duplicate_revision": {
+          "n": 500,
+          "p50": 226.808,
+          "p95": 362.499
+        },
+        "history_only": {
+          "n": 4500,
+          "p50": 213.918,
+          "p95": 375.103
+        },
+        "quarantined": {
+          "n": 100,
+          "p50": 235.203,
+          "p95": 359.638
+        }
+      },
+      "observer": {
+        "poll_wait_ms": 100,
+        "idle_catchup_after_ms": 1000.0,
+        "idle_catchup_scans": 0,
+        "max_query_cycle_ms": 183.77992199998516,
+        "read_scope": "Privileged independent observer; adds measurement overhead to both worker configurations."
+      },
+      "reconciliation": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "exact distinct inbox identity set",
+            "passed": true
+          },
+          {
+            "name": "all canonical hashes and terminal inbox states",
+            "passed": true
+          },
+          {
+            "name": "zero processing retries or lost attempts",
+            "passed": true
+          },
+          {
+            "name": "exact immutable revision key set",
+            "passed": true
+          },
+          {
+            "name": "all revision payloads times and original event lineage",
+            "passed": true
+          },
+          {
+            "name": "exact current entity keys",
+            "passed": true
+          },
+          {
+            "name": "all latest versions payloads and authoritative sources",
+            "passed": true
+          },
+          {
+            "name": "exact receipt identity set",
+            "passed": true
+          },
+          {
+            "name": "all receipt outcomes independently allowed",
+            "passed": true
+          },
+          {
+            "name": "exact partition checkpoint counts",
+            "passed": true
+          },
+          {
+            "name": "all checkpoint pointers have scoped terminal receipts",
+            "passed": true
+          },
+          {
+            "name": "exact business quarantine count",
+            "passed": true
+          },
+          {
+            "name": "SQL-derived history equals independent Python intervals",
+            "passed": true
+          },
+          {
+            "name": "exact latest-order totals by tenant",
+            "passed": true
+          },
+          {
+            "name": "observer saw every committed identity",
+            "passed": true
+          },
+          {
+            "name": "no negative visibility latency or missed-observer records",
+            "passed": true
+          },
+          {
+            "name": "alpha-operator exact API count and latest total",
+            "passed": true
+          },
+          {
+            "name": "beta-operator exact API count and latest total",
+            "passed": true
+          },
+          {
+            "name": "existing other-tenant event API returns404",
+            "passed": true
+          }
+        ],
+        "observed_counts": {
+          "inbox": 10000,
+          "revisions": 9400,
+          "current": 2350,
+          "receipts": 10000,
+          "quarantines": 100,
+          "partitions": 2450
+        },
+        "latest_order_totals_minor": {
+          "11111111-1111-4111-8111-111111111111": 20186500,
+          "22222222-2222-4222-8222-222222222222": 0
+        }
+      },
+      "owned_database_removed": true,
+      "raw_artifacts": [
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-2/api.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-2/http-attempts.jsonl.gz",
+          "sha256": "24d6b4888d06e35fcc162c1f779abd74b709e2122b9abf75048a0a11be289643",
+          "bytes": 386069
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-2/terminal-visibility.jsonl.gz",
+          "sha256": "0190c3eb38f227c800229e5cc73343c3b537329846685d8b30a1e858a697628f",
+          "bytes": 483078
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-2/worker-1.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-2/worker-2.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-2/worker-3.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-2/worker-4.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      ]
+    },
+    {
+      "workers": 4,
+      "repetition": 3,
+      "source": {
+        "files": {
+          "src/orderflow/__init__.py": "b2e4cfe6cbe0230170ece51c042e62e7fdeef2f6ae271c49d25fdb2a188a6677",
+          "src/orderflow/api.py": "a9f2be24bfa3f6699d646d4cf3465e4cf798f562429b6f8bcf3a833693f117f9",
+          "src/orderflow/auth.py": "8cae5a3478d227896e64a05e5f913e3aaccc5c06ced20e261a2de7201632710f",
+          "src/orderflow/config.py": "93fafd0fc978a1877edda6410219aad69372dd7f2bdfa2c60cbc88aacda505c6",
+          "src/orderflow/connectors.py": "d95ae2f78996361e5f3f24eefc336269118972b0a9564f32cfbc730b9a5e7a0e",
+          "src/orderflow/db.py": "004196a2ba6ac1b5624d041abf4d3808f5201757d8cf4605cf101a4e92e553ab",
+          "src/orderflow/dbt_runtime.py": "0385c7d10c1251b4fe8781a9117d3958efbbb10c5d8a81fd75253baae4d8519e",
+          "src/orderflow/hosted_jobs.py": "92b427e264783ce8a79b938a0c0a8707d4239bdb8ec7c4037a7a69ea6011d525",
+          "src/orderflow/neon_auth.py": "76cd89548676948661bdf8763b3b594a33a7360103fd46d5b7ebd5fd9c5a3374",
+          "src/orderflow/objects.py": "8b26fff0ea262f1ab71264064322eaf51c4a2c2dfd674bf84050a3809b5fede0",
+          "src/orderflow/pipeline.py": "33a2f6fa25a167ad8e6c1ac401d3fa4a7a1222ef4d0af6d3e168315f337d5d0f",
+          "src/orderflow/schemas.py": "f819534d70c611cf9ffe70867e2768da0456c7d7c4f6d7b55d53a5cd1dffede9",
+          "src/orderflow/service.py": "23bbb60a425729d6a53132b513c0b2220256a031f2535ad1b9bc44a3484ad90a",
+          "src/orderflow/worker.py": "78d74e0ee34981b515eae328e267cc338fc6415e2b3309ec12b05b69633569ea",
+          "migrations/001_core.sql": "6d005c4a7e98ba1c35c8e9416844ff8de037418e73560920db49ae423fde21a8",
+          "migrations/002_pipeline.sql": "de65c606b975cd6036923069f8fc15944623e0f1bc3be3e5c59f299862f0bb44",
+          "migrations/003_version_claim_lookup.sql": "cde8ef89e970311b412292ec1fb9f53b36b2c9f1c47d0dc14571e789c538a175",
+          "migrations/004_eligible_claim_window.sql": "dcb9d272260e22ebe36b80d0009df68a3ca147138f6ac3bf5999b0713e561941",
+          "migrations/005_hosted_jobs.sql": "37967dafc8f5e2a71011fc224334df63725bacf8d0d4c4ffc8b5ade6365cab93"
+        },
+        "sha256": "5902ada9204854377563f234ecca63501a4967cc291a7481df797eff578706b0"
+      },
+      "harness_sha256": {
+        "analysis/benchmark_v2.py": "7b09cc6ebdf3f24682d7e3306eb4cc95202180e72e06c3a84a80dcfec79bf377",
+        "scripts/verification_support.py": "acde5c17084acd82b38bdfee5c44d53553a862cbd7dacfa3cf61dcd3dd0a65cc",
+        "fixtures/seed_metadata.json": "e95309f7c30a1f308e760bc8b26d9e1b300d60d32bf3929afd4783288f30f0a7",
+        "pyproject.toml": "427b6d062757ded011a9fd952544c143f40e73bad2c0ff33072e8aa3df1d0cbf",
+        "uv.lock": "76dc4c6bde24ac4ec17e8eb773610bba1ec5da4af1363a5ad188aa9cdc4e192a",
+        "requirements.lock": "54c4186974c9127550907cc9c8179463a95c2624e506535c2841ac24217a90bb",
+        "dashboard/package.json": "489752ec0423e99beb211cc8a66029c2444e3d61ca14bb2ce45c8ce9484be58c",
+        "dashboard/package-lock.json": "72b5c7d6f21f21d072e58e6b8eeed1000e53bb658643234ae479386e0ddf7dca"
+      },
+      "passed": true,
+      "generated_at": "2026-11-23T20:00:55.847801+00:00",
+      "request_concurrency": 24,
+      "database": "orderflow_benchmark_a1ed09db2026",
+      "postgresql": {
+        "version": "PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "max_connections": "100",
+        "shared_buffers": "128MB"
+      },
+      "measurement_configuration": {
+        "requests_per_minute": "1000000",
+        "read_only_warmup_seconds": 0.4,
+        "pool_size_per_process": 8,
+        "max_pool_overflow": 8
+      },
+      "http_attempts": 11000,
+      "http_errors": [],
+      "distinct_accepted_ids": 10000,
+      "acceptance_seconds": 70.307724,
+      "postflight_validation": {
+        "protocol_id": "postflight-token-refresh-v1",
+        "measurement_finished_before_refresh": true,
+        "started_seconds_after_measurement": 0.8471956099999716,
+        "refresh_statuses": {
+          "alpha-operator": 200,
+          "beta-operator": 200
+        },
+        "overview_statuses": {
+          "alpha-operator": 200,
+          "beta-operator": 200
+        },
+        "cross_tenant_status": 404
+      },
+      "elapsed_seconds": 70.307724,
+      "terminal_receipts_per_second": 142.23188302033336,
+      "successful_materializations_per_second": 133.69797003911336,
+      "acceptance_latency_ms": {
+        "n": 11000,
+        "p50": 152.057941,
+        "p95": 210.414253
+      },
+      "observed_terminal_visibility_latency_ms": {
+        "n": 10000,
+        "p50": 225.383,
+        "p95": 380.686,
+        "max": 638.184
+      },
+      "visibility_latency_by_outcome_ms": {
+        "applied_current": {
+          "n": 4902,
+          "p50": 229.061,
+          "p95": 386.191
+        },
+        "duplicate_revision": {
+          "n": 500,
+          "p50": 236.129,
+          "p95": 377.367
+        },
+        "history_only": {
+          "n": 4498,
+          "p50": 220.631,
+          "p95": 377.581
+        },
+        "quarantined": {
+          "n": 100,
+          "p50": 243.358,
+          "p95": 374.263
+        }
+      },
+      "observer": {
+        "poll_wait_ms": 100,
+        "idle_catchup_after_ms": 1000.0,
+        "idle_catchup_scans": 0,
+        "max_query_cycle_ms": 166.83254500003386,
+        "read_scope": "Privileged independent observer; adds measurement overhead to both worker configurations."
+      },
+      "reconciliation": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "exact distinct inbox identity set",
+            "passed": true
+          },
+          {
+            "name": "all canonical hashes and terminal inbox states",
+            "passed": true
+          },
+          {
+            "name": "zero processing retries or lost attempts",
+            "passed": true
+          },
+          {
+            "name": "exact immutable revision key set",
+            "passed": true
+          },
+          {
+            "name": "all revision payloads times and original event lineage",
+            "passed": true
+          },
+          {
+            "name": "exact current entity keys",
+            "passed": true
+          },
+          {
+            "name": "all latest versions payloads and authoritative sources",
+            "passed": true
+          },
+          {
+            "name": "exact receipt identity set",
+            "passed": true
+          },
+          {
+            "name": "all receipt outcomes independently allowed",
+            "passed": true
+          },
+          {
+            "name": "exact partition checkpoint counts",
+            "passed": true
+          },
+          {
+            "name": "all checkpoint pointers have scoped terminal receipts",
+            "passed": true
+          },
+          {
+            "name": "exact business quarantine count",
+            "passed": true
+          },
+          {
+            "name": "SQL-derived history equals independent Python intervals",
+            "passed": true
+          },
+          {
+            "name": "exact latest-order totals by tenant",
+            "passed": true
+          },
+          {
+            "name": "observer saw every committed identity",
+            "passed": true
+          },
+          {
+            "name": "no negative visibility latency or missed-observer records",
+            "passed": true
+          },
+          {
+            "name": "alpha-operator exact API count and latest total",
+            "passed": true
+          },
+          {
+            "name": "beta-operator exact API count and latest total",
+            "passed": true
+          },
+          {
+            "name": "existing other-tenant event API returns404",
+            "passed": true
+          }
+        ],
+        "observed_counts": {
+          "inbox": 10000,
+          "revisions": 9400,
+          "current": 2350,
+          "receipts": 10000,
+          "quarantines": 100,
+          "partitions": 2450
+        },
+        "latest_order_totals_minor": {
+          "11111111-1111-4111-8111-111111111111": 20186500,
+          "22222222-2222-4222-8222-222222222222": 0
+        }
+      },
+      "owned_database_removed": true,
+      "raw_artifacts": [
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-3/api.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-3/http-attempts.jsonl.gz",
+          "sha256": "7556cfa251395b532570dddcff15304ec878304666e6a2463887606421377f18",
+          "bytes": 386292
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-3/terminal-visibility.jsonl.gz",
+          "sha256": "7f2692a2cbcccb3a242fc4b8b5cab51de8ca4ee0500003b4af2c4b0aa55a0fa1",
+          "bytes": 483015
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-3/worker-1.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-3/worker-2.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-3/worker-3.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "artifacts/benchmarks/raw/production-v2-45253712739-1-10000-seed20261123-5902ada92048/workers-4-rep-3/worker-4.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      ]
+    }
+  ],
+  "complete": true,
+  "passed": true
+}

@@ -1,0 +1,62 @@
+{
+  "checked_at": "2026-11-24T04:01:25.902172+00:00",
+  "passed": true,
+  "release_id": 456288555,
+  "release_url": "https://github.com/nirajmohabey/orderflow/releases/tag/benchmark-v2-2026-11-23",
+  "tag": "benchmark-v2-2026-11-23",
+  "measured_commit": "d082edbd5db498bc49b41ca0e17f781607831048",
+  "tag_target_verified": true,
+  "draft": false,
+  "assets": [
+    {
+      "id": 785609899,
+      "name": "benchmark-status.json",
+      "url": "https://github.com/nirajmohabey/orderflow/releases/download/benchmark-v2-2026-11-23/benchmark-status.json",
+      "bytes": 23025,
+      "sha256": "901d79fe49b661945f78818d7f8588467f9a74f1280b8f3ab0cb79c83e65e96c",
+      "server_digest_matches": true,
+      "public_check": "Anonymous GET200 and exact complete downloaded SHA-256/size",
+      "anonymous_status": 200
+    },
+    {
+      "id": 785609901,
+      "name": "benchmark-v2-45253712739-1.zip",
+      "url": "https://github.com/nirajmohabey/orderflow/releases/download/benchmark-v2-2026-11-23/benchmark-v2-45253712739-1.zip",
+      "bytes": 61678560,
+      "sha256": "4af6a162f8624ab5c9d23a474424212a91db306e19735ddc84a9cc4136a3baa4",
+      "server_digest_matches": true,
+      "public_check": "Anonymous HEAD200 and Content-Length, plus exact server SHA-256; ZIP is not downloaded a second time for this publication check",
+      "anonymous_status": 200
+    },
+    {
+      "id": 785609898,
+      "name": "production-v2-45253712739-1-10000-summary.json",
+      "url": "https://github.com/nirajmohabey/orderflow/releases/download/benchmark-v2-2026-11-23/production-v2-45253712739-1-10000-summary.json",
+      "bytes": 63440,
+      "sha256": "b89f14abe3d669d878577ac1ab2253caf4c2372277ee0c4d8bcba98a4a6a1e4f",
+      "server_digest_matches": true,
+      "public_check": "Anonymous GET200 and exact complete downloaded SHA-256/size",
+      "anonymous_status": 200
+    },
+    {
+      "id": 785609900,
+      "name": "production-v2-45253712739-1-100000-summary.json",
+      "url": "https://github.com/nirajmohabey/orderflow/releases/download/benchmark-v2-2026-11-23/production-v2-45253712739-1-100000-summary.json",
+      "bytes": 63798,
+      "sha256": "4dee8f8b79c1339cdcbb47fd3420c58ebdbed03a40b4f402004bb45ba31535fa",
+      "server_digest_matches": true,
+      "public_check": "Anonymous GET200 and exact complete downloaded SHA-256/size",
+      "anonymous_status": 200
+    }
+  ],
+  "billing_mutations": false,
+  "scope": "Original benchmark ZIP and compact reports; new benchmark-only tag/release; no app source or existing release/tag/asset mutation",
+  "anonymous_release_page_status": 200,
+  "existing_app_release_preserved": {
+    "release_id": 456001964,
+    "tag": "v0.2.0",
+    "tag_object_unchanged": true,
+    "asset_id_size_digest_records_unchanged": 3,
+    "latest_release_still_v0_2_0": true
+  }
+}

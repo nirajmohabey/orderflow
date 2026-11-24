@@ -1,0 +1,38 @@
+{
+  "merchant_code": "maple-demo",
+  "catalog_updates": [
+    {
+      "notification_id": "maple-catalog-017",
+      "product_code": "MAPLE-7",
+      "revision": 2,
+      "valid_from": "2026-11-02T08:30:00-05:00",
+      "emitted_at": "2026-11-02T08:31:00-05:00",
+      "stock_keeping_unit": "MP-NOTEBOOK",
+      "display_title": "Maple notebook",
+      "unit_price": "12.30",
+      "currency": "USD"
+    },
+    {
+      "notification_id": "maple-catalog-011",
+      "product_code": "MAPLE-7",
+      "revision": 1,
+      "valid_from": "2026-11-01T08:30:00-05:00",
+      "emitted_at": "2026-11-03T08:31:00-05:00",
+      "stock_keeping_unit": "MP-NOTEBOOK",
+      "display_title": "Maple notebook",
+      "unit_price": "10.00",
+      "currency": "USD"
+    },
+    {
+      "notification_id": "maple-catalog-019",
+      "product_code": "MAPLE-8",
+      "revision": 1,
+      "valid_from": "2026-11-02T18:45:00+05:30",
+      "emitted_at": "2026-11-02T18:46:00+05:30",
+      "stock_keeping_unit": "MP-PENCIL",
+      "display_title": "Maple pencil",
+      "unit_price": "0.10",
+      "currency": "USD"
+    }
+  ]
+}

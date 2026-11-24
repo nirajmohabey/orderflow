@@ -1,0 +1,14 @@
+{
+  "own_loopback_cluster": true,
+  "port": 55579,
+  "owned_cluster_stopped": true,
+  "native_configuration_unchanged": true,
+  "protected_filenames": [
+    ".env",
+    ".runtime\\api.process.json",
+    ".runtime\\worker.process.json"
+  ],
+  "production_database_touched": false,
+  "native_database_touched": false,
+  "scope": "Fresh local PostgreSQL; each core integration fixture owns its UUID database. No production credentials read."
+}

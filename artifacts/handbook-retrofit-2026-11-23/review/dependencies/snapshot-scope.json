@@ -1,0 +1,14 @@
+{
+  "artifacts\\security\\application-installed.json": {
+    "sha256": "b043fb3e4f6da891efa0bb2ff722db83f46a7fa95c706acf0929fdc521d45b90",
+    "role": "recorded installed snapshot; original timestamp retained, advisory query is fresh"
+  },
+  "artifacts\\security\\dbt-installed.json": {
+    "sha256": "3dc2b8488cd4787572b3b7169e632a8f9ef8b4c08a209ba3bdce67fc51db2124",
+    "role": "recorded installed snapshot; original timestamp retained, advisory query is fresh"
+  },
+  "artifacts\\security\\airflow-installed.json": {
+    "sha256": "63482454c5fd6e3beb75f6ec3ce082a898254010283a71ee01ee96f783006abf",
+    "role": "recorded installed snapshot; original timestamp retained, advisory query is fresh"
+  }
+}

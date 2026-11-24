@@ -1,0 +1,47 @@
+{
+  "scope": "Synthetic merchant mapping; one composite real loopback HTTP/PostgreSQL test plus 22 offline checks within the actual completed source-bound full suite",
+  "human_customer_acceptance": null,
+  "full_suite": {
+    "xml": "artifacts/handbook-retrofit-2026-11-23/native/full-suite.xml",
+    "source_proof": "artifacts/handbook-retrofit-2026-11-23/native/full-suite.source-proof.json",
+    "counts": {
+      "tests": 196,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "time_seconds": 232.421
+    },
+    "source_bound": true
+  },
+  "mapping_tests": {
+    "passed": 23,
+    "total": 23,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "real_http_postgres_tests": {
+    "passed": 1,
+    "total": 1,
+    "name": "test_mapped_catalog_real_http_cursor_replay_late_revision_and_conflict"
+  },
+  "source_sha256": {
+    "scripts/customer_catalog_mapping.py": "91ddcb19ef9fd396ca3a537e25f438a72d2489c9292b404307a12c78e2e35108",
+    "fixtures/customer_mapping/maple_catalog.json": "d5a6f8c7e0e0f94834caa7abc783b3391c74c2521c6b6f06822c31352b551bc1",
+    "fixtures/customer_mapping/maple_catalog.expected.jsonl": "fdc8fe1169d3cc7b63e9f558fadffa07ee31b1fe04a3969c37001cae13f469f5",
+    "tests/test_customer_mapping.py": "9591cd9e37ac3d7a7598b5107ac0b5ad5f3644ffebf638658b590581db258264"
+  },
+  "composite_assertions": [
+    "Three normalized records match the separate literal canonical oracle",
+    "Interrupted first accepted event retains durable identity and leaves cursor revision 0",
+    "Resumed two-page ingestion accepts 3 with 1 duplicate; cursor revision 2",
+    "Explicit complete-feed refresh returns 3 duplicates without extra events/revisions",
+    "Three immutable revisions; MAPLE-7 current v2 price 1230, MAPLE-8 current v1 price 10",
+    "Beta tenant has zero current rows",
+    "Changed content under old event identity rejected without cursor advancement"
+  ],
+  "diagnostic_interruption": {
+    "junit": "integration-diagnostic.xml",
+    "result": "one fixture-setup ConnectionTimeout before any app assertions; root verified the disposable PostgreSQL start process had ended; distinct successful rerun retained"
+  }
+}

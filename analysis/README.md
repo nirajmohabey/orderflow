@@ -1,4 +1,22 @@
-# Benchmark status and a future verification fix
+# Current v2 benchmark and preserved v1 history
+
+The separate [GitHub-hosted Linux v2 matrix](https://github.com/nirajmohabey/orderflow/actions/runs/45253712739) completed on measured commit `d082edbd5db498bc49b41ca0e17f781607831048`. All six 10k and six 100k trials passed. The [independent downloaded-evidence review](../artifacts/handbook-retrofit-2026-11-23/benchmark-status.json) checked the twelve reports, 228 recorded database assertions and 28 gzip CRC/SHA/count/identity reductions. It checks the original recorded database assertions; deleted benchmark databases were not recreated or queried.
+
+| Core workload | One-worker median terminal receipts/s | Four-worker median terminal receipts/s |
+|---|---:|---:|
+| 10,000 events, three sequential repetitions per worker setting | 135.36 | 142.78 |
+| 100,000 events, three sequential repetitions per worker setting | 108.01 | 137.56 |
+
+This was a shared four-vCPU Linux/PostgreSQL 17.12 runner, not the Vercel/Neon deployment. Trials were sequential rather than randomized or concurrent matched controls; these descriptive medians do not establish a causal scaling speedup. The workload used request concurrency 24, pool 8+8 and a synthetic request budget of one million/minute, not production defaults. It excludes Queue/dbt/Airflow and managed free-plan capacity. Acceptance p95 ranged 181.91-211.73 ms (10k) and 183.84-224.74 ms (100k); observed visibility p95 reached 20.34 s and 326.59 s respectively. Visibility is a polling upper bound and the accumulated backlog is material. No production SLO, open-loop saturation, customer throughput or low-latency claim is made.
+
+Original summaries are retained separately under [10k](../artifacts/handbook-retrofit-2026-11-23/benchmark-v2/production-v2-45253712739-1-10000-summary.json) and [100k](../artifacts/handbook-retrofit-2026-11-23/benchmark-v2/production-v2-45253712739-1-100000-summary.json); see the evidence review for their exact filenames/hashes and raw archive. V1's failed trial and `not_verified` gate remain unchanged. V2 completion does not retroactively repair v1, retune a test or relabel old release manifests.
+
+The [durable benchmark-only release](https://github.com/nirajmohabey/orderflow/releases/tag/benchmark-v2-2026-11-23) preserves the original 61,678,560-byte CI ZIP and summary/review files beyond the one-day Actions artifact lifetime. Its source is the measured commit above; it does not replace the application release.
+
+## Historical v1 diagnosis and v2 preparation
+
+The following text records the earlier review and its then-future reproduction instructions. Its 104-test/future-execution wording belongs to that historical checkpoint, not the current v0.2.0 or completed v2 run above.
+
 
 > Patch version note: Current v0.1.1 native evidence is in `artifacts/recheck-2026-11-23/`. The earlier Linux/Airflow/container/OS and measured v1 workload results below are historical v0.1.0 evidence. Use `scripts/review_patch.py` for the current native review. The legacy release/partial-render tools require their matching original source; no current full performance matrix or Linux rerun is claimed.
 

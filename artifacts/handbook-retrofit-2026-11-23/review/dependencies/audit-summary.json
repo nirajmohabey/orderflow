@@ -1,0 +1,95 @@
+{
+  "generated_at": "2026-11-24T03:50:22.668775+00:00",
+  "inputs": {
+    "uv.lock": {
+      "sha256": "76dc4c6bde24ac4ec17e8eb773610bba1ec5da4af1363a5ad188aa9cdc4e192a",
+      "bytes": 144233
+    },
+    "requirements.lock": {
+      "sha256": "54c4186974c9127550907cc9c8179463a95c2624e506535c2841ac24217a90bb",
+      "bytes": 39116
+    },
+    "dashboard/package-lock.json": {
+      "sha256": "72b5c7d6f21f21d072e58e6b8eeed1000e53bb658643234ae479386e0ddf7dca",
+      "bytes": 59197
+    },
+    "warehouse/requirements-dbt.lock": {
+      "sha256": "b01dc3d8d742d5a6e63af63416cf9b8796fea6c6b1ad0a8e12a843d46eb82cbf",
+      "bytes": 93044
+    },
+    "orchestration/constraints-3.12.txt": {
+      "sha256": "3cecb4fe4a11d69bd772aef18434825bbed9b344703302ca0a55d50e30a33eda",
+      "bytes": 19284
+    },
+    "orchestration/requirements-airflow.in": {
+      "sha256": "e7ea1936e834c441ce224a76f70a421edad5ee68156531e78c3402f424296480",
+      "bytes": 45
+    },
+    "orchestration/constraints-hardened-3.12.txt": {
+      "sha256": "5001dcab2e85da66f9ac2139e7bcffc7b3b736e3b37c29f256544cc13837c9a2",
+      "bytes": 19284
+    },
+    "artifacts/security/airflow-installed.json": {
+      "sha256": "63482454c5fd6e3beb75f6ec3ce082a898254010283a71ee01ee96f783006abf",
+      "bytes": 9534
+    },
+    "artifacts/security/dbt-installed.json": {
+      "sha256": "3dc2b8488cd4787572b3b7169e632a8f9ef8b4c08a209ba3bdce67fc51db2124",
+      "bytes": 4345
+    },
+    "artifacts/security/application-installed.json": {
+      "sha256": "b043fb3e4f6da891efa0bb2ff722db83f46a7fa95c706acf0929fdc521d45b90",
+      "bytes": 2628
+    }
+  },
+  "unique_exact_versions": 873,
+  "groups": {
+    "application-lock": {
+      "exact_versions": 92,
+      "packages_with_advisories": 0
+    },
+    "dashboard-lock": {
+      "exact_versions": 102,
+      "packages_with_advisories": 0
+    },
+    "dbt-lock": {
+      "exact_versions": 60,
+      "packages_with_advisories": 0
+    },
+    "airflow-constraints-inventory": {
+      "exact_versions": 720,
+      "packages_with_advisories": 5
+    },
+    "airflow-hardened-constraints-inventory": {
+      "exact_versions": 720,
+      "packages_with_advisories": 4
+    },
+    "airflow-installed": {
+      "exact_versions": 134,
+      "packages_with_advisories": 1
+    },
+    "dbt-installed": {
+      "exact_versions": 60,
+      "packages_with_advisories": 0
+    },
+    "application-installed": {
+      "exact_versions": 32,
+      "packages_with_advisories": 0
+    }
+  },
+  "required_graph_packages_with_advisories": 1,
+  "unique_advisories_all_scopes": 7,
+  "npm": {
+    "exit_code": 0,
+    "reported_vulnerabilities": 0,
+    "registry": "https://registry.npmjs.org"
+  },
+  "missing_required_graphs": [],
+  "required_graph_passed": false,
+  "limitations": [
+    "Airflow constraints inventory includes optional extras that are not necessarily installed; it is reported separately, never silently treated as the selected graph.",
+    "Exact-version advisory matching at query time is not proof of security, exploitability or deployment safety.",
+    "Installed snapshots describe their recorded interpreter/time; lock/platform differences remain explicit.",
+    "No dependency or advisory is suppressed/upgraded by this audit. Built-container OS packages, GitHub Actions runtime dependencies and future advisories are outside this package scan."
+  ]
+}

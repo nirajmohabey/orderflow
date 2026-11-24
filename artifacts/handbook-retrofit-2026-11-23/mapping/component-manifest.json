@@ -1,0 +1,20 @@
+{
+  "scope": "Synthetic fixture mapping; current component hashes recorded after the22-check offline invocation, not an independent before/after full-source attestation",
+  "source_sha256": {
+    "scripts/customer_catalog_mapping.py": "91ddcb19ef9fd396ca3a537e25f438a72d2489c9292b404307a12c78e2e35108",
+    "fixtures/customer_mapping/maple_catalog.json": "d5a6f8c7e0e0f94834caa7abc783b3391c74c2521c6b6f06822c31352b551bc1",
+    "fixtures/customer_mapping/maple_catalog.expected.jsonl": "fdc8fe1169d3cc7b63e9f558fadffa07ee31b1fe04a3969c37001cae13f469f5",
+    "tests/test_customer_mapping.py": "9591cd9e37ac3d7a7598b5107ac0b5ad5f3644ffebf638658b590581db258264"
+  },
+  "local_links_checked": 18,
+  "missing_links": [],
+  "human_customer_acceptance": null,
+  "integration_status": "passed in completed source-bound full suite",
+  "offline_result": {
+    "passed": 22,
+    "failed": 0,
+    "deselected": 1,
+    "junit": "offline-tests.xml"
+  },
+  "integration_evidence": "acceptance.json"
+}

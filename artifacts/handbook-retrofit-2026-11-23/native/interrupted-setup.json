@@ -1,0 +1,10 @@
+{
+  "complete_suite_result": false,
+  "status": "interrupted_test_environment",
+  "reason": "Detached owned PostgreSQL did not survive the initial separate sandboxed start cell; subsequent integration setup connections timed out. The incomplete suite was stopped before a source-bound full result.",
+  "production_touched": false,
+  "native_serving_database_touched": false,
+  "private_console_retained": true,
+  "subsequent_run": "full-suite.source-proof.json",
+  "interpretation": "Not counted as an application pass. The repeat starts and probes the exact owned cluster in an approved local execution before running tests."
+}

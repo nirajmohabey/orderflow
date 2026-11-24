@@ -1,0 +1,49 @@
+{
+  "reviewer": "AI-agent simulated documentation review; no human/customer signoff",
+  "baseline_commit": "b46164173606eb045f11dd05ca8932f49b755ac0",
+  "corrections": [
+    {
+      "path": "docs/HOSTING.md",
+      "baseline_commit": "b46164173606eb045f11dd05ca8932f49b755ac0",
+      "before_sha256": "1f9616661e0558d2aa0c231a2c5d00616ac06ed9e332b9af16a32b1ab1889d1f",
+      "after_sha256": "2519db8ec08be8341f16c89b7b4734cd4f7f3989cb00371c2ddf1c4b7be4c8d8",
+      "correction": "Current Vercel/Neon/Managed Auth/private finite Queue/object/recovery boundaries"
+    },
+    {
+      "path": "docs/BACKEND.md",
+      "baseline_commit": "b46164173606eb045f11dd05ca8932f49b755ac0",
+      "before_sha256": "7fe0fa09c4b5d300ca30c4401d6310cb00f87373558eb0e61bac515ca508d720",
+      "after_sha256": "302090b5d36fa02f5863716e4bcb39d1998fc2b5e6f421b481ef244a4b78df36",
+      "correction": "Real hosted identity distinguished from local HS256/RS256 profiles"
+    },
+    {
+      "path": "docs/ROLLOUT_AND_NEXT_STEPS.txt",
+      "baseline_commit": "b46164173606eb045f11dd05ca8932f49b755ac0",
+      "before_sha256": "3d8612f0b2cd129582c4bb5eb85d29f71ac42880564dc491fa43872e79ecf75f",
+      "after_sha256": "40b84eef0c44b5ef2fee2ac7d44d3743d1d5c446a9d7b15e312c53ba2e962bc2",
+      "correction": "Superseded account and billing blockers removed from current checklist"
+    },
+    {
+      "path": "dashboard/README.md",
+      "baseline_commit": "b46164173606eb045f11dd05ca8932f49b755ac0",
+      "before_sha256": "0a08d9be5cc7d74aaee00746d3199ced554ae2326951f1a63d3fbe1af1f3eb53",
+      "after_sha256": "acc22d85868c5430310e346ad44e94bd84c4c4fab6f9b4c82f302243fd7869f2",
+      "correction": "Hosted sign-in and hosted evidence distinguished from local/intercepted checks"
+    },
+    {
+      "path": "analysis/README.md",
+      "baseline_commit": "b46164173606eb045f11dd05ca8932f49b755ac0",
+      "before_sha256": "033abae841e58ee2d6eecd5e6f5d863dc2f709ddd060056a9f5ece2a35ed0665",
+      "after_sha256": "e613c8846b29915caee1b53106622f10ff9244f81dc547dd0acbf76b1d93726a",
+      "correction": "New completed v2 results separated from preserved failed v1 and original source"
+    },
+    {
+      "path": "orchestration/README.md",
+      "baseline_commit": "b46164173606eb045f11dd05ca8932f49b755ac0",
+      "before_sha256": "1cc7915bb1dc1151cf8a3f108a401c08954ce4010f8de94224dbe2c4c8e915f9",
+      "after_sha256": "6375c17820c69e5994d0ec17e9121707f384562735a1880e8c3544f935c80d53",
+      "correction": "Current hardened constraints and historical dependency snapshots distinguished"
+    }
+  ],
+  "historical_reports_changed": false
+}

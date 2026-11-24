@@ -1,0 +1,110 @@
+{
+  "recorded_at_utc": "2026-11-24T03:54:01.476206+00:00",
+  "baseline_commit": "b46164173606eb045f11dd05ca8932f49b755ac0",
+  "scope": "Fresh scratch-built real React UI; intercepted APIs and fictional Neon provider. No authenticated live account journey or database mutation.",
+  "build": {
+    "node": "26.13.1",
+    "typescript": "pass",
+    "vite": "pass",
+    "prettier": "pass",
+    "serving_dist_untouched": true
+  },
+  "browser_suites": {
+    "base": {
+      "passed": 18,
+      "total": 18,
+      "source_stable": true
+    },
+    "races": {
+      "passed": 5,
+      "total": 5,
+      "source_stable": true
+    },
+    "neon": {
+      "passed": 12,
+      "total": 12,
+      "source_stable": true
+    },
+    "auth-code": {
+      "passed": 3,
+      "total": 3,
+      "source_stable": true
+    },
+    "contrast": {
+      "passed": 8,
+      "total": 8,
+      "source_stable": true
+    }
+  },
+  "passed": 46,
+  "total": 46,
+  "frontend_sources_unchanged": true,
+  "source_hashes": {
+    "src/App.tsx": "988ba6959c44a703bf0b21cd9b40a7d0b626182fd9ba2bbebde59ae806d81b84",
+    "src/auth.ts": "46faaef9f30fa3c14da597464ae031f0a77d9290305076eefd267a574963d88b",
+    "src/AuthForm.tsx": "609b102a2c87ef755756330f6288a9ccb0803765beab65e7e55e9c4950e63514",
+    "src/api.ts": "1527c5220551112e9739cddc30dcd67fc683f22b3d8c0ab48a53f20a0a61e628",
+    "src/types.ts": "6a69a4a9747bb0bc4ecea825d0db673eb9f2f7b3bba5f1bca480991cab1cf0d3",
+    "src/style.css": "70f8ae280b74a3257c6d9745dcba7ff89b6a26207bdde8ed7b049d2bca8591e8",
+    "src/main.tsx": "575c9833bc5993d6a7b8db0587b8ecc202809448fd71842c5a4331bec6ee7977",
+    "package.json": "489752ec0423e99beb211cc8a66029c2444e3d61ca14bb2ce45c8ce9484be58c",
+    "package-lock.json": "72b5c7d6f21f21d072e58e6b8eeed1000e53bb658643234ae479386e0ddf7dca",
+    "index.html": "9b117a61527cf4de1dd9d921a637d4bd181ac2181e657e8388d76f238d594cad"
+  },
+  "responsive": {
+    "widths": [
+      320,
+      375,
+      768,
+      1440
+    ],
+    "text_zoom": "200%",
+    "all_seven_views_checked": true
+  },
+  "manual_visual_review": [
+    "375px inventory diff",
+    "1440px overview"
+  ],
+  "no_app_runtime_patch_justified_by_this_review": true,
+  "findings": [
+    {
+      "id": "ODF-DOC-01",
+      "type": "documentation",
+      "path": "dashboard/README.md",
+      "status": "corrected",
+      "observation": "Old nonlocal bearer-only/no IdP and local-only evidence statements contradicted current Neon/Vercel runtime.",
+      "runtime_affected": false
+    },
+    {
+      "id": "ODF-DEP-01",
+      "type": "dependency advisory",
+      "status": "narrow hardened pin applied; candidate resolver/advisory check passed; matching Linux CI execution pending",
+      "package": "apache-airflow-providers-smtp",
+      "before": "3.2.0",
+      "candidate": "3.2.2",
+      "scope": "Selected optional local/Linux Airflow environment, not deployed Vercel runtime",
+      "advisory": "PYSEC-2026-4396",
+      "primary_fix": "https://github.com/apache/airflow/pull/65346",
+      "resolved_linux_packages": 134,
+      "resolved_graph_known_advisory_packages": 0,
+      "hardened_constraints_sha256": "8588ee0e645fd3a62e73997a374559e8ad70b92d201291b2b0f2d17e7b694758"
+    }
+  ],
+  "limitations": [
+    "Automated accessibility checks and computed contrast do not establish full WCAG or assistive-technology conformance.",
+    "Known-advisory matches are time-bound and not a proof of no vulnerabilities or exploitability.",
+    "Before dependency audit retains recorded installed-snapshot timestamps; candidate resolver evidence is not an actual package installation."
+  ],
+  "execution_notes": [
+    "Initial base-suite Node process could not initialize (Windows0xC0000142); no application assertions executed. The same unmodified source suite reran successfully with authorized native browser execution."
+  ],
+  "accessibility": {
+    "base_axe_states": 25,
+    "base_axe_violations": 0,
+    "contrast_followup_states": 8,
+    "contrast_violations": 0,
+    "retained_incomplete_records": 8,
+    "computed_text_targets": 134,
+    "keyboard_observations": 18
+  }
+}

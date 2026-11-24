@@ -29,7 +29,7 @@ For this local Vite workflow, set `ODF_ALLOWED_ORIGINS=http://127.0.0.1:8010,htt
 
 ## Session and precision boundaries
 
-The server must enable both local environment and demo configuration before the fixture identity picker appears. Other environments offer a manually supplied bearer token; this is not an implemented external identity-provider flow. The UI verifies `/v1/session` and uses its principal and tenant rather than trusting decoded token claims.
+The server must enable both local environment and demo configuration before the fixture identity picker appears. The hosted deployment uses Neon Managed Better Auth through the fixed same-origin `/auth` proxy. The official client retrieves a signed short-lived JWT, then the UI verifies `/v1/session` and uses its server-maintained principal and tenant rather than trusting decoded token roles. Signup alone grants no tenant membership. A separately configured bearer-token profile remains available; it is not the hosted sign-in experience. See [current production authentication and enrollment](../docs/PRODUCTION.md#authentication-boundary).
 
 Tokens stay in React memory. Tenant switches immediately remove the previous workspace, abort reads, and reject delayed responses. Disconnect and reload clear the session. Source credentials are never requested or displayed by the client. API authorization remains the enforcement boundary for every operation.
 
@@ -51,4 +51,4 @@ npm run test:live
 
 Both scripts require the system Chrome installation. For video capture only, `npx playwright install ffmpeg` installs Playwright's private helper. No browser or operating-system installation is necessary when Chrome is already available.
 
-Reports record source hashes and source stability. Treat intercepted-browser, actual-HTTP, accessibility-state, and backend acceptance counts as different evidence scopes. Current evidence is local synthetic execution, not a hosted production/customer claim.
+Reports record source hashes and source stability. Treat intercepted-browser, actual-HTTP, accessibility-state, and backend acceptance counts as different evidence scopes. These commands reproduce local synthetic checks. Separate [hosted production evidence](../docs/PRODUCTION.md#executed-hosted-checks-2026-11-23) records actual Neon sign-in and tenant/API behavior on Vercel; it is not a real merchant/customer adoption claim. The original recording remains an earlier local demonstration.

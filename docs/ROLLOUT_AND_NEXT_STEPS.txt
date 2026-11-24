@@ -1,56 +1,45 @@
-ORDERFLOW: VERIFIED IMPLEMENTATION AND HOSTED ROLLOUT
+ORDERFLOW: CURRENT DELIVERY AND FOLLOW-UP
 
-Implemented and exercised
+Current deployment
 
-- Durable source identities, canonical replay detection and strict envelopes.
-- Tenant-scoped current records, immutable revisions and effective intervals.
-- Atomic worker effects, terminal receipts/checkpoints and bounded retries.
-- Source-authority and same-version conflict protection, including quarantine.
-- Server-enforced memberships, roles, keyset pages and protected recovery.
-- Real HTTP catalog/event connectors with durable cursor replay.
-- A finite mapped Airflow DAG, actual dbt checks and last-good publication.
-- Independent inventory comparison with immutable input/report provenance.
-- Real process-death recovery and dump/restore/replay verification.
-- A responsive React workbench, recorded workflow and public case study.
+The stable app is https://orderflow-hazel.vercel.app, deployed through the public
+GitHub repository's approved main-to-Vercel connection. FastAPI, Neon PostgreSQL,
+Managed Better Auth, immutable PostgreSQL objects and private finite Queue phases
+are implemented on the existing free-plan setup. Fixture authentication is off in
+production. docs/PRODUCTION.md identifies the executed hosted checks and limits.
 
-The release manifest and raw reports define the exact executed scopes. A
-passing local release gate does not mean a hosted production rollout exists.
+Earlier marketplace terms, missing-hosting and GitHub-runner restrictions describe
+historical checkpoints. They are not current account or billing blockers. Public
+source and actual CI/deployment results supersede the old rollout checklist.
 
-Hosting steps that remain
+Handbook addition
 
-1. Owner completes Neon marketplace account terms. Vercel is connected, but
-   neither backend has a managed database or hosted production workload yet.
-2. Provision separate development/production databases and least-privilege
-   runtime/transform roles; apply reviewed migrations via an admin connection.
-3. Configure a real identity provider, issuer/audience/public key and explicit
-   server-side memberships. Keep fixture sessions disabled in production.
-4. Establish the worker and finite scheduler on a supported Vercel execution
-   model with a verified resource budget. Request functions do not supply an
-   always-running consumer. Existing polling processes cannot be assumed to
-   survive a serverless request.
-5. Configure cross-host object access/retention and scheduled remote backups.
-   Rehearse a real remote restore and run the hosted browser-to-database-to-
-   worker-to-publication acceptance flow before claiming production behavior.
-6. Resolve the GitHub account restriction that currently prevents jobs from
-   starting. The installed acceptance workflow is not a successful CI run.
+docs/CUSTOMER_MAPPING.md documents one synthetic noncanonical merchant export,
+exact money/time/identity mapping, source authority, actual acceptance results
+and operator handoff through the existing paginated connector. The local/offline
+example adds no public API, cloud, schema, customer integration or paid service.
+It is automated simulation, not human/customer acceptance or business savings.
 
-Further improvements, prioritized after hosted acceptance
+The independent v2 Linux core benchmark has now completed; the original failed
+v1 matrix remains not_verified. analysis/README.md and the versioned review give
+separate source pins, raw evidence, latency/backlog caveats and denominators.
 
-- Connect one real merchant sandbox and define its authority/version policy,
-  pagination, currency/time semantics, rate limits and credential rotation.
-- Run a controlled arrival-rate sweep on a reserved host. Measure queue age,
-  admission limits, database connections, lock waits, CPU/I/O saturation and
-  recovery after a deliberate downstream outage. Keep this distinct from the
-  completed closed-loop synthetic core benchmarks.
-- Define deployment-specific SLOs and alerts from observed real traffic, with
-  explicit failure/queue-age budgets and an operator recovery runbook.
-- Add a reviewed terminal-correction workflow that requests a new authoritative
-  source version; retain terminal immutability and a complete audit trail.
-- Recheck vendor OS advisories and rebuild when fixes appear. The captured
-  Python images retain 217 package/advisory pairs each, including 50 high,
-  with no fixed versions supplied by the captured distribution database.
-- Complete manual screen-reader, keyboard and zoom review with operators;
-  automated zero-violation scans alone do not establish WCAG conformance.
+Security and operating follow-up
 
-These are explicit follow-up work items, not implemented feature claims or
-evidence of customer adoption. Source visibility remains an owner decision.
+- The optional local/Linux Airflow environment's SMTP provider pin is patched
+  from 3.2.0 to 3.2.2 for PYSEC-2026-4396. Inspect the versioned review and actual
+  final CI installation/DAG results; resolved metadata alone is not installation.
+- Monitor existing storage, database connections, queue age, failed jobs and
+  email/execution quotas. Hosted objects have limits and no implicit purge.
+- Retain failed attempts and last-good publication; use reviewed ownership,
+  cursor and new-identity/version correction rules rather than deleting history.
+- Name a human acceptance/incident owner and review source authority, retention,
+  rate limits and credential rotation before a real merchant pilot.
+- Establish traffic-derived SLOs and a separately tested backup schedule only
+  when actually adopted. Application-schema recovery is not full-account recovery.
+- Keep historic OS/container advisory findings scoped to their original image
+  snapshots; app dependency scans do not audit the managed Vercel host OS.
+- Human screen-reader/operator acceptance and merchant adoption remain unmeasured.
+
+No billing upgrade, extra cloud, AWS service or always-on scheduler is required
+by this handbook update. Preserve the existing free-tier architecture and quotas.
